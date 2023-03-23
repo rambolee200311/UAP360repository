@@ -204,7 +204,7 @@ public class reverseinvoice implements IAPICustmerDevelop {
 					 zyx3=vob.getZyx3();
 				 }
 				 
-				 parentvo.setZyx13(vob.getFb_oid()+"_"+zyx3);//原发票系统流水号
+				 parentvo.setZyx16(vob.getFb_oid()+"_"+zyx3);//原发票系统流水号
 				// childrenvo.setJfybje(detail.getInclusiveMoney());
 				/*
 				 * 收支项目

@@ -42,6 +42,11 @@ public class ParentVO {
     private String zyx13;
     private String zyx14;
     private String zyx15;
+    private String zyx16;
+    private String zyx17;
+    private String zyx18;
+    private String zyx19;
+    private String zyx20;
 	public String getZyx7() {
 		return zyx7;
 	}
@@ -287,6 +292,36 @@ public class ParentVO {
 	}
 	public void setZyx15(String zyx15) {
 		this.zyx15 = zyx15;
+	}
+	public String getZyx16() {
+		return zyx16;
+	}
+	public void setZyx16(String zyx16) {
+		this.zyx16 = zyx16;
+	}
+	public String getZyx17() {
+		return zyx17;
+	}
+	public void setZyx17(String zyx17) {
+		this.zyx17 = zyx17;
+	}
+	public String getZyx18() {
+		return zyx18;
+	}
+	public void setZyx18(String zyx18) {
+		this.zyx18 = zyx18;
+	}
+	public String getZyx19() {
+		return zyx19;
+	}
+	public void setZyx19(String zyx19) {
+		this.zyx19 = zyx19;
+	}
+	public String getZyx20() {
+		return zyx20;
+	}
+	public void setZyx20(String zyx20) {
+		this.zyx20 = zyx20;
 	}
     
 }
