@@ -1,0 +1,36 @@
+package u8c.busiitf.task;
+
+import java.util.LinkedHashMap;
+
+import u8c.bs.exception.SecurityException;
+import u8c.vo.arrival.EncryptHelper;
+import com.alibaba.fastjson.JSON;
+
+import nc.bs.logging.Logger;
+import nc.bs.pub.taskcenter.BgWorkingContext;
+import nc.vo.pub.BusinessException;
+
+public class DecryptTest implements nc.bs.pub.taskcenter.IBackgroundWorkPlugin {
+	@Override
+	public String executeTask(BgWorkingContext param) throws BusinessException {
+		String strResult="";
+		Logger.init("hanglianAPI");
+		LinkedHashMap<String, Object> para = param.getKeyMap();
+		strResult = (String) para.get("temp");
+		//strResult="df9d0d268864fb7597eb00b68cfb9689f8a84b768b6852b08588030c5412ef2ac82be9e257cf61a0b0fcbef59c810d168ca6af6d8c5f99821fb16b962f3ee9c30f14670415d6016fa2218d5b6225d1610e080f7b7ba629cbc04e06b8c0fb335025a8337a0aea85d1267801572e53b52d4d2509cf38adfe2f536dd2e2a7e1267dcd9cc7037d95baccc2fe00be2f75d15bf99fd015036ff656177b5c110ba1c1d1abd36230722bbe12dd077160355ac7b38ae07f55962577866209f55ff0030b61234aa6c4a0d6824378d3b33690e6af60de43e772f0665271d4df4304ac5179cebe7dcbd3527079ae5d090665e2e59702311bd5b25e468e8d0300e5fa685c7fd583116762f0672d27483e0ebcd8132047a1118ae07f918325643c8ddd0fc5eca1c682545d073e3198ecb961c00af225c7";
+		strResult="536cafe69309dd4902358e264645361440f589f29d05fd53eb5498ba22994bf993fb130fadfd335698bfcaed9f076c4229f46699c3cc0aa565a99dc0f1d9b6a826791e7ab422303e676f39ce6c035ea49c8576ca476fb1d4a95fe664b1700e54ea84e064ebf534d94b83adc066b881382fee0f692a32539372a38e027d1959ca256f7d0a051f0253adc1861ef50e3065333d3435961c9200dcf7a17bfcd94a75e83aba6098a0b02a9a256a87d56dfce31075b0d6b49c1409dab750a628f445c77e630e3333178a2385072d37c1962776acf0fe0c12c997cc8bd9b19772295ab0d115a1e9eb9f24fec061e074cfac836f16d6ff202d3da784b6ffd291e58592ba847d01e11bcce62d2d594318f469577ff8f242e51a10391a5dd982f8d64d8d11cfa32854f79d4fb4ae0792edcf4520fae0d15e4a53dabadaff7471c239419bd8dc76f464206319bc3bf6a492c93ecb5d2bea3eb08a2d69ba759c533c52c0eacf41a7367a8ad4a931e2fe89870ff0373585857fb0fd5d6ebbb44c8f0e2a4749df4ad2885d272004597aa941e1cfb0697b587f43be23adc8ed9b0e7aff7bd78e23c29c55e94ae8014e777bfd004ae4e38f"; 
+				
+		Logger.debug(strResult);
+		//jie√‹
+		EncryptHelper encryptHelper=new EncryptHelper();
+		try {
+			strResult=encryptHelper.decrypt(strResult);
+		} catch (SecurityException e) {
+			Logger.error(e.getMessage(),e);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Logger.debug(strResult);
+		return strResult;
+	}
+}

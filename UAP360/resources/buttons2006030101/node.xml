@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="GBK"?>
+<nodes>
+	<node corp="0001" id="2006030101">
+        <buttons>
+            <button btncode="批删除" djlx=""
+                hint="批删除" id="fi_arap_bolistDelete"
+                name="批删除" pageid="0" parentid="fi_arap_btn_DjOperation"
+                power="5" sequence="170" statusImpClass="nc.ui.arap.buttonstat.DjDelDjStatListener">
+                <flow id="fi_arap#listbatchdelete"/>
+            </button>
+        </buttons>
+    </node>
+	<node corp="0001" id="2006030101">
+        <buttons>
+            <button btncode="批保存" djlx=""
+                hint="批保存" id="fi_arap_bolistSave"
+                name="批保存" pageid="0" parentid="fi_arap_btn_DjOperation"
+                power="5" sequence="170" statusImpClass="nc.ui.arap.buttonstat.ListSaveStatlistener">
+                <flow id="fi_arap#listsave"/>
+            </button>
+        </buttons>
+    </node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="单据操作" djlx=""
+				hint="2006030102@UPP2006030102-000889" id="fi_arap_btn_DjOperation"
+				name="2006030102@UPT2006030102-000019" pageid="0&amp;1" parentid=""
+				power="5" sequence="15"
+				statusImpClass="nc.ui.arap.buttonstat.DjOperateStatListener" />
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="行操作" djlx=""
+				hint="2006030102@UPP2006030102-001105" id="fi_arap_btn_RowOperation"
+				name="2006030102@UPP2006030102-001105" pageid="1" parentid="" power="5" sequence="20"
+				statusImpClass="nc.ui.arap.buttonstat.DjRowOperateStatListener" />
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="正式打印" djlx=""
+				hint="2006030102@UPT2006030102-000032" id="on_Print_Official"
+				name="2006030102@UPT2006030102-000032" pageid="0&amp;1"
+				parentid="print_action" power="5" sequence="30"
+				statusImpClass="nc.ui.arap.buttonstat.Print_AllStatListener">
+				<flow id="fi_arap#arap_on_Print_Official" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="打印操作" djlx=""
+				hint="2006030102@UPP2006030102-000939" id="print_action"
+				name="2006030102@UPP2006030102-000939" pageid="0&amp;1" parentid=""
+				power="5" sequence="130" statusImpClass="" />
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="打印列表" djlx=""
+				hint="2006030102@UPT2006030102-000031" id="fi_arap_on_Print"
+				name="2006030102@UPT2006030102-000031" pageid="0"
+				parentid="print_action" power="5" sequence="10"
+				statusImpClass="nc.ui.arap.buttonstat.Print_OfficialPStatListener">
+				<flow id="fi_arap#arap_on_Print_PrintAction" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="打印" djlx="" hint="common@UC001-0000007"
+				id="fi_arap_on_Print_All" name="common@UC001-0000007"
+				pageid="0&amp;1" parentid="print_action" power="5" sequence="20"
+				statusImpClass="nc.ui.arap.buttonstat.Print_AllStatListener">
+				<flow id="fi_arap#arap_on_Print_All" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="取消正式打印" djlx=""
+				hint="2006030102@UPT2006030102-000033"
+				id="fi_arap_on_CancelOfficialPrint"
+				name="2006030102@UPT2006030102-000033" pageid="0&amp;1"
+				parentid="print_action" power="5" sequence="40"
+				statusImpClass="nc.ui.arap.buttonstat.Print_AllStatListener">
+				<flow id="fi_arap#arap_on_CancelOfficialPrint" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="上翻" djlx=""
+				hint="200602@UPT200602-v35-000012" id="m_boPreviousPage"
+				name="200602@UPT200602-v35-000012" pageid="0" parentid="" power="5"
+				sequence="70"
+				statusImpClass="nc.ui.arap.buttonstat.RefreshStatListener">
+				<flow id="fi_arap#arap_previous_SearchActionNor" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="下翻" djlx=""
+				hint="200602@UPT200602-v35-000013" id="m_boNextPage"
+				name="200602@UPT200602-v35-000013" pageid="0" parentid="" power="5"
+				sequence="80"
+				statusImpClass="nc.ui.arap.buttonstat.RefreshStatListener">
+				<flow id="fi_arap#arap_next_SearchActionNor" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="全选" djlx="" hint="common@UC001-0000041"
+				id="fi_arap_SelectAll" name="common@UC001-0000041" pageid="0"
+				parentid="" power="5" sequence="100"
+				statusImpClass="nc.ui.arap.buttonstat.TurnPageStatLisener">
+				<flow id="fi_arap#arap_selectedAll" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="全消" djlx="" hint="common@UC001-0000042"
+				id="fi_arap_UnSelectAll" name="common@UC001-0000042" pageid="0"
+				parentid="" power="5" sequence="110"
+				statusImpClass="nc.ui.arap.buttonstat.TurnPageStatLisener">
+				<flow id="fi_arap#arap_unSelectedAll" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="查询" djlx=""
+				hint="2006030102@UPP2006030102-000888" id="fi_arap_Query"
+				name="common@UC001-0000006" pageid="0&amp;1" parentid="" power="5"
+				sequence="10"
+				statusImpClass="nc.ui.arap.buttonstat.ShowInListListener">
+				<flow id="fi_arap#arap_showDjQuery" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="刷新" djlx="" hint="common@UC001-0000009"
+				id="fi_arap_boRefreshPage" name="common@UC001-0000009"
+				pageid="0&amp;1" parentid="" power="5" sequence="90"
+				statusImpClass="nc.ui.arap.buttonstat.RefreshStatListener">
+				<flow id="fi_arap#arap_refersh_SearchActionNor" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="辅助" djlx="" hint="common@UC001-0000036"
+				id="fi_arap_boAssistant" name="common@UC001-0000036"
+				pageid="0&amp;1" parentid="" power="5" sequence="120"
+				statusImpClass="nc.ui.arap.buttonstat.DjBoStatListener" />
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="联查" djlx=""
+				hint="2006030102@UPT2006030102-000052" id="fi_arap_boLinkQuery"
+				name="2006030102@UPT2006030102-000052" pageid="0&amp;1" parentid=""
+				power="5" sequence="140"
+				statusImpClass="nc.ui.arap.buttonstat.DjRelQryStatListener" />
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="文档管理" djlx=""
+				hint="2006030102@UPP2006030102-000835" id="fi_arap_btDocMng"
+				name="2006030102@UPP2006030102-000835" pageid="0&amp;1"
+				parentid="fi_arap_btn_DjOperation" power="5" sequence="190"
+				statusImpClass="nc.ui.arap.buttonstat.DocumentManagerStatLisener">
+				<flow id="fi_arap_dj#ShowDocumentflow" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="列表显示" djlx=""
+				hint="2006030102@UPP2006030102-000897" id="fi_arap_m_boNext"
+				name="common@UPTcommon-0101281" pageid="1" parentid=""
+				power="5" sequence="25"
+				statusImpClass="nc.ui.arap.buttonstat.BoNextStatListener">
+				<flow id="fi_arap#arap_changeTab_SearchActionNor" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="卡片显示" djlx=""
+				hint="2006030102@UPP2006030102-001111" id="fi_arap_cardShow"
+				name="common@UPTcommon-0101280" pageid="0" parentid="" power="5" sequence="90"
+				statusImpClass="nc.ui.arap.buttonstat.BoNextStatListener">
+				<flow id="fi_arap#arap_changeTab_SearchActionNor" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="交易类型" djlx=""
+				hint="2006030102@UPP2006030102-000826" id="fi_arap_boDjlx"
+				name="2006030102@UPP2006030102-001028" pageid="1" parentid=""
+				power="5" sequence="55"
+				statusImpClass="nc.ui.arap.buttonstat.BoDjlxStatListener">
+				<flow id="fi_arap#arap_showDjlx" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="暂存" djlx="" hint="2008@UPP2008-000113"
+				id="fi_arap_boTempSave" name="2008@UPP2008-000113" pageid="1"
+				parentid="" power="5" sequence="65"
+				statusImpClass="nc.ui.arap.buttonstat.DjEditStatListener">
+				<flow id="fi_arap#btn_tempsaveDefault" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="浏览" djlx=""
+				hint="2006030102@UPT2006030102-000022" id="fi_arap_m_boChangePage"
+				name="2006030102@UPT2006030102-000022" pageid="1" parentid=""
+				power="5" sequence="105"
+				statusImpClass="nc.ui.arap.buttonstat.DjBrowseStatListener" />
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="保存" djlx=""
+				hint="&quot;common@UC001-0000001" id="fi_arap_boSave"
+				name="&quot;common@UC001-0000001" pageid="1" parentid="" power="5"
+				sequence="75"
+				statusImpClass="nc.ui.arap.buttonstat.DjEditStatListener">
+				<flow id="fi_arap#btn_savedefault" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="取消" djlx="" hint="common@UC001-0000008"
+				id="fi_arap_bocancel" name="common@UC001-0000008" pageid="1"
+				parentid="" power="5" sequence="85"
+				statusImpClass="nc.ui.arap.buttonstat.DjEditStatListener">
+				<flow id="fi_arap#btn_cancelDefault" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="删除" djlx=""
+				hint="2006030102@UPP2006030102-000825" id="fi_arap_boDelDj"
+				name="common@UC001-0000039" pageid="0&amp;1"
+				parentid="fi_arap_btn_DjOperation" power="5" sequence="20"
+				statusImpClass="nc.ui.arap.buttonstat.DjDelDjStatListener">
+				<flow id="fi_arap#arap_boDelDj_Nor" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="修改" djlx="" hint="common@UC001-0000045"
+				id="fi_arap_boEdit" name="common@UC001-0000045" pageid="1"
+				parentid="fi_arap_btn_DjOperation" power="5" sequence="40"
+				statusImpClass="nc.ui.arap.buttonstat.DjModifyStatListener">
+				<flow id="fi_arap#btn_editDefault" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="增行" djlx="" hint="common@UC001-0000012"
+				id="fi_arap_boAddRow" name="common@UC001-0000012" pageid="1"
+				parentid="fi_arap_btn_RowOperation" power="5" sequence="10"
+				statusImpClass="nc.ui.arap.buttonstat.DjEditStatListener">
+				<flow id="fi_arap#btn_addRowDefault" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="删行" djlx="" hint="common@UC001-0000013"
+				id="fi_arap_boDelRow" name="common@UC001-0000013" pageid="1"
+				parentid="fi_arap_btn_RowOperation" power="5" sequence="20"
+				statusImpClass="nc.ui.arap.buttonstat.DjEditStatListener">
+				<flow id="fi_arap#btn_deleteRowDefault" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="复制行" djlx="" hint="common@UC001-0000014"
+				id="fi_arap_boCopyRow" name="common@UC001-0000014" pageid="1"
+				parentid="fi_arap_btn_RowOperation" power="5" sequence="30"
+				statusImpClass="nc.ui.arap.buttonstat.DjEditStatListener">
+				<flow id="fi_arap#btn_CopyRowDefault" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="粘贴行" djlx="" hint="common@UC001-0000015"
+				id="fi_arap_boPasteRow" name="common@UC001-0000015" pageid="1"
+				parentid="fi_arap_btn_RowOperation" power="5" sequence="40"
+				statusImpClass="nc.ui.arap.buttonstat.DjEditStatListener">
+				<flow id="fi_arap#btn_PasteRowDefault" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="插入行" djlx="" hint="common@UC001-0000016"
+				id="fi_arap_boInsertRow" name="common@UC001-0000016" pageid="1"
+				parentid="fi_arap_btn_RowOperation" power="5" sequence="50"
+				statusImpClass="nc.ui.arap.buttonstat.DjEditStatListener">
+				<flow id="fi_arap#btn_InsertRowDefault" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="粘贴行至表尾" djlx=""
+				hint="2006030102@UPP2006030102-000769" id="fi_arap_pasteLineToTail"
+				name="2006030102@UPP2006030102-000769" pageid="1"
+				parentid="fi_arap_btn_RowOperation" power="5" sequence="60"
+				statusImpClass="nc.ui.arap.buttonstat.DjEditStatListener">
+				<flow id="fi_arap#btn_pasteLineToTailDefault" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="首页" djlx=""
+				hint="2006030102@UPT2006030102-000042" id="boFirstPage"
+				name="2006030102@UPT2006030102-000042" pageid="1"
+				parentid="fi_arap_m_boChangePage" power="5" sequence="10"
+				statusImpClass="nc.ui.arap.buttonstat.TurnPageStatLisener">
+				<flow id="fi_arap#arap_firstPage" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="上一页" djlx=""
+				hint="2006030102@UPT2006030102-000043" id="boUpPage"
+				name="2006030102@UPT2006030102-000043" pageid="1"
+				parentid="fi_arap_m_boChangePage" power="5" sequence="20"
+				statusImpClass="nc.ui.arap.buttonstat.TurnPageStatLisener">
+				<flow id="fi_arap#arap_upPage" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="下一页" djlx=""
+				hint="2006030102@UPT2006030102-000044" id="boDownPage"
+				name="2006030102@UPT2006030102-000044" pageid="1"
+				parentid="fi_arap_m_boChangePage" power="5" sequence="30"
+				statusImpClass="nc.ui.arap.buttonstat.TurnPageStatLisener">
+				<flow id="fi_arap#arap_downPage" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="末页" djlx=""
+				hint="2006030102@UPT2006030102-000045" id="boLastPage"
+				name="2006030102@UPT2006030102-000045" pageid="1"
+				parentid="fi_arap_m_boChangePage" power="5" sequence="40"
+				statusImpClass="nc.ui.arap.buttonstat.TurnPageStatLisener">
+				<flow id="fi_arap#arap_lastPage" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="审批情况" djlx=""
+				hint="2006030102@UPT2006030102-000026" id="boApprove"
+				name="2006030102@UPT2006030102-000026" pageid="0&amp;1"
+				parentid="fi_arap_boLinkQuery" power="5" sequence="10"
+				statusImpClass="nc.ui.arap.buttonstat.DjApproveRelQryStatListener">
+				<flow id="fi_arap#btn_on_approvedefault" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="处理情况" djlx=""
+				hint="2006030102@UPP2006030102-000935" id="boParticularQuery"
+				name="2006030102@UPP2006030102-000935" pageid="0&amp;1"
+				parentid="fi_arap_boLinkQuery" power="5" sequence="20"
+				statusImpClass="nc.ui.arap.buttonstat.DjApproveRelQryStatListener">
+				<flow id="fi_arap#btn_on_showParticularQuerydefault" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+        <buttons>
+            <button btncode="联查银行回单" djlx=""
+                hint=""
+                id="fi_arap_yhhdLink"
+                name="联查银行回单" pageid="0&amp;1"
+                parentid="fi_arap_boLinkQuery" power="5" sequence="190" statusImpClass="nc.ui.arap.buttonstat.DjBackOrNextRelQryStatListener">
+                <flow id="fi_arap#skfk#yhhdLink"/>
+            </button>
+        </buttons>
+    </node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="联查凭证" djlx=""
+				hint="2006030102@UPT2006030102-000030" id="m_boPf"
+				name="2006030102@UPT2006030102-000030" pageid="0&amp;1"
+				parentid="fi_arap_boLinkQuery" power="5" sequence="30"
+				statusImpClass="nc.ui.arap.buttonstat.DjPfRelQryStatListener">
+				<flow id="fi_arap#btn_on_QueryPfdefault" />
+			</button>
+		</buttons>
+   </node>
+   <node corp="0001" id="2006030101">
+        <buttons>
+            <button btncode="资金计划" djlx=""
+                hint="2006030102@UPP2006030102-001110"
+                id="m_boFpImpl"
+                name="2006030102@UPP2006030102-001110" pageid="0&amp;1"
+                parentid="fi_arap_boLinkQuery" power="5" sequence="40" statusImpClass="nc.ui.arap.buttonstat.DjBudgetRelQryStatListener">
+                <flow id="fi_arap#btn_on_CmpFpdefault"/>
+            </button>
+        </buttons>
+    </node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="预算执行情况" djlx=""
+				hint="2006030102@UPP2006030102-000430" id="m_boBudgetImpl"
+				name="2006030102@UPP2006030102-000430" pageid="0&amp;1"
+				parentid="fi_arap_boLinkQuery" power="5" sequence="50"
+				statusImpClass="nc.ui.arap.buttonstat.DjBudgetRelQryStatListener">
+				<flow id="fi_arap#btn_on_Budgetdefault" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="收付款协议" djlx="" hint="common@UC000-0002200"
+				id="m_boSFK" name="common@UC000-0002200" pageid="0&amp;1"
+				parentid="fi_arap_boLinkQuery" power="5" sequence="100"
+				statusImpClass="nc.ui.arap.buttonstat.SFkStatListener">
+				<flow id="fi_arap#arap_btn_SFK" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="联查余额表" djlx=""
+				hint="common@uarappub-v35-000372" id="m_boQueryList"
+				name="common@uarappub-v35-000372" pageid="0&amp;1"
+				parentid="fi_arap_boLinkQuery" power="5" sequence="120"
+				statusImpClass="nc.ui.arap.buttonstat.DjRelQryListStatListener">
+				<flow id="fi_arap#btn_on_queryListdefault" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="联查协同单据" djlx=""
+				hint="2006030102@UPT2006030102-000109" id="m_boXtQuery"
+				name="2006030102@UPT2006030102-000109" pageid="0&amp;1"
+				parentid="fi_arap_boLinkQuery" power="5" sequence="60"
+				statusImpClass="nc.ui.arap.buttonstat.DjApproveRelQryStatListener">
+				<flow id="fi_arap#btn_on_QueryXtDjdefault" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="联查上下游单据" djlx=""
+				hint="2006030102@UPP2006030102-001104" id="fi_arap_DjRelQry"
+				name="2006030102@UPP2006030102-001104" pageid="0&amp;1"
+				parentid="fi_arap_boLinkQuery" power="5" sequence="190"
+				statusImpClass="nc.ui.arap.buttonstat.DjBackOrNextRelQryStatListener">
+				<flow id="fi_arap#if_arap#DjRelQry" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="租金" djlx=""
+				hint="2006030102@UPT2006030102-000028" id="m_boRent"
+				name="2006030102@UPT2006030102-000028" pageid="0&amp;1"
+				parentid="fi_arap_boAssistant" power="5" sequence="10"
+				statusImpClass="nc.ui.arap.buttonstat.DjRentStatListener">
+				<flow id="fi_arap#arap_on_Rent" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="项目管理" djlx=""
+				hint="2006030102@UPT2006030102-000024" id="m_boXm"
+				name="2006030102@UPT2006030102-000024" pageid="1"
+				parentid="fi_arap_boAssistant" power="5" sequence="20"
+				statusImpClass="" />
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="生成变动单" djlx=""
+				hint="200602@UPP200602-v501-000001" id="m_boCreatFABill"
+				name="200602@UPP200602-v501-000001" pageid="0&amp;1"
+				parentid="fi_arap_boAssistant" power="5" sequence="30"
+				statusImpClass="nc.ui.arap.buttonstat.DjCreatFaBillStatListener">
+				<flow id="fi_arap#arap_on_creatFABill" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="删除" djlx=""
+				hint="2006030102@UPP2006030102-000828" id="m_boDelZyx"
+				name="2006030102@UPP2006030102-000891" pageid="2" parentid=""
+				power="5" sequence="20"
+				statusImpClass="nc.ui.arap.buttonstat.ZyxEditstatforManager">
+				<flow id="fi_arap_dj#delFreeItem" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="修改" djlx=""
+				hint="2006030102@UPP2006030102-000829" id="m_boEditZyx"
+				name="2006030102@UPP2006030102-000892" pageid="2" parentid=""
+				power="5" sequence="30"
+				statusImpClass="nc.ui.arap.buttonstat.ZyxEditstatforManager">
+				<flow id="fi_arap_dj#editFreeItem" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="增行" djlx="" hint="common@UC001-0000012"
+				id="m_boAddRowZyx" name="2006030102@UPP2006030102-000893" pageid="2"
+				parentid="" power="5" sequence="40"
+				statusImpClass="nc.ui.arap.buttonstat.ZyxSaveStatforManager">
+				<flow id="fi_arap_dj#addFreeitemRow" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="删行" djlx="" hint="common@UC001-0000013"
+				id="m_boDelRowZyx" name="2006030102@UPP2006030102-000894" pageid="2"
+				parentid="" power="5" sequence="50"
+				statusImpClass="nc.ui.arap.buttonstat.ZyxSaveStatforManager">
+				<flow id="fi_arap_dj#delFreeItemRow" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="保存" djlx="" hint="common@UC001-0000001"
+				id="m_boSaveZyx" name="2006030102@UPP2006030102-000895" pageid="2"
+				parentid="" power="5" sequence="60"
+				statusImpClass="nc.ui.arap.buttonstat.ZyxSaveStatforManager">
+				<flow id="fi_arap_dj#saveFreeItem" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="取消" djlx="" hint="common@UC001-0000008"
+				id="m_boCancelZyx" name="2006030102@UPP2006030102-000896" pageid="2"
+				parentid="" power="5" sequence="70"
+				statusImpClass="nc.ui.arap.buttonstat.ZyxSaveStatforManager">
+				<flow id="fi_arap_dj#cancelFreeitem" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="打印自由项" djlx=""
+				hint="2006030102@UPT2006030102-000046" id="m_boPrintZYX"
+				name="2006030102@UPT2006030102-000046" pageid="2" parentid=""
+				power="5" sequence="90"
+				statusImpClass="nc.ui.arap.buttonstat.ZyxDefaultStatLisener">
+				<flow id="fi_arap_dj#printFreeItem" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="分配" djlx=""
+				hint="2006030102@UPT2006030102-000038" id="m_boVerify_Fp"
+				name="2006030102@UPT2006030102-000038" pageid="3" parentid=""
+				power="5" sequence="20" statusImpClass="">
+				<flow id="fi_arap#arap_onDistribute" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="核销" djlx=""
+				hint="2006030102@UPT2006030102-000039" id="m_boVerify_Hx"
+				name="2006030102@UPT2006030102-000039" pageid="3" parentid=""
+				power="5" sequence="30" statusImpClass="">
+				<flow id="fi_arap#arap_on_Verify_Hx" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="过滤" djlx=""
+				hint="2006030102@UPT2006030102-000037" id="m_boVerify_Filter"
+				name="2006030102@UPT2006030102-000037" pageid="3" parentid=""
+				power="5" sequence="40" statusImpClass="">
+				<flow id="fi_arap#arap_on_Filter" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="全选" djlx="" hint="common@UC001-0000041"
+				id="m_boVerify_All" name="common@UC001-0000041" pageid="3"
+				parentid="" power="5" sequence="50" statusImpClass="">
+				<flow id="fi_arap#arap_onAllSelected_CounteractAction" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="全消" djlx="" hint="common@UC001-0000042"
+				id="m_boVerify_N" name="common@UC001-0000042" pageid="3" parentid=""
+				power="5" sequence="60" statusImpClass="">
+				<flow id="fi_arap#arap_onAllCancel_CounteractAction" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="返回" djlx="" hint="common@UC001-0000038"
+				id="m_boVerify_GoBack" name="common@UC001-0000038" pageid="3"
+				parentid="" power="5" sequence="70" statusImpClass="">
+				<flow id="fi_arap#arap_on_VerifyGoBack" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="联查单据" djlx=""
+				hint="2006030102@UPT2006030102-000041" id="m_boVerify_ShowDj"
+				name="2006030102@UPT2006030102-000041" pageid="3" parentid=""
+				power="5" sequence="80" statusImpClass="">
+				<flow id="fi_arap#arap_onShowDocInfo" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="补差" djlx=""
+				hint="2006030102@UPT2006030102-000040" id="m_boVerify_Bc"
+				name="2006030102@UPT2006030102-000040" pageid="3" parentid=""
+				power="5" sequence="10" statusImpClass="">
+				<flow id="fi_arap#arap_on_Bc" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="确定" djlx="" hint="common@UC001-0000044"
+				id="m_boVerify_ConfirmBc" name="common@UC001-0000044" pageid="4"
+				parentid="" power="5" sequence="10" statusImpClass="">
+				<flow id="fi_arap#arap_on_confirmBc" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="取消补差" djlx="" hint="common@UC001-0000008"
+				id="m_boVerify_CancelBc" name="common@UC001-0000008" pageid="4"
+				parentid="" power="5" sequence="20" statusImpClass="">
+				<flow id="fi_arap#arap_on_CancelBc" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="增加" djlx=""
+				hint="2006030102@UPP2006030102-000827" id="m_boAddZyx"
+				name="2006030102@UPP2006030102-000890" pageid="2" parentid=""
+				power="5" sequence="10"
+				statusImpClass="nc.ui.arap.buttonstat.ZyxAddStatforManger">
+				<flow id="fi_arap_dj#addFreeItem" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+		<buttons>
+			<button btncode="窗口关闭" defaultFlag="windowClose" djlx=""
+				hint=" " id="windowClose" name=" " pageid="0&amp;1" parentid=""
+				power="5" sequence="0"
+				statusImpClass="nc.ui.arap.buttonstat.WindowCloseListener">
+				<flow id="fi_arap#windowClose_Nor" />
+			</button>
+		</buttons>
+	</node>
+	<node corp="0001" id="2006030101">
+        <buttons>
+            <button btncode="收票登记" djlx=""
+                hint="2006030102@UPP2006030102-001109"
+                id="fi_arap_boSPDJ"
+                name="2006030102@UPP2006030102-001109" pageid="0&amp;1"
+                parentid="fi_arap_boAssistant" power="5" sequence="10" statusImpClass="">
+                <flow id="fi_arap#cmp_flow_pjregister"/>
+            </button>
+        </buttons>
+    </node> 
+	<!--纪录增加u8c2.5版本,20181120-->
+	<node corp="0001" id="2006030101">
+        <buttons>
+            <button btncode="申请开票" djlx=""
+                hint="2006030102@UPP2006030102-001121"
+                id="fi_arap_boSQKP"
+                name="2006030102@UPP2006030102-001121" pageid="0&amp;1"
+                parentid="fi_arap_boAssistant" power="5" sequence="40" statusImpClass="">
+                <flow id="fi_arap#cmp_flow_applyinvoice"/>
+            </button>
+        </buttons>
+    </node> 
+    <!--纪录增加u8c3.6版本,20230310-->
+	<node corp="0001" id="2006030101">
+        <buttons>
+            <button btncode="上传金税" djlx=""
+                hint="2006030102@UPP2006030102-001122"
+                id="fi_arap_boSCJS"
+                name="2006030102@UPP2006030102-001121" pageid="0&amp;1"
+                parentid="fi_arap_boAssistant" power="5" sequence="50" statusImpClass="">
+                <flow id="fi_arap#cmp_flow_applyGTVoucher"/>
+            </button>
+        </buttons>
+    </node> 
+</nodes>

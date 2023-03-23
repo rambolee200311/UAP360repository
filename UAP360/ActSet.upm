@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE module[<!ELEMENT module (public)> 
+<!ATTLIST module name CDATA ""> 
+<!ELEMENT public (component+)>
+<!ELEMENT component (interface+,implementation+)>
+<!ATTLIST component singleton CDATA "true"> 
+<!ATTLIST component remote CDATA "true"> 
+<!ATTLIST component tx CDATA "CMT"> 
+<!ELEMENT interface ANY>
+<!ELEMENT implementation ANY>
+]>
+<module name="uap360">
+	<public>
+		<component remote="true" singleton="true" tx="NONE">
+			<interface>u8c.serverset.IGTVoucherSet</interface>
+			<implementation>u8c.server.GTVoucherSet</implementation>
+		</component>
+	</public>
+</module>

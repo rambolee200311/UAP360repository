@@ -1,0 +1,2492 @@
+<?xml version="1.0" encoding="GBK"?>
+<flows>
+    <flow desc="arap单据删除流程" id="fi_arap#btn_deldefault"
+        name="arap单据删除流程" namespace="fi_arap" startActName="delconform">
+        <actions>
+            <action id="fi_arap#dj_ArapBillDeleteConform"
+                name="delconform" namespace="fi_arap">
+                <succs>
+                    <succ condition="isConfirm" name="getArapBills"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_getbills" name="getArapBills" namespace="fi_arap">
+                <succs>
+                    <succ name="delcheckxtbill"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillDeleteCheckXt"
+                name="delcheckxtbill" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillDeleteCheckXt_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="getArapBills" refparamme="fi_arap_dj_getbills_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillDeleteCheck"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillDeleteCheck"
+                name="ArapBillDeleteCheck" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillDeleteCheck_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="getArapBills" refparamme="fi_arap_dj_getbills_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillDelete"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillDelete" name="ArapBillDelete" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillDelete_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="getArapBills" refparamme="fi_arap_dj_getbills_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="refreshui"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_RefreshUIaction" name="refreshui" namespace="fi_arap">
+                <succs>
+                    <succ name="refreshbuttonstat"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_UpdateButtonStatAction"
+                name="refreshbuttonstat" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="删除单据服务" id="fi_arap#del_dj_service"
+        name="del_dj_service" namespace="fi_arap" startActName="删除单据服务">
+        <flowinputs>
+            <input desc="" id="fi_arap_del_dj_service_param__1"
+                name="dj" type="nc.vo.ep.dj.DJZBVO"/>
+        </flowinputs>
+        <flowoutput desc="" id="fi_arap_del_dj_service12" name="outdj" type="nc.vo.ep.dj.DJZBVO">
+            <dataref attrname="outdj">
+                <ref refactname="删除单据服务" refparamme="outdj"/>
+            </dataref>
+        </flowoutput>
+        <actions>
+            <action id="fi_arap#dj_ArapBillDeleteService" name="删除单据服务" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillDeleteService_param_1">
+                        <dataref attrname="fi_arap_dj_ArapBillDeleteService_param_1">
+                            <ref refactname="fi_arap#del_dj_service" refparamme="dj"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="后台_保存单据服务" id="fi_arap#background_ArapSaveDj"
+        name="del_dj_service" namespace="fi_arap" startActName="SaveDj">
+        <flowinputs>
+            <input desc="" id="fi_arap#background_ArapSaveDj_param_1"
+                name="dj" type="nc.vo.ep.dj.DJZBVO"/>
+        </flowinputs>
+        <flowoutput desc=""
+            id="fi_arap#background_ArapSaveDjService_service"
+            name="outdj" type="nc.vo.ep.dj.DJZBVO">
+            <dataref attrname="outdj">
+                <ref refactname="SaveDj" refparamme="outdj"/>
+            </dataref>
+        </flowoutput>
+        <actions>
+            <action id="fi_arap#background_ArapSaveDjService"
+                name="SaveDj" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap#background_ArapSaveDjService_param_1">
+                        <dataref attrname="fi_arap#background_ArapSaveDjService_param_1">
+                            <ref
+                                refactname="fi_arap#background_ArapSaveDj" refparamme="dj"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="单据管理_单据保存流程" id="fi_arap#btn_savedefault"
+        name="单据管理_单据保存流程" namespace="fi_arap" startActName="ArapBillCheckPanel">
+        <actions>
+            <action id="fi_arap#dj_ArapBillCheckPanel"
+                name="ArapBillCheckPanel" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillAdjustDigit"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillAdjustDigit"
+                name="ArapBillAdjustDigit" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillConvertVO"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillConvertVO"
+                name="ArapBillConvertVO" namespace="fi_arap">
+                <succs>
+                    <succ name="CheckTraderTypeAction"/>
+                </succs>
+            </action>
+            <action id="fi_arap#CheckTraderTypeAction"
+                name="CheckTraderTypeAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_CheckTraderTypeAction_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckItem"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckItem"
+                name="ArapBillCheckItem" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillCheckItem_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckParam"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckParam"
+                name="ArapBillCheckParam" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillcheck_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="PrepareBillHead"/>
+                </succs>
+            </action>
+            
+            <action id="fi_arap#dj_PrepareBillHead"
+                name="PrepareBillHead" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_prepareBillHead_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="CheckBillHeadAction"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_CheckBillHeadAction"
+                name="CheckBillHeadAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_CheckBillHeadAction_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="PrepareBillHead" refparamme="fi_arap_dj_PrepareBillHead_output"/>
+                        </dataref>
+                    </input>
+                    <input id="fi_arap_dj_CheckBillHeadAction_param_2">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillCheckParam" refparamme="fi_arap_dj_ArapBillCheckParam_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="prepareBillBody"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_prepareBillBody"
+                name="prepareBillBody" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_prepareBillBody_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="PrepareBillHead" refparamme="fi_arap_dj_PrepareBillHead_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="isAdjustSaveAction"/>
+                </succs>
+            </action>
+            
+             <action id="fi_arap#isAdjustSaveAction" name="isAdjustSaveAction" namespace="fi_arap">
+                 <succs>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;N&quot;)" name="SaveActionNor"/>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;Y&quot;)" name="AdjustSaveAction"/>
+                </succs>
+             </action>
+             <action id="fi_arap#AdjustSaveAction" name="AdjustSaveAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_AdjustSaveAction_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="prepareBillBody" refparamme="fi_arap_dj_prepareBillBody_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>            
+            <action id="fi_arap#dj_SaveActionNor" name="SaveActionNor" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_SaveActionNor_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="prepareBillBody" refparamme="fi_arap_dj_prepareBillBody_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="单据录入_单据保存流程" id="fi_arap#btn_saveLr" name="单据录入_单据保存流程"
+        namespace="fi_arap" startActName="ArapBillCheckPanel">
+        <actions>
+            <action id="fi_arap#dj_ArapBillCheckPanel"
+                name="ArapBillCheckPanel" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillAdjustDigit"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillAdjustDigit"
+                name="ArapBillAdjustDigit" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillConvertVO"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillConvertVO"
+                name="ArapBillConvertVO" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillCheckItem"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckItem"
+                name="ArapBillCheckItem" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillCheckItem_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckParam"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckParam"
+                name="ArapBillCheckParam" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillcheck_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="PrepareBillHead"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_PrepareBillHead"
+                name="PrepareBillHead" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_prepareBillHead_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="CheckBillHeadAction"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_CheckBillHeadAction"
+                name="CheckBillHeadAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_CheckBillHeadAction_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="PrepareBillHead" refparamme="fi_arap_dj_PrepareBillHead_output"/>
+                        </dataref>
+                    </input>
+                    <input id="fi_arap_dj_CheckBillHeadAction_param_2">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillCheckParam" refparamme="fi_arap_dj_ArapBillCheckParam_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="prepareBillBody"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_prepareBillBody"
+                name="prepareBillBody" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_prepareBillBody_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="PrepareBillHead" refparamme="fi_arap_dj_PrepareBillHead_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="SaveActionLr"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_SaveActionLr" name="SaveActionLr" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_SaveActionLr_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="prepareBillBody" refparamme="fi_arap_dj_prepareBillBody_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="期初余额_单据保存流程" id="fi_arap#btn_saveQc" name="期初余额_单据保存流程"
+        namespace="fi_arap" startActName="ArapBillCheckPanel">
+        <actions>
+            <action id="fi_arap#dj_ArapBillCheckPanel"
+                name="ArapBillCheckPanel" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillAdjustDigit"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillAdjustDigit"
+                name="ArapBillAdjustDigit" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillConvertVO"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillConvertVO"
+                name="ArapBillConvertVO" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillCheckItem"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckItem"
+                name="ArapBillCheckItem" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillCheckItem_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckParam"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckParam"
+                name="ArapBillCheckParam" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillcheck_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="PrepareBillHead"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_PrepareBillHead"
+                name="PrepareBillHead" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_prepareBillHead_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="CheckBillHeadAction"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_CheckBillHeadAction"
+                name="CheckBillHeadAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_CheckBillHeadAction_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="PrepareBillHead" refparamme="fi_arap_dj_PrepareBillHead_output"/>
+                        </dataref>
+                    </input>
+                    <input id="fi_arap_dj_CheckBillHeadAction_param_2">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillCheckParam" refparamme="fi_arap_dj_ArapBillCheckParam_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="prepareBillBody"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_prepareBillBody"
+                name="prepareBillBody" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_prepareBillBody_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="PrepareBillHead" refparamme="fi_arap_dj_PrepareBillHead_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="isAdjustSaveAction"/>
+                </succs>
+            </action>
+             <action id="fi_arap#isAdjustSaveAction" name="isAdjustSaveAction" namespace="fi_arap">
+                 <succs>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;N&quot;)" name="SaveActionQc"/>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;Y&quot;)" name="AdjustSaveAction"/>
+                </succs>
+             </action>
+             <action id="fi_arap#AdjustSaveAction" name="AdjustSaveAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_AdjustSaveAction_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="prepareBillBody" refparamme="fi_arap_dj_prepareBillBody_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action> 
+            <action id="fi_arap#dj_SaveActionQc" name="SaveActionQc" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_SaveActionQc_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="prepareBillBody" refparamme="fi_arap_dj_prepareBillBody_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="签字确认_单据保存流程" id="fi_arap#btn_saveSn" name="签字确认_单据保存流程"
+        namespace="fi_arap" startActName="ArapBillCheckPanel">
+        <actions>
+            <action id="fi_arap#dj_ArapBillCheckPanel"
+                name="ArapBillCheckPanel" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillAdjustDigit"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillAdjustDigit"
+                name="ArapBillAdjustDigit" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillConvertVO"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillConvertVO"
+                name="ArapBillConvertVO" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillCheckItem"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckItem"
+                name="ArapBillCheckItem" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillCheckItem_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckParam"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckParam"
+                name="ArapBillCheckParam" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillcheck_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckIsTempSave"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckIsTempSave"
+                name="ArapBillCheckIsTempSave" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillIsTempSave_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                    <input id="fi_arap_dj_ArapBillIsTempSave_param_2">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillCheckParam" refparamme="fi_arap_dj_ArapBillCheckParam_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="PrepareBillHead"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_PrepareBillHead"
+                name="PrepareBillHead" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_prepareBillHead_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="CheckBillHeadAction"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_CheckBillHeadAction"
+                name="CheckBillHeadAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_CheckBillHeadAction_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="PrepareBillHead" refparamme="fi_arap_dj_PrepareBillHead_output"/>
+                        </dataref>
+                    </input>
+                    <input id="fi_arap_dj_CheckBillHeadAction_param_2">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillCheckParam" refparamme="fi_arap_dj_ArapBillCheckParam_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="prepareBillBody"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_prepareBillBody"
+                name="prepareBillBody" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_prepareBillBody_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="PrepareBillHead" refparamme="fi_arap_dj_PrepareBillHead_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckVO"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckVO"
+                name="ArapBillCheckVO" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillCheckVO_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="prepareBillBody" refparamme="fi_arap_dj_prepareBillBody_output"/>
+                        </dataref>
+                    </input>
+                    <input id="fi_arap_dj_ArapBillCheckVO_param_2">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillCheckParam" refparamme="fi_arap_dj_ArapBillCheckParam_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="SaveActionSn"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_SaveActionSn" name="SaveActionSn" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_SaveActionSn_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="prepareBillBody" refparamme="fi_arap_dj_prepareBillBody_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="事项审批单_单据保存流程" id="fi_arap#btn_saveSs"
+        name="事项审批单_单据保存流程" namespace="fi_arap" startActName="ArapBillCheckPanel">
+        <actions>
+            <action id="fi_arap#dj_ArapBillCheckPanel"
+                name="ArapBillCheckPanel" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillAdjustDigit"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillAdjustDigit"
+                name="ArapBillAdjustDigit" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillConvertVO"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillConvertVO"
+                name="ArapBillConvertVO" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillCheckItem"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckItem"
+                name="ArapBillCheckItem" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillCheckItem_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckParam"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckParam"
+                name="ArapBillCheckParam" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillcheck_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckIsTempSave"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckIsTempSave"
+                name="ArapBillCheckIsTempSave" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillIsTempSave_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                    <input id="fi_arap_dj_ArapBillIsTempSave_param_2">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillCheckParam" refparamme="fi_arap_dj_ArapBillCheckParam_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="PrepareBillHead"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_PrepareBillHead"
+                name="PrepareBillHead" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_prepareBillHead_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="CheckBillHeadAction"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_CheckBillHeadAction"
+                name="CheckBillHeadAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_CheckBillHeadAction_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="PrepareBillHead" refparamme="fi_arap_dj_PrepareBillHead_output"/>
+                        </dataref>
+                    </input>
+                    <input id="fi_arap_dj_CheckBillHeadAction_param_2">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillCheckParam" refparamme="fi_arap_dj_ArapBillCheckParam_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="prepareBillBody"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_prepareBillBody"
+                name="prepareBillBody" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_prepareBillBody_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="PrepareBillHead" refparamme="fi_arap_dj_PrepareBillHead_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckVO"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckVO"
+                name="ArapBillCheckVO" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillCheckVO_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="prepareBillBody" refparamme="fi_arap_dj_prepareBillBody_output"/>
+                        </dataref>
+                    </input>
+                    <input id="fi_arap_dj_ArapBillCheckVO_param_2">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillCheckParam" refparamme="fi_arap_dj_ArapBillCheckParam_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="SaveActionSs"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_SaveActionSs" name="SaveActionSs" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_SaveActionSs_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="prepareBillBody" refparamme="fi_arap_dj_prepareBillBody_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="预提单_单据保存流程" id="fi_arap#btn_saveTb" name="预提单_单据保存流程"
+        namespace="fi_arap" startActName="ArapBillCheckPanel">
+        <actions>
+            <action id="fi_arap#dj_ArapBillCheckPanel"
+                name="ArapBillCheckPanel" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillAdjustDigit"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillAdjustDigit"
+                name="ArapBillAdjustDigit" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillConvertVO"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillConvertVO"
+                name="ArapBillConvertVO" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillCheckItem"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckItem"
+                name="ArapBillCheckItem" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillCheckItem_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckParam"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckParam"
+                name="ArapBillCheckParam" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillcheck_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckIsTempSave"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckIsTempSave"
+                name="ArapBillCheckIsTempSave" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillIsTempSave_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                    <input id="fi_arap_dj_ArapBillIsTempSave_param_2">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillCheckParam" refparamme="fi_arap_dj_ArapBillCheckParam_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="PrepareBillHead"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_PrepareBillHead"
+                name="PrepareBillHead" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_prepareBillHead_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="CheckBillHeadAction"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_CheckBillHeadAction"
+                name="CheckBillHeadAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_CheckBillHeadAction_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="PrepareBillHead" refparamme="fi_arap_dj_PrepareBillHead_output"/>
+                        </dataref>
+                    </input>
+                    <input id="fi_arap_dj_CheckBillHeadAction_param_2">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillCheckParam" refparamme="fi_arap_dj_ArapBillCheckParam_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="prepareBillBody"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_prepareBillBody"
+                name="prepareBillBody" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_prepareBillBody_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="PrepareBillHead" refparamme="fi_arap_dj_PrepareBillHead_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckVO"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckVO"
+                name="ArapBillCheckVO" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillCheckVO_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="prepareBillBody" refparamme="fi_arap_dj_prepareBillBody_output"/>
+                        </dataref>
+                    </input>
+                    <input id="fi_arap_dj_ArapBillCheckVO_param_2">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillCheckParam" refparamme="fi_arap_dj_ArapBillCheckParam_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="SaveActionTb"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_SaveActionTb" name="SaveActionTb" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_SaveActionTb_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="prepareBillBody" refparamme="fi_arap_dj_prepareBillBody_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="收付款" id="fi_arap#arap_btn_SFK" name="收付款"
+        namespace="fi_arap" startActName="sfk">
+        <actions>
+            <action id="fi_arap#on_SFK" name="sfk" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="打印" id="fi_arap#arap_btn_on_Print" name="打印"
+        namespace="fi_arap" startActName="打印">
+        <actions>
+            <action id="fi_arap#on_Print" name="打印" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="批打印" id="fi_arap#arap_on_PrintLr" name="批打印"
+        namespace="fi_arap" startActName="批打印">
+        <actions>
+            <action id="fi_arap#on_PrintLr" name="批打印" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="打印全部" id="fi_arap#arap_on_Print_All" name="打印全部"
+        namespace="fi_arap" startActName="打印全部">
+        <actions>
+            <action id="fi_arap#on_Print_All" name="打印全部" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="正式打印" id="fi_arap#arap_on_Print_Official" name="正式打印"
+        namespace="fi_arap" startActName="正式打印">
+        <actions>
+            <action id="fi_arap#on_Print_Official" name="正式打印" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="取消正式打印" id="fi_arap#arap_on_CancelOfficialPrint"
+        name="取消正式打印" namespace="fi_arap" startActName="取消正式打印">
+        <actions>
+            <action id="fi_arap#on_CancelOfficialPrint" name="取消正式打印" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="最后一页" id="fi_arap#arap_lastPage" name="最后一页"
+        namespace="fi_arap" startActName="最后一页">
+        <actions>
+            <action id="fi_arap#lastPage" name="最后一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="首张" id="fi_arap#arap_firstPage" name="首张"
+        namespace="fi_arap" startActName="首张">
+        <actions>
+            <action id="fi_arap#firstPage" name="首张" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="上一页" id="fi_arap#arap_upPage" name="上一页"
+        namespace="fi_arap" startActName="上一页">
+        <actions>
+            <action id="fi_arap#upPage" name="上一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="下一页" id="fi_arap#arap_downPage" name="下一页"
+        namespace="fi_arap" startActName="下一页">
+        <actions>
+            <action id="fi_arap#downPage" name="下一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="全选" id="fi_arap#arap_selectedAll" name="全选"
+        namespace="fi_arap" startActName="全选">
+        <actions>
+            <action id="fi_arap#selectedAll" name="全选" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="全消" id="fi_arap#arap_unSelectedAll" name="全消"
+        namespace="fi_arap" startActName="全不选">
+        <actions>
+            <action id="fi_arap#unSelectedAll" name="全不选" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="拆分事项审批单表体行" id="fi_arap#onSplitSSItem" name="拆分事项审批单表体行"
+        namespace="fi_arap" startActName="拆分事项审批单表体行">
+        <actions>
+            <action id="fi_arap#onSplitSSItem_SSSplitAction"
+                name="拆分事项审批单表体行" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据管理_查询单据" id="fi_arap#arap_showDjQuery"
+        name="单据管理_查询单据" namespace="fi_arap" startActName="单据管理_查询单据">
+        <actions>
+            <action id="fi_arap#showDjQuery_SearchActionNor"
+                name="单据管理_查询单据" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="打印" id="fi_arap#arap_on_Print_PrintAction" name="打印"
+        namespace="fi_arap" startActName="打印">
+        <actions>
+            <action id="fi_arap#on_Print" name="打印" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="费用结算_查询单据" id="fi_arap#arap_showDjQuery_SearchActionPay"
+        name="费用结算_查询单据" namespace="fi_arap" startActName="费用结算_查询单据">
+        <actions>
+            <action id="fi_arap#showDjQuery_SearchActionPay"
+                name="费用结算_查询单据" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据确认_查询单据" id="fi_arap#arap_showDjQuery_SearchActionQr"
+        name="单据确认_查询单据" namespace="fi_arap" startActName="单据确认_查询单据">
+        <actions>
+            <action id="fi_arap#showDjQuery_SearchActionQr"
+                name="单据确认_查询单据" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据查询_查询单据" id="fi_arap#arap_showDjQuery_SearchActionQry"
+        name="单据查询_查询单据" namespace="fi_arap" startActName="单据查询_查询单据">
+        <actions>
+            <action id="fi_arap#showDjQuery_SearchActionQry"
+                name="单据查询_查询单据" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="签字确认_查询单据" id="fi_arap#arap_showDjQuery_SearchActionSn"
+        name="签字确认_查询单据" namespace="fi_arap" startActName="签字确认_查询单据">
+        <actions>
+            <action id="fi_arap#showDjQuery_SearchActionSn"
+                name="签字确认_查询单据" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="事项审批单_查询单据" id="fi_arap#arap_showDjQuery_SearchActionSs"
+        name="事项审批单_查询单据" namespace="fi_arap" startActName="事项审批单_查询单据">
+        <actions>
+            <action id="fi_arap#showDjQuery_SearchActionSs"
+                name="事项审批单_查询单据" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="预提单_查询单据" id="fi_arap#arap_showDjQuery_SearchActionTb"
+        name="预提单_查询单据" namespace="fi_arap" startActName="预提单_查询单据">
+        <actions>
+            <action id="fi_arap#showDjQuery_SearchActionTb"
+                name="预提单_查询单据" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="网上转账_查询单据" id="fi_arap#arap_showDjQuery_SearchActionWz"
+        name="网上转账_查询单据" namespace="fi_arap" startActName="网上转账_查询单据">
+        <actions>
+            <action id="fi_arap#showDjQuery_SearchActionWz"
+                name="网上转账_查询单据" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="预提单_改变页签(单据和列表之间) "
+        id="fi_arap#arap_changeTab_SearchActionTb"
+        name="预提单_改变页签(单据和列表之间) " namespace="fi_arap" startActName="预提单_改变页签(单据和列表之间) ">
+        <actions>
+            <action id="fi_arap#changeTab_SearchActionTb"
+                name="预提单_改变页签(单据和列表之间) " namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据管理_改变页签(单据和列表之间) "
+        id="fi_arap#arap_changeTab_SearchActionNor"
+        name="单据管理_改变页签(单据和列表之间) " namespace="fi_arap" startActName="单据管理_改变页签(单据和列表之间) ">
+        <actions>
+            <action id="fi_arap#changeTab_SearchActionNor"
+                name="单据管理_改变页签(单据和列表之间) " namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="费用结算_改变页签(单据和列表之间) "
+        id="fi_arap#arap_changeTab_SearchActionPay"
+        name="费用结算_改变页签(单据和列表之间) " namespace="fi_arap" startActName="费用结算_改变页签(单据和列表之间) ">
+        <actions>
+            <action id="fi_arap#changeTab_SearchActionPay"
+                name="费用结算_改变页签(单据和列表之间) " namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据确认_改变页签(单据和列表之间)"
+        id="fi_arap#arap_changeTab_SearchActionQr"
+        name="单据确认_改变页签(单据和列表之间)" namespace="fi_arap" startActName="单据确认_改变页签(单据和列表之间)">
+        <actions>
+            <action id="fi_arap#changeTab_SearchActionQr"
+                name="单据确认_改变页签(单据和列表之间)" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="事项审批单取消行关闭" id="fi_arap#on_Cancel_Close_SSRow"
+        name="事项审批单取消行关闭" namespace="fi_arap" startActName="事项审批单取消行关闭">
+        <actions>
+            <action id="fi_arap#on_Cancel_Close_SSRow" name="事项审批单取消行关闭" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="事项审批单行关闭" id="fi_arap#on_Close_SSRow" name="事项审批单行关闭"
+        namespace="fi_arap" startActName="事项审批单行关闭">
+        <actions>
+            <action id="fi_arap#on_Close_SSRow" name="事项审批单行关闭" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="事项审批单取消关闭" id="fi_arap#on_Cancel_Close_SS"
+        name="事项审批单取消关闭" namespace="fi_arap" startActName="事项审批单取消关闭">
+        <actions>
+            <action id="fi_arap#on_Cancel_Close_SS" name="事项审批单取消关闭" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="关闭事项审批单" id="fi_arap#on_Close_SS" name="关闭事项审批单"
+        namespace="fi_arap" startActName="on_Close_SS">
+        <actions>
+            <action id="fi_arap#on_Close_SS" name="on_Close_SS" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc=" 租金" id="fi_arap#arap_on_Rent" name=" 租金"
+        namespace="fi_arap" startActName=" 租金">
+        <actions>
+            <action id="fi_arap#on_Rent_AffiliatedAction" name=" 租金" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="on_creatFABill" id="fi_arap#arap_on_creatFABill"
+        name="on_creatFABill" namespace="fi_arap" startActName="on_creatFABill">
+        <actions>
+            <action id="fi_arap#on_creatFABill_AffiliatedAction"
+                name="on_creatFABill" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="补差" id="fi_arap#arap_on_Bc" name="补差"
+        namespace="fi_arap" startActName="补差">
+        <actions>
+            <action id="fi_arap#on_Bc_CounterActAction" name="补差" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="分配" id="fi_arap#arap_onDistribute" name="分配"
+        namespace="fi_arap" startActName="onDistribute">
+        <actions>
+            <action id="fi_arap#onDistribute_VerifyInTimePanel" name="onDistribute"/>
+        </actions>
+    </flow>
+    <flow desc="核销" id="fi_arap#arap_on_Verify_Hx" name="核销"
+        namespace="fi_arap" startActName="核销">
+        <actions>
+            <action id="fi_arap#on_Verify_Hx_CounterActAction" name="核销" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="按表体行核销" id="fi_arap#arap_on_VerifySearch" name="按表体行核销"
+        namespace="fi_arap" startActName="按表体行核销">
+        <actions>
+            <action id="fi_arap#on_VerifySearch_CounterActAction"
+                name="按表体行核销" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="过滤" id="fi_arap#arap_on_Filter" name="过滤"
+        namespace="fi_arap" startActName="过滤">
+        <actions>
+            <action id="fi_arap#on_Filter_CounterActAction" name="过滤" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="按照单据核销，counteract the the whole bill"
+        id="fi_arap#arap_on_VerifySearchWholeBill"
+        name="on_VerifySearchWholeBill" namespace="fi_arap" startActName="按照单据核销，counteract the the whole b">
+        <actions>
+            <action
+                id="fi_arap#on_VerifySearchWholeBill_CounterActActio"
+                name="按照单据核销，counteract the the whole b" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="全选_CounteractAction"
+        id="fi_arap#arap_onAllSelected_CounteractAction"
+        name="全选_CounteractAction" namespace="fi_arap" startActName="onAllSelected">
+        <actions>
+            <action id="fi_arap#onAllSelected_VerifyInTimePanel" name="onAllSelected"/>
+        </actions>
+    </flow>
+    <flow desc="全消_CounteractAction"
+        id="fi_arap#arap_onAllCancel_CounteractAction"
+        name="全消_CounteractAction" namespace="fi_arap" startActName="onAllCancel">
+        <actions>
+            <action id="fi_arap#onAllCancel_VerifyInTimePanel" name="onAllCancel"/>
+        </actions>
+    </flow>
+    <flow desc="即时核销返回" id="fi_arap#arap_on_VerifyGoBack" name="即时核销返回"
+        namespace="fi_arap" startActName="即时核销返回">
+        <actions>
+            <action id="fi_arap#on_VerifyGoBack_CounterActAction"
+                name="即时核销返回" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="on_confirmBc" id="fi_arap#arap_on_confirmBc"
+        name="on_confirmBc" namespace="fi_arap" startActName="on_confirmBc">
+        <actions>
+            <action id="fi_arap#on_confirmBc_CounterActAction"
+                name="on_confirmBc" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="取消补差" id="fi_arap#arap_on_CancelBc" name="取消补差"
+        namespace="fi_arap" startActName="取消补差">
+        <actions>
+            <action id="fi_arap#on_CancelBc_CounterActAction"
+                name="取消补差" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="联查单据" id="fi_arap#arap_onShowDocInfo" name="联查单据"
+        namespace="fi_arap" startActName="onShowDocInfo">
+        <actions>
+            <action id="fi_arap#onShowDocInfo_VerifyInTimePanel" name="onShowDocInfo"/>
+        </actions>
+    </flow>
+    <flow desc="切换到即时核销" id="fi_arap#arap_on_Verify" name="切换到即时核销"
+        namespace="fi_arap" startActName="切换到即时核销">
+        <actions>
+            <action id="fi_arap#on_Verify_CounterActAction"
+                name="切换到即时核销" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="租金" id="fi_arap#arap_onArapToFts" name="租金"
+        namespace="fi_arap" startActName="租金">
+        <actions>
+            <action id="fi_arap#onArapToFts_FTSPaymentAction" name="租金" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="m_boWTSK" id="fi_arap#arap_onFTSRecive" name="m_boWTSK"
+        namespace="fi_arap" startActName="m_boWTSK">
+        <actions>
+            <action id="fi_arap#onFTSRecive_FTSPaymentAction"
+                name="m_boWTSK" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="挂起" id="fi_arap#arap_on_Pausetransact" name="挂起"
+        namespace="fi_arap" startActName="挂起">
+        <actions>
+            <action id="fi_arap#on_Pausetransact_SuspendAction"
+                name="挂起" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="取消挂起" id="fi_arap#arap_on_UnPausetransact" name="取消挂起"
+        namespace="fi_arap" startActName="取消挂起">
+        <actions>
+            <action id="fi_arap#on_UnPausetransact_SuspendAction"
+                name="取消挂起" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="to generate proceeding bill refering YuTi bill items"
+        id="fi_arap#arap_on_NewSSByTBYT"
+        name="to generate proceeding bill refering YuT"
+        namespace="fi_arap" startActName="to generate proceeding bill refering YuT">
+        <actions>
+            <action id="fi_arap#on_NewSSByTBYT_SSReferYuTiAction"
+                name="to generate proceeding bill refering YuT" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="参照预算生成预提单" id="fi_arap#arap_on_NewSSByTB"
+        name="参照预算生成预提单" namespace="fi_arap" startActName="参照预算生成预提单">
+        <actions>
+            <action id="fi_arap#on_NewSSByTB_SSReferYuTiAction"
+                name="参照预算生成预提单" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="参照预算生成事项审批单_SSReferBudgetAction"
+        id="fi_arap#arap_on_NewSSByTB_SSReferBudgetAction"
+        name="参照预算生成事项审批单" namespace="fi_arap" startActName="参照预算生成事项审批单">
+        <actions>
+            <action id="fi_arap#on_NewSSByTB_SSReferBudgetAction"
+                name="参照预算生成事项审批单" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="显示单据类型" id="fi_arap#arap_showDjlx" name="显示单据类型"
+        namespace="fi_arap" startActName="显示单据类型">
+        <actions>
+            <action id="fi_arap#showDjlx" name="显示单据类型" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="显示第一面的另一个模块" id="fi_arap#backRelatedDj"
+        name="显示第一面的另一个模块" namespace="fi_arap" startActName="显示第一面的另一个模块">
+        <actions>
+            <action id="fi_arap#backRelatedDj" name="显示第一面的另一个模块" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据查询_改变页签(单据和列表之间) "
+        id="fi_arap#arap_changeTab_SearchActionQry"
+        name="单据查询_改变页签(单据和列表之间) " namespace="fi_arap" startActName="单据查询_改变页签(单据和列表之间) ">
+        <actions>
+            <action id="fi_arap#changeTab_SearchActionQry"
+                name="单据查询_改变页签(单据和列表之间) " namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="签字确认_改变页签(单据和列表之间) "
+        id="fi_arap#arap_changeTab_SearchActionSn"
+        name="签字确认_改变页签(单据和列表之间) " namespace="fi_arap" startActName="签字确认_改变页签(单据和列表之间) ">
+        <actions>
+            <action id="fi_arap#changeTab_SearchActionSn"
+                name="签字确认_改变页签(单据和列表之间) " namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="事项审批单_改变页签(单据和列表之间) "
+        id="fi_arap#arap_changeTab_SearchActionSs"
+        name="事项审批单_改变页签(单据和列表之间) " namespace="fi_arap" startActName="事项审批单_改变页签(单据和列表之间) ">
+        <actions>
+            <action id="fi_arap#changeTab_SearchActionSs"
+                name="事项审批单_改变页签(单据和列表之间) " namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="网上转账_改变页签(单据和列表之间) "
+        id="fi_arap#arap_changeTab_SearchActionWz"
+        name="网上转账_改变页签(单据和列表之间) " namespace="fi_arap" startActName="网上转账_改变页签(单据和列表之间) ">
+        <actions>
+            <action id="fi_arap#changeTab_SearchActionWz"
+                name="网上转账_改变页签(单据和列表之间) " namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="网上转账_上一页" id="fi_arap#arap_previous_SearchActionWz"
+        name="网上转账_上一页" namespace="fi_arap" startActName="网上转账_上一页">
+        <actions>
+            <action id="fi_arap#previous_SearchActionWz" name="网上转账_上一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="预提单_上一页" id="fi_arap#arap_previous_SearchActionTb"
+        name="预提单_上一页" namespace="fi_arap" startActName="预提单_上一页">
+        <actions>
+            <action id="fi_arap#previous_SearchActionTb" name="预提单_上一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="事项审批单_上一页" id="fi_arap#arap_previous_SearchActionSs"
+        name="事项审批单_上一页" namespace="fi_arap" startActName="事项审批单_上一页">
+        <actions>
+            <action id="fi_arap#previous_SearchActionSs"
+                name="事项审批单_上一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="签字确认_上一页" id="fi_arap#arap_previous_SearchActionSn"
+        name="签字确认_上一页" namespace="fi_arap" startActName="签字确认_上一页">
+        <actions>
+            <action id="fi_arap#previous_SearchActionSn" name="签字确认_上一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据查询_上一页" id="fi_arap#arap_previous_SearchActionQry"
+        name="单据查询_上一页" namespace="fi_arap" startActName="单据查询_上一页">
+        <actions>
+            <action id="fi_arap#previous_SearchActionQry"
+                name="单据查询_上一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据确认_上一页" id="fi_arap#arap_previous_SearchActionQr"
+        name="单据确认_上一页" namespace="fi_arap" startActName="单据确认_上一页">
+        <actions>
+            <action id="fi_arap#previous_SearchActionQr" name="单据确认_上一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="费用结算_上一页" id="fi_arap#arap_previous_SearchActionPay"
+        name="费用结算_上一页" namespace="fi_arap" startActName="费用结算_上一页">
+        <actions>
+            <action id="fi_arap#previous_SearchActionPay"
+                name="费用结算_上一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据管理_上一页" id="fi_arap#arap_previous_SearchActionNor"
+        name="单据管理_上一页" namespace="fi_arap" startActName="单据管理_上一页">
+        <actions>
+            <action id="fi_arap#previous_SearchActionNor"
+                name="单据管理_上一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据管理_下一页" id="fi_arap#arap_next_SearchActionNor"
+        name="单据管理_下一页" namespace="fi_arap" startActName="单据管理_下一页">
+        <actions>
+            <action id="fi_arap#next_SearchActionNor" name="单据管理_下一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="费用结算_下一页" id="fi_arap#arap_next_SearchActionPay"
+        name="费用结算_下一页" namespace="fi_arap" startActName="费用结算_下一页">
+        <actions>
+            <action id="fi_arap#next_SearchActionPay" name="费用结算_下一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据查询_下一页" id="fi_arap#arap_next_SearchActionQry"
+        name="单据查询_下一页" namespace="fi_arap" startActName="单据查询_下一页">
+        <actions>
+            <action id="fi_arap#next_SearchActionQry" name="单据查询_下一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据确认_下一页" id="fi_arap#arap_next_SearchActionQr"
+        name="单据确认_下一页" namespace="fi_arap" startActName="单据确认_下一页">
+        <actions>
+            <action id="fi_arap#next_SearchActionQr" name="单据确认_下一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="签字确认_下一页" id="fi_arap#arap_next_SearchActionSn"
+        name="签字确认_下一页" namespace="fi_arap" startActName="签字确认_下一页">
+        <actions>
+            <action id="fi_arap#next_SearchActionSn" name="签字确认_下一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="事项审批单_下一页" id="fi_arap#arap_next_SearchActionSs"
+        name="事项审批单_下一页" namespace="fi_arap" startActName="事项审批单_下一页">
+        <actions>
+            <action id="fi_arap#next_SearchActionSs" name="事项审批单_下一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="预提单_下一页" id="fi_arap#arap_next_SearchActionTb"
+        name="预提单_下一页" namespace="fi_arap" startActName="预提单_下一页">
+        <actions>
+            <action id="fi_arap#next_SearchActionTb" name="预提单_下一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="网上转账_下一页" id="fi_arap#arap_next_SearchActionWz"
+        name="网上转账_下一页" namespace="fi_arap" startActName="网上转账_下一页">
+        <actions>
+            <action id="fi_arap#next_SearchActionWz" name="网上转账_下一页" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据管理_刷新" id="fi_arap#arap_refersh_SearchActionNor"
+        name="单据管理_刷新" namespace="fi_arap" startActName="单据管理_刷新">
+        <actions>
+            <action id="fi_arap#refersh_SearchActionNor" name="单据管理_刷新" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="费用结算_刷新" id="fi_arap#arap_refersh_SearchActionPay"
+        name="费用结算_刷新" namespace="fi_arap" startActName="费用结算_刷新">
+        <actions>
+            <action id="fi_arap#refersh_SearchActionPay" name="费用结算_刷新" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据确认_刷新" id="fi_arap#arap_refersh_SearchActionQr"
+        name="单据确认_刷新" namespace="fi_arap" startActName="单据确认_刷新">
+        <actions>
+            <action id="fi_arap#refersh_SearchActionQr" name="单据确认_刷新" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据查询_刷新" id="fi_arap#arap_refersh_SearchActionQry"
+        name="单据查询_刷新" namespace="fi_arap" startActName="单据查询_刷新">
+        <actions>
+            <action id="fi_arap#refersh_SearchActionQry" name="单据查询_刷新" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="签字确认_刷新" id="fi_arap#arap_refersh_SearchActionSn"
+        name="签字确认_刷新" namespace="fi_arap" startActName="签字确认_刷新">
+        <actions>
+            <action id="fi_arap#refersh_SearchActionSn" name="签字确认_刷新" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="事项审批单_刷新" id="fi_arap#arap_refersh_SearchActionSs"
+        name="事项审批单_刷新" namespace="fi_arap" startActName="事项审批单_刷新">
+        <actions>
+            <action id="fi_arap#refersh_SearchActionSs" name="事项审批单_刷新" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="预提单_刷新" id="fi_arap#arap_refersh_SearchActionTb"
+        name="预提单_刷新" namespace="fi_arap" startActName="预提单_刷新">
+        <actions>
+            <action id="fi_arap#refersh_SearchActionTb" name="预提单_刷新" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="网上转账_刷新" id="fi_arap#arap_refersh_SearchActionWz"
+        name="网上转账_刷新" namespace="fi_arap" startActName="网上转账_刷新">
+        <actions>
+            <action id="fi_arap#refersh_SearchActionWz" name="网上转账_刷新" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据确认" id="fi_arap#btn_confirm" name="单据确认"
+        namespace="fi_arap" startActName="确认操作">
+        <actions>
+            <action id="fi_arap#onConfirmBill" name="确认操作" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="取消确认流程" id="fi_arap#onCancelConfirm" name="取消确认"
+        namespace="fi_arap" startActName="cancelconfirm">
+        <actions>
+            <action id="fi_arap#onCancelConfirm" name="cancelconfirm" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="签字确认流程" id="fi_arap#signconfirmflow" name="签字确认流程"
+        namespace="fi_arap" startActName="signconfirm">
+        <actions>
+            <action id="fi_arap#signconfirm" name="signconfirm" namespace="fi_arap">
+                <succs>
+                    <succ name="setSxbzValueAfterYhqrSingConfirm"/>
+                </succs>
+            </action>
+            <action id="fi_arap#setSxbzValueAfterYhqrSingConfirm"
+                name="setSxbzValueAfterYhqrSingConfirm" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_setSxbzValueAfterYhqrSingConfirm_param_1">
+                        <dataref attrname="fi_arap_setSxbzValueAfterYhqrSingConfirm_param_1">
+                            <ref refactname="signconfirm" refparamme="fi_arap_signconfirm_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="刷新ui"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_RefreshUIaction" name="刷新ui" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="取消签字确认" id="fi_arap#cancelSignconfirmflow" name="取消签字确认"
+        namespace="fi_arap" startActName="取消签字确认">
+        <actions>
+            <action id="fi_arap#cancelSignconfirm" name="取消签字确认" namespace="fi_arap">
+                <succs>
+                    <succ name="setSxbzValueAfterUnYhqrSingConfirm"/>
+                </succs>
+            </action>
+            <action id="fi_arap#setSxbzValueAfterUnYhqrSingConfirm"
+                name="setSxbzValueAfterUnYhqrSingConfirm" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_setSxbzValueAfterUnYhqrSingConfirm_param_1">
+                        <dataref attrname="fi_arap_setSxbzValueAfterUnYhqrSingConfirm_param_1">
+                            <ref refactname="取消签字确认" refparamme="fi_arap_cancelSignconfirm_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="刷新ui"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_RefreshUIaction" name="刷新ui" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据前台反审核列表流程" id="fi_arap#unshenhe_LB_Display"
+        name="unshenhe_LB_Display" namespace="fi_arap" startActName="unshenhe_LB">
+        <actions>
+            <action id="fi_arap#dj_UnAuditAction_unshenhe_LB_Display"
+                name="unshenhe_LB" namespace="fi_arap">
+                <succs>
+                    <succ name="setSxbzValueInUnAuditAction"/>
+                </succs>
+            </action>
+            <action id="fi_arap#setSxbzValueInUnAuditAction"
+                name="setSxbzValueInUnAuditAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_setSxbzValueInUnAuditAction_param_1">
+                        <dataref attrname="fi_arap_setSxbzValueInUnAuditAction_param_1">
+                            <ref refactname="unshenhe_LB" refparamme="fi_arap_dj_UnAuditAction_unauditDisplay_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="单据后台反审核列表流程" id="fi_arap#unshenhe_LB_s_background"
+        name="unshenhe_LB_s_background" namespace="fi_arap" startActName="unshenhe_LB_s">
+        <actions>
+            <action id="fi_arap#dj_UnAuditAction_unshenhe_LB_Display"
+                name="unshenhe_LB_s" namespace="fi_arap">
+                <succs>
+                    <succ name="setSxbzValueInUnAuditAction"/>
+                </succs>
+            </action>
+            <action id="fi_arap#setSxbzValueInUnAuditAction"
+                name="setSxbzValueInUnAuditAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_setSxbzValueInUnAuditAction_param_1">
+                        <dataref attrname="fi_arap_setSxbzValueInUnAuditAction_param_1">
+                            <ref refactname="unshenhe_LB_s" refparamme="fi_arap_dj_UnAuditAction_unshenhe_LB_s_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="updateViewAfterUnVerifyCardMode"/>
+                </succs>
+            </action>
+            <action id="fi_arap#updateViewAfterUnVerifyCardMode"
+                name="updateViewAfterUnVerifyCardMode" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_updateViewAfterUnVerifyCardMode_param_1">
+                        <dataref attrname="fi_arap_updateViewAfterUnVerifyCardMode_param_1">
+                            <ref
+                                refactname="setSxbzValueInUnAuditAction" refparamme="fi_arap_setSxbzValueInUnAuditAction_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="单据卡片状态前台反审核流程" id="fi_arap#unshenhe_Dj_Display"
+        name="unshenhe_Dj_Display" namespace="fi_arap" startActName="unshenhe_Dj">
+        <actions>
+            <action id="fi_arap#dj_UnAuditAction_unshenhe_Dj"
+                name="unshenhe_Dj" namespace="fi_arap">
+                <succs>
+                    <succ name="setSxbzValueInUnAuditAction"/>
+                </succs>
+            </action>
+            <action id="fi_arap#setSxbzValueInUnAuditAction"
+                name="setSxbzValueInUnAuditAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_setSxbzValueInUnAuditAction_param_1">
+                        <dataref attrname="fi_arap_setSxbzValueInUnAuditAction_param_1">
+                            <ref refactname="unshenhe_Dj" refparamme="fi_arap_dj_UnAuditAction_unshenhe_Dj_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="updateViewAfterUnVerifyCardMode"/>
+                </succs>
+            </action>
+            <action id="fi_arap#updateViewAfterUnVerifyCardMode"
+                name="updateViewAfterUnVerifyCardMode" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_updateViewAfterUnVerifyCardMode_param_1">
+                        <dataref attrname="fi_arap_updateViewAfterUnVerifyCardMode_param_1">
+                            <ref
+                                refactname="setSxbzValueInUnAuditAction" refparamme="fi_arap_setSxbzValueInUnAuditAction_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="单据前台审核列表流程" id="fi_arap#shenhe_LB_Display"
+        name="shenhe_LB_Display" namespace="fi_arap" startActName="shenhe_LB_Display">
+        <actions>
+            <action id="fi_arap#dj_AuditAction_shenhe_LB_Display"
+                name="shenhe_LB_Display" namespace="fi_arap">
+                <succs>
+                    <succ name="setSxbzValueInAuditAction"/>
+                </succs>
+            </action>
+            <action id="fi_arap#setSxbzValueInAuditAction"
+                name="setSxbzValueInAuditAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_setSxbzValueInAuditAction_param_1">
+                        <dataref attrname="fi_arap_setSxbzValueInAuditAction_param_1">
+                            <ref refactname="shenhe_LB_Display" refparamme="fi_arap_dj_AuditAction_shenhe_LB_Display_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="单据前台审核卡片流程" id="fi_arap#shenhe_Dj_Display"
+        name="shenhe_Dj_Display" namespace="fi_arap" startActName="shenhe_Dj">
+        <actions>
+            <action id="fi_arap#dj_AuditAction_shenhe_Dj_Display"
+                name="shenhe_Dj" namespace="fi_arap">
+                <succs>
+                    <succ name="updateViewAfterVerifyCardMode"/>
+                </succs>
+            </action>
+            <action id="fi_arap#updateViewAfterVerifyCardMode"
+                name="updateViewAfterVerifyCardMode" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_updateViewAfterVerifyCardMode_param_1">
+                        <dataref attrname="fi_arap_updateViewAfterVerifyCardMode_param_1">
+                            <ref refactname="shenhe_Dj" refparamme="fi_arap_dj_AuditAction_shenhe_Dj_Display_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="单据后台审核列表流程" id="fi_arap#shenhe_LB_S_background"
+        name="shenhe_LB_S_background" namespace="fi_arap" startActName="shenhe_LB_S">
+        <actions>
+            <action id="fi_arap#dj_AuditAction_shenhe_LB_S"
+                name="shenhe_LB_S" namespace="fi_arap">
+                <succs>
+                    <succ name="setSxbzValueInAuditAction"/>
+                </succs>
+            </action>
+            <action id="fi_arap#setSxbzValueInAuditAction"
+                name="setSxbzValueInAuditAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_setSxbzValueInAuditAction_param_1">
+                        <dataref attrname="fi_arap_setSxbzValueInAuditAction_param_1">
+                            <ref refactname="shenhe_LB_S" refparamme="fi_arap_dj_AuditAction_shenhe_LB_S_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="arap单据审核流程" id="fi_arap#btn_auditdefault"
+        name="arap单据审核流程" namespace="fi_arap" startActName="judgeListOrCard">
+        <actions>
+            <action id="fi_arap#judgeListOrCard" name="judgeListOrCard" namespace="fi_arap">
+                <succs>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;list&quot;)" name="shenhe_LB"/>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;card&quot;)" name="shenhe_Dj"/>
+                </succs>
+            </action>
+            <action name="shenhe_LB">
+                <refflow flowid="fi_arap#shenhe_LB_Display" namespace="fi_arap"/>
+            </action>
+            <action name="shenhe_Dj">
+                <refflow flowid="fi_arap#shenhe_Dj_Display" namespace="fi_arap"/>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="单据审核流程_是否后台审核"
+        id="fi_arap#btn_auditdefault_IsAuditInBackground"
+        name="单据审核流程_是否后台审核" namespace="fi_arap" startActName="IsAuditInBackground">
+        <actions>
+            <action id="fi_arap#dj_IsAuditInBackground"
+                name="IsAuditInBackground" namespace="fi_arap">
+                <succs>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;auditDisplay&quot;)" name="shenhe_LB_Display"/>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;card&quot;)" name="shenhe_Dj_Display"/>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;cancel&quot;)" name="dj_AuditAction_cancel"/>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;background&quot;)" name="shenhe_LB_S_background"/>
+                </succs>
+            </action>
+            <action name="shenhe_LB_Display">
+                <refflow flowid="fi_arap#shenhe_LB_Display" namespace="fi_arap"/>
+            </action>
+            <action name="shenhe_LB_S_background">
+                <refflow flowid="fi_arap#shenhe_LB_S_background" namespace="fi_arap"/>
+            </action>
+            <action name="shenhe_Dj_Display">
+                <refflow flowid="fi_arap#shenhe_Dj_Display" namespace="fi_arap"/>
+            </action>
+            <action id="fi_arap#dj_AuditAction_cancel"
+                name="dj_AuditAction_cancel" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据审核流程_是否后台反审核"
+        id="fi_arap#btn_auditdefault_IsUnAuditInBackground"
+        name="单据审核流程_是否后台反审核" namespace="fi_arap" startActName="IsUnAuditBackground">
+        <actions>
+            <action id="fi_arap#dj_IsUnAuditInBackground"
+                name="IsUnAuditBackground" namespace="fi_arap">
+                <succs>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;unauditDisplay&quot;)" name="unshenhe_LB_Display"/>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;card&quot;)" name="unshenhe_Dj_Display"/>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;cancel&quot;)" name="dj_AuditAction_cancel"/>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;background&quot;)" name="unshenhe_LB_s_background"/>
+                </succs>
+            </action>
+            <action name="unshenhe_LB_Display">
+                <refflow flowid="fi_arap#unshenhe_LB_Display" namespace="fi_arap"/>
+            </action>
+            <action name="unshenhe_LB_s_background">
+                <refflow flowid="fi_arap#unshenhe_LB_s_background" namespace="fi_arap"/>
+            </action>
+            <action name="unshenhe_Dj_Display">
+                <refflow flowid="fi_arap#unshenhe_Dj_Display" namespace="fi_arap"/>
+            </action>
+            <action id="fi_arap#dj_AuditAction_cancel"
+                name="dj_AuditAction_cancel" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap单据反审核流程" id="fi_arap#btn_unAuditdefault"
+        name="arap单据反审核流程" namespace="fi_arap" startActName="judgeListOrCard">
+        <actions>
+            <action id="fi_arap#judgeListOrCard" name="judgeListOrCard" namespace="fi_arap">
+                <succs>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;list&quot;)" name="unshenhe_LB"/>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;card&quot;)" name="unshenhe_Dj"/>
+                </succs>
+            </action>
+            <action name="unshenhe_LB">
+                <refflow flowid="fi_arap#unshenhe_LB_Display" namespace="fi_arap"/>
+            </action>
+            <action name="unshenhe_Dj">
+                <refflow flowid="fi_arap#unshenhe_Dj_Display" namespace="fi_arap"/>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="arap单据红冲流程" id="fi_arap#btn_redHandledefault"
+        name="arap单据红冲流程" namespace="fi_arap" startActName="RedHandleAction">
+        <actions>
+            <action id="fi_arap#dj_onredverify" name="RedHandleAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap单据网上转账流程" id="fi_arap#btn_wszzrdefault"
+        name="arap单据网上转账流程" namespace="fi_arap" startActName="PaymentAction">
+        <actions>
+            <action id="fi_arap#dj_onwszz" name="PaymentAction" namespace="fi_arap">
+                <succs>
+                    <succ name="setSxbzValueInPaymentAction"/>
+                </succs>
+            </action>
+            <action id="fi_arap#setSxbzValueInPaymentAction"
+                name="setSxbzValueInPaymentAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_setSxbzValueInPaymentAction_param_1">
+                        <dataref attrname="fi_arap_setSxbzValueInPaymentAction_param_1">
+                            <ref refactname="PaymentAction" refparamme="fi_arap_dj_onwszz_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="arap单据合并支付流程" id="fi_arap#btn_combinePaymentdefault"
+        name="arap单据合并支付流程" namespace="fi_arap" startActName="combinePayment">
+        <actions>
+            <action id="fi_arap#dj_combinePayment" name="combinePayment" namespace="fi_arap">
+                <succs>
+                    <succ name="setSxbzValueInPaymentAction"/>
+                </succs>
+            </action>
+            <action id="fi_arap#setSxbzValueInPaymentAction"
+                name="setSxbzValueInPaymentAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_setSxbzValueInPaymentAction_param_1">
+                        <dataref attrname="fi_arap_setSxbzValueInPaymentAction_param_1">
+                            <ref refactname="combinePayment" refparamme="fi_arap_dj_combinePayment_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="arap单据手工支付流程" id="fi_arap#btn_on_handPaydefault"
+        name="arap单据手工支付流程" namespace="fi_arap" startActName="PaymentAction">
+        <actions>
+            <action id="fi_arap#dj_on_handPay" name="PaymentAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap单据查询流程" id="fi_arap#btn_on_pjsearchdefault"
+        name="arap单据查询流程" namespace="fi_arap" startActName="PjSearchAction">
+        <actions>
+            <action id="fi_arap#dj_pjsearch" name="PjSearchAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap单据刷新流程" id="fi_arap#btn_on_refreshdefault"
+        name="arap单据刷新流程" namespace="fi_arap" startActName="RefreshAction">
+        <actions>
+            <action id="fi_arap#dj_refresh" name="RefreshAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap审批情况流程" id="fi_arap#btn_on_approvedefault"
+        name="arap审批情况流程" namespace="fi_arap" startActName="RelatedQueryAction">
+        <actions>
+            <action id="fi_arap#dj_on_Approve" name="RelatedQueryAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap审批情况流程" id="fi_arap#btn_on_approvedefault"
+        name="arap审批情况流程" namespace="fi_arap" startActName="RelatedQueryAction">
+        <actions>
+            <action id="fi_arap#dj_on_Approve" name="RelatedQueryAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap处理情况流程"
+        id="fi_arap#btn_on_showParticularQuerydefault" name="arap处理情况流程"
+        namespace="fi_arap" startActName="RelatedQueryAction">
+        <actions>
+            <action id="fi_arap#dj_showParticularQueryDlg"
+                name="RelatedQueryAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap联查发票流程" id="fi_arap#btn_on_Providedefault"
+        name="arap联查发票流程" namespace="fi_arap" startActName="RelatedQueryAction">
+        <actions>
+            <action id="fi_arap#dj_on_Provide" name="RelatedQueryAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap预算执行情况流程" id="fi_arap#btn_on_Budgetdefault"
+        name="arap预算执行情况流程" namespace="fi_arap" startActName="RelatedQueryAction">
+        <actions>
+            <action id="fi_arap#dj_on_Budgete" name="RelatedQueryAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="cmp资金计划执行情况流程" id="fi_arap#btn_on_CmpFpdefault"
+        name="cmp资金计划执行情况流程" namespace="fi_arap" startActName="RelatedQueryAction">
+        <actions>
+            <action id="fi_arap#cmpdj_on_Fp" name="RelatedQueryAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap联查信贷流程" id="fi_arap#btn_on_Creditdefault"
+        name="arap联查信贷流程" namespace="fi_arap" startActName="RelatedQueryAction">
+        <actions>
+            <action id="fi_arap#dj_on_Credit" name="RelatedQueryAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap联查凭证流程" id="fi_arap#btn_on_QueryPfdefault"
+        name="arap联查凭证流程" namespace="fi_arap" startActName="RelatedQueryAction">
+        <actions>
+            <action id="fi_arap#dj_on_QueryPf" name="RelatedQueryAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap联查协同单据流程" id="fi_arap#btn_on_QueryXtDjdefault"
+        name="arap联查协同单据流程" namespace="fi_arap" startActName="RelatedQueryAction">
+        <actions>
+            <action id="fi_arap#dj_on_QueryXtDj"
+                name="RelatedQueryAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap联查委托付款书流程"
+        id="fi_arap#btn_on_queryFTSPaymentdefault" name="arap联查委托付款书流程"
+        namespace="fi_arap" startActName="RelatedQueryAction">
+        <actions>
+            <action id="fi_arap#dj_on_queryFTSPayment"
+                name="RelatedQueryAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap联查账户预计余额流程" id="fi_arap#btn_on_queryAccountdefault"
+        name="arap联查账户预计余额流程" namespace="fi_arap" startActName="RelatedQueryAction">
+        <actions>
+            <action id="fi_arap#dj_on_queryAccount"
+                name="RelatedQueryAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap联查余额表流程" id="fi_arap#btn_on_queryListdefault"
+        name="arap联查余额表流程" namespace="fi_arap" startActName="RelatedQueryAction">
+        <actions>
+            <action id="fi_arap#dj_on_queryList"
+                name="RelatedQueryAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap联查委托收款书流程"
+        id="fi_arap#btn_on_queryFTSReceiverdefault" name="arap联查委托收款书流程"
+        namespace="fi_arap" startActName="RelatedQueryAction">
+        <actions>
+            <action id="fi_arap#dj_on_queryFTSReceiver"
+                name="RelatedQueryAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap联查单据流程" id="fi_arap#btn_on_ssQyrDJdefault"
+        name="arap联查单据流程" namespace="fi_arap" startActName="RelatedQueryAction">
+        <actions>
+            <action id="fi_arap#dj_on_ssQyrDJ" name="RelatedQueryAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap联查事项审批单流程" id="fi_arap#btn_on_djQrySSdefault"
+        name="arap联查事项审批单流程" namespace="fi_arap" startActName="RelatedQueryAction">
+        <actions>
+            <action id="fi_arap#dj_on_djQrySS" name="RelatedQueryAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap期初关闭流程" id="fi_arap#btn_onQcClosedefault"
+        name="arap期初关闭流程" namespace="fi_arap" startActName="QcCloseAction">
+        <actions>
+            <action id="fi_arap#dj_onQcClose" name="QcCloseAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap取消关闭流程" id="fi_arap#btn_onQcCancelClosedefault"
+        name="arap取消关闭流程" namespace="fi_arap" startActName="QcCloseAction">
+        <actions>
+            <action id="fi_arap#dj_onQcCancelClose" name="QcCloseAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap删行流程" id="fi_arap#btn_deleteRowDefault"
+        name="arap删行流程" namespace="fi_arap" startActName="DelRowAction">
+        <actions>
+            <action id="fi_arap#dj_delrow" name="DelRowAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap复制行流程" id="fi_arap#btn_CopyRowDefault"
+        name="arap复制行流程" namespace="fi_arap" startActName="CopyRowAction">
+        <actions>
+            <action id="fi_arap#dj_copyrow" name="CopyRowAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap粘贴行流程" id="fi_arap#btn_PasteRowDefault"
+        name="arap粘贴行流程" namespace="fi_arap" startActName="PasteRowAction">
+        <actions>
+            <action id="fi_arap#dj_pasterow" name="PasteRowAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap插入行流程" id="fi_arap#btn_InsertRowDefault"
+        name="arap插入行流程" namespace="fi_arap" startActName="InsertRowAction">
+        <actions>
+            <action id="fi_arap#dj_insertrow" name="InsertRowAction" namespace="fi_arap"/>
+        </actions>
+    </flow>   
+    <flow desc="arap粘贴行至表尾流程" id="fi_arap#btn_pasteLineToTailDefault"
+        name="arap粘贴行至表尾流程" namespace="fi_arap" startActName="PasteLineToTailAction">
+        <actions>
+            <action id="fi_arap#dj_PasteLineToTail" name="PasteLineToTailAction" namespace="fi_arap"/>
+        </actions>
+    </flow> 
+    <flow desc="arap增行流程" id="fi_arap#btn_addRowDefault" name="arap增行流程"
+        namespace="fi_arap" startActName="AddRowAction">
+        <actions>
+            <action id="fi_arap#dj_addrow" name="AddRowAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap复制流程" id="fi_arap#btn_copydjDefault" name="arap复制流程"
+        namespace="fi_arap" startActName="CopyDjAction">
+        <actions>
+            <action id="fi_arap#dj_copydj" name="CopyDjAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap取消流程" id="fi_arap#btn_cancelDefault" name="arap取消流程"
+        namespace="fi_arap" startActName="CancelAction">
+        <actions>
+            <action id="fi_arap#dj_cancel" name="CancelAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap编辑流程" id="fi_arap#btn_editDefault" name="arap编辑流程"
+        namespace="fi_arap" startActName="EditAction">
+        <actions>
+            <action id="fi_arap#dj_edit" name="EditAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap临时保存流程" id="fi_arap#btn_tempsaveDefault"
+        name="arap临时保存流程" namespace="fi_arap" startActName="TempSaveAction">
+        <actions>
+            <action id="fi_arap#dj_tempsave" name="TempSaveAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap设置预收付标志" id="fi_arap#btn_setysfDefault"
+        name="arap设置预收付标志" namespace="fi_arap" startActName="SetYsfAction">
+        <actions>
+            <action id="fi_arap#dj_onysf" name="SetYsfAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="arap增加单据" id="fi_arap#btn_addDefault" name="arap增加单据"
+        namespace="fi_arap" startActName="AddAction">
+        <actions>
+            <action id="fi_arap#dj_add" name="AddAction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="增加一张单据" id="fi_arap#dj_add" name="增加"
+        namespace="fi_arap" startActName="增加一张单据">
+        <actions>
+            <action id="fi_arap#dj_add" name="增加一张单据" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据录入_删除" id="fi_arap#arap_boDelDj_Lr" name="单据录入_删除"
+        namespace="fi_arap" startActName="单据录入_删除">
+        <actions>
+            <action id="fi_arap#m_boDelDj_Lr" name="单据录入_删除"/>
+        </actions>
+    </flow>
+    <flow desc="单据管理_删除" id="fi_arap#arap_boDelDj_Nor" name="单据管理_删除"
+        namespace="fi_arap" startActName="单据管理_删除">
+        <actions>
+            <action id="fi_arap#m_boDelDj_Nor" name="单据管理_删除"/>
+        </actions>
+    </flow>
+    <flow desc="期初余额_删除" id="fi_arap#arap_boDelDj_Qc" name="期初余额_删除"
+        namespace="fi_arap" startActName="期初余额_删除">
+        <actions>
+            <action id="fi_arap#m_boDelDj_Qc" name="期初余额_删除"/>
+        </actions>
+    </flow>
+    <flow desc="签字确认_删除" id="fi_arap#arap_boDelDj_Sn" name="签字确认_删除"
+        namespace="fi_arap" startActName="签字确认_删除">
+        <actions>
+            <action id="fi_arap#m_boDelDj_Sn" name="签字确认_删除"/>
+        </actions>
+    </flow>
+    <flow desc="事项审批单_删除" id="fi_arap#arap_boDelDj_Ss" name="事项审批单_删除"
+        namespace="fi_arap" startActName="事项审批单_删除">
+        <actions>
+            <action id="fi_arap#m_boDelDj_Ss" name="事项审批单_删除"/>
+        </actions>
+    </flow>
+    <flow desc="预提单_删除" id="fi_arap#arap_boDelDj_Tb" name="预提单_删除"
+        namespace="fi_arap" startActName="预提单_删除">
+        <actions>
+            <action id="fi_arap#m_boDelDj_Tb" name="预提单_删除"/>
+        </actions>
+    </flow>
+    <flow desc="单据管理_windows关闭" id="fi_arap#windowClose_Nor"
+        name="windows关闭" namespace="fi_arap" startActName="IsSaveBeforeClose">
+        <actions>
+            <action id="fi_arap#dj_IsSaveBeforeCloseAction"
+                name="IsSaveBeforeClose" namespace="fi_arap">
+                <succs>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;save&quot;)" name="btn_savedefault"/>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;cancel&quot;)" name="btn_cancelclosingdefault"/>
+                </succs>
+            </action>
+            <action name="btn_savedefault">
+                <refflow flowid="fi_arap#btn_savedefault" namespace="fi_arap"/>
+            </action>
+            <action id="fi_arap#btn_cancelclosingdefault"
+                name="btn_cancelclosingdefault" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="单据录入_windows关闭" id="fi_arap#windowClose_Lr"
+        name="windows关闭" namespace="fi_arap" startActName="IsSaveBeforeClose">
+        <actions>
+            <action id="fi_arap#dj_IsSaveBeforeCloseAction"
+                name="IsSaveBeforeClose" namespace="fi_arap">
+                <succs>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;save&quot;)" name="btn_saveLr"/>
+                </succs>
+            </action>
+            <action name="btn_saveLr">
+                <refflow flowid="fi_arap#btn_saveLr" namespace="fi_arap"/>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="事项审批单_windows关闭" id="fi_arap#windowClose_Ss"
+        name="windows关闭" namespace="fi_arap" startActName="IsSaveBeforeClose">
+        <actions>
+            <action id="fi_arap#dj_IsSaveBeforeCloseAction"
+                name="IsSaveBeforeClose" namespace="fi_arap">
+                <succs>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;save&quot;)" name="btn_saveSs"/>
+                </succs>
+            </action>
+            <action name="btn_saveSs">
+                <refflow flowid="fi_arap#btn_saveSs" namespace="fi_arap"/>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="签字确认_windows关闭" id="fi_arap#windowClose_Sn"
+        name="windows关闭" namespace="fi_arap" startActName="IsSaveBeforeClose">
+        <actions>
+            <action id="fi_arap#dj_IsSaveBeforeCloseAction"
+                name="IsSaveBeforeClose" namespace="fi_arap">
+                <succs>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;save&quot;)" name="btn_saveSn"/>
+                </succs>
+            </action>
+            <action name="btn_saveSn">
+                <refflow flowid="fi_arap#btn_saveSn" namespace="fi_arap"/>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="预提单_windows关闭" id="fi_arap#windowClose_Tb"
+        name="windows关闭" namespace="fi_arap" startActName="IsSaveBeforeClose">
+        <actions>
+            <action id="fi_arap#dj_IsSaveBeforeCloseAction"
+                name="IsSaveBeforeClose" namespace="fi_arap">
+                <succs>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;save&quot;)" name="btn_saveTb"/>
+                </succs>
+            </action>
+            <action name="btn_saveTb">
+                <refflow flowid="fi_arap#btn_saveTb" namespace="fi_arap"/>
+            </action>
+        </actions>
+    </flow>
+    <flow desc="批复制" id="fi_arap#batchcopy" name="batchcopy"
+        namespace="fi_arap" startActName="batchcopyaction">
+        <actions>
+            <action id="fi_arap#btn_batchcopy" name="batchcopyaction" namespace="fi_arap"/>
+        </actions>
+    </flow>
+    <flow desc="" id="fi_arap#if_arap#DjAdjust" name="单据管理_单据调整"
+        namespace="fi_arap" startActName="setStatus">
+        <actions>
+            <action id="fi_arap#dj_EditAction" name="setStatus"/>
+        </actions>
+    </flow>
+    <flow desc="" id="fi_arap#if_arap#DjRelQry" name="单据管理_联查上下游单据"
+        namespace="fi_arap" startActName="RelatedQueryBackOrNextDj">
+        <actions>
+            <action id="fi_arap#RelatedQueryBackOrNextDj" name="RelatedQueryBackOrNextDj"/>
+        </actions>
+    </flow>
+	<flow desc="" id="fi_arap#if_arap#yhhdLink" name="单据管理_联查银行回单"
+        namespace="fi_arap" startActName="yhhdLink">
+        <actions>
+            <action id="fi_arap#yhhdLink" name="yhhdLink"/>
+        </actions>
+    </flow>
+	<flow desc="" id="fi_arap#skfk#yhhdLink" name="单据管理_联查银行回单"
+        namespace="fi_arap" startActName="yhhdLink">
+        <actions>
+            <action id="fi_arap#yhhdLinkSkFk" name="yhhdLink"/>
+        </actions>
+    </flow>
+		<flow desc="" id="fi_arap#erm#yhhdLink" name="单据管理_联查银行回单"
+        namespace="fi_arap" startActName="yhhdLink">
+        <actions>
+            <action id="fi_arap#yhhdLinkErm" name="yhhdLink"/>
+        </actions>
+    </flow>
+    <flow desc="" id="fi_arap#fi_cmp_DjRelQry" name="现金流平台_联查上下游单据"
+        namespace="fi_arap" startActName="RelatedQueryBackOrNextDj">
+        <actions>
+            <action id="fi_arap#cmp_RelatedQueryBackOrNextDj" name="RelatedQueryBackOrNextDj"/>
+        </actions>
+    </flow>
+    <flow desc="" id="fi_arap#cmp_flow_cashapply" name="单据管理_资金申请"
+        namespace="fi_arap" startActName="cashApply">
+        <actions>
+            <action id="fi_arap#cmp_cashapply" name="cashApply"/>
+        </actions>
+    </flow>
+    <flow desc="" id="fi_arap#cmp_flow_pjregister" name="收票登记"
+        namespace="fi_arap" startActName="pjregister">
+        <actions>
+            <action id="fi_arap#cmp_pjregister" name="pjregister"/>
+        </actions>
+    </flow>
+    <flow desc="" id="fi_arap#cmp_flow_addLine" name="增行"
+        namespace="fi_arap" startActName="addLine">
+        <actions>
+            <action id="fi_arap#cmp_addLine" name="addLine"/>
+        </actions>
+    </flow>
+    <flow desc="" id="fi_arap#cmp_flow_insertLine" name="增行"
+        namespace="fi_arap" startActName="insertLine">
+        <actions>
+            <action id="fi_arap#cmp_insertLine" name="insertLine"/>
+        </actions>
+    </flow>
+    
+    <flow desc="" id="fi_arap#cmp_flow_copyLine" name="复制行"
+        namespace="fi_arap" startActName="copyLine">
+        <actions>
+            <action id="fi_arap#cmp_copyLine" name="copyLine"/>
+        </actions>
+    </flow>
+    <flow desc="" id="fi_arap#cmp_flow_delLine" name="删行"
+        namespace="fi_arap" startActName="delLine">
+        <actions>
+            <action id="fi_arap#cmp_delLine" name="delLine"/>
+        </actions>
+    </flow>
+    <flow desc="" id="fi_arap#cmp_flow_pasteLine" name="粘贴行"
+        namespace="fi_arap" startActName="pasteLine">
+        <actions>
+            <action id="fi_arap#cmp_pasteLine" name="pasteLine"/>
+        </actions>
+    </flow>
+    <flow desc="" id="fi_arap#cmp_flow_pasteLineToTail" name="粘贴行到表尾"
+        namespace="fi_arap" startActName="pasteLineToTail">
+        <actions>
+            <action id="fi_arap#cmp_pasteLineToTail" name="pasteLineToTail"/>
+        </actions>
+    </flow>
+    <flow desc="" id="fi_arap#cmp_flow_prepareNetBank" name="补录网银信息"
+        namespace="fi_arap" startActName="prepareNetBank">
+        <actions>
+            <action id="fi_arap#cmp_prepareNetBank" name="prepareNetBank"/>
+        </actions>
+    </flow>
+    <flow desc="" id="fi_arap#dj_MergePfAct" name="制单"
+        namespace="fi_arap" startActName="mergePfAct">
+        <actions>
+            <action id="fi_arap#MergePfAct" name="mergePfAct"/>
+        </actions>
+    </flow>
+     <flow desc="" id="fi_arap#listsave" name="列表保存"
+        namespace="fi_arap" startActName="listsave">
+        <actions>
+            <action id="fi_arap#listsave" name="listsave"/>
+        </actions>
+    </flow>
+    <flow desc="" id="fi_arap#listaudit" name="列表批量审核"
+        namespace="fi_arap" startActName="listaudit">
+        <actions>
+            <action id="fi_arap#listaudit" name="listaudit"/>
+        </actions>
+    </flow>
+    <flow desc="" id="fi_arap#listunaudit" name="列表批量反审核"
+        namespace="fi_arap" startActName="listunaudit">
+        <actions>
+            <action id="fi_arap#listunaudit" name="listunaudit"/>
+        </actions>
+    </flow>
+    <flow desc="" id="fi_arap#listbatchdelete" name="列表批量删除"
+        namespace="fi_arap" startActName="listbatchdelete">
+        <actions>
+            <action id="fi_arap#listbatchdelete" name="listbatchdelete"/>
+        </actions>
+    </flow>
+   
+     <!-- 常用单据 @author wuzhwa -->
+    <flow desc="保存常用单据" id="fi_arap#cmpgeneralbillsave" name="保存常用单据"
+        namespace="fi_arap" startActName="cmpgeneralbillsave">
+        <actions>
+            <action id="fi_arap#cmpgeneralbillsave" name="cmpgeneralbillsave"/>
+        </actions>
+    </flow>
+    <flow desc="调用常用单据" id="fi_arap#cmpgeneralbillview" name="调用常用单据"
+        namespace="fi_arap" startActName="cmpgeneralbillview">
+        <actions>
+            <action id="fi_arap#cmpgeneralbillview" name="cmpgeneralbillview"/>
+        </actions>
+    </flow>   
+    <!-- 常用单据 end -->
+	<!--纪录增加u8c2.5版本,20181120-->
+	<flow desc="" id="fi_arap#cmp_flow_applyinvoice" name="申请开票"
+        namespace="fi_arap" startActName="applyinvoice">
+        <actions>
+            <action id="fi_arap#cmp_applyinvoice" name="applyinvoice"/>
+        </actions>
+    </flow>
+	<!--纪录增加u8c2.6版本,20190415-->
+	<flow desc="" id="fi_arap#cmp_flow_boImportData4YS" name="导入数据"
+        namespace="fi_arap" startActName="importData">
+        <actions>
+            <action id="fi_arap#cmp_boImportData4YS" name="importData"/>
+        </actions>
+    </flow>
+	<flow desc="" id="fi_arap#cmp_flow_boExportTemplate4YS" name="导出模板"
+        namespace="fi_arap" startActName="exportTemplate">
+        <actions>
+            <action id="fi_arap#cmp_boExportTemplate4YS" name="exportTemplate"/>
+        </actions>
+    </flow>
+	<flow desc="" id="fi_arap#cmp_flow_boImportData4SK" name="导入数据"
+        namespace="fi_arap" startActName="importData">
+        <actions>
+            <action id="fi_arap#cmp_boImportData4SK" name="importData"/>
+        </actions>
+    </flow>
+	<flow desc="" id="fi_arap#cmp_flow_boExportTemplate4SK" name="导出模板"
+        namespace="fi_arap" startActName="exportTemplate">
+        <actions>
+            <action id="fi_arap#cmp_boExportTemplate4SK" name="exportTemplate"/>
+        </actions>
+    </flow>
+	<flow desc="" id="fi_arap#cmp_flow_boImportData4YF" name="导入数据"
+        namespace="fi_arap" startActName="importData">
+        <actions>
+            <action id="fi_arap#cmp_boImportData4YF" name="importData"/>
+        </actions>
+    </flow>
+	<flow desc="" id="fi_arap#cmp_flow_boExportTemplate4YF" name="导出模板"
+        namespace="fi_arap" startActName="exportTemplate">
+        <actions>
+            <action id="fi_arap#cmp_boExportTemplate4YF" name="exportTemplate"/>
+        </actions>
+    </flow>
+	<flow desc="" id="fi_arap#cmp_flow_boImportData4FK" name="导入数据"
+        namespace="fi_arap" startActName="importData">
+        <actions>
+            <action id="fi_arap#cmp_boImportData4FK" name="importData"/>
+        </actions>
+    </flow>
+	<flow desc="" id="fi_arap#cmp_flow_boExportTemplate4FK" name="导出模板"
+        namespace="fi_arap" startActName="exportTemplate">
+        <actions>
+            <action id="fi_arap#cmp_boExportTemplate4FK" name="exportTemplate"/>
+        </actions>
+    </flow>
+	<!-- add by yangyangt 付款申请单保存走 应收应付单据保存与事项审批单保存-->
+	<flow desc="单据管理_付款申请单保存流程" id="fi_arap#btn_saveapplyfk"
+        name="单据管理_付款申请单保存流程" namespace="fi_arap" startActName="ArapBillCheckPanel">
+        <actions>
+			<!-- 事项审批保存 -->
+            <action id="fi_arap#dj_ArapBillCheckPanel"
+                name="ArapBillCheckPanel" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillAdjustDigit"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillAdjustDigit"
+                name="ArapBillAdjustDigit" namespace="fi_arap">
+                <succs>
+                    <succ name="ArapBillConvertVO"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillConvertVO"
+                name="ArapBillConvertVO" namespace="fi_arap">
+                <succs>
+                    <succ name="CheckTraderTypeAction"/>
+                </succs>
+            </action>
+			<action id="fi_arap#CheckTraderTypeAction"
+                name="CheckTraderTypeAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_CheckTraderTypeAction_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckItem"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckItem"
+                name="ArapBillCheckItem" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillCheckItem_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckParam"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckParam"
+                name="ArapBillCheckParam" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillcheck_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckIsTempSave"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckIsTempSave"
+                name="ArapBillCheckIsTempSave" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillIsTempSave_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                    <input id="fi_arap_dj_ArapBillIsTempSave_param_2">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillCheckParam" refparamme="fi_arap_dj_ArapBillCheckParam_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="PrepareBillHead"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_PrepareBillHead"
+                name="PrepareBillHead" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_prepareBillHead_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillConvertVO" refparamme="fi_arap_dj_ArapBillConvertVO_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="CheckBillHeadAction"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_CheckBillHeadAction"
+                name="CheckBillHeadAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_CheckBillHeadAction_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="PrepareBillHead" refparamme="fi_arap_dj_PrepareBillHead_output"/>
+                        </dataref>
+                    </input>
+                    <input id="fi_arap_dj_CheckBillHeadAction_param_2">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillCheckParam" refparamme="fi_arap_dj_ArapBillCheckParam_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="prepareBillBody"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_prepareBillBody"
+                name="prepareBillBody" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_prepareBillBody_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="PrepareBillHead" refparamme="fi_arap_dj_PrepareBillHead_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="ArapBillCheckVO"/>
+                </succs>
+            </action>
+            <action id="fi_arap#dj_ArapBillCheckVO"
+                name="ArapBillCheckVO" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_ArapBillCheckVO_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="prepareBillBody" refparamme="fi_arap_dj_prepareBillBody_output"/>
+                        </dataref>
+                    </input>
+                    <input id="fi_arap_dj_ArapBillCheckVO_param_2">
+                        <dataref attrname="djs">
+                            <ref refactname="ArapBillCheckParam" refparamme="fi_arap_dj_ArapBillCheckParam_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+                <succs>
+                    <succ name="isAdjustSaveAction"/>
+                </succs>
+            </action>
+            <!-- <action id="fi_arap#dj_SaveActionSs" name="SaveActionSs" namespace="fi_arap"> -->
+                <!-- <inputs> -->
+                    <!-- <input id="fi_arap_dj_SaveActionSs_param_1"> -->
+                        <!-- <dataref attrname="djs"> -->
+                            <!-- <ref refactname="prepareBillBody" refparamme="fi_arap_dj_prepareBillBody_output"/> -->
+                        <!-- </dataref> -->
+                    <!-- </input> -->
+                <!-- </inputs> -->
+				<!-- <succs> -->
+                    <!-- <succ name="isAdjustSaveAction"/> -->
+                <!-- </succs> -->
+            <!-- </action> -->
+			<!-- 应收应付单据保存 -->
+			<action id="fi_arap#isAdjustSaveAction" name="isAdjustSaveAction" namespace="fi_arap">
+                 <succs>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;N&quot;)" name="SaveActionNor"/>
+                    <succ
+                        condition="equalsIgnoreCase(result,&quot;Y&quot;)" name="AdjustSaveAction"/>
+                </succs>
+             </action>
+			 <action id="fi_arap#AdjustSaveAction" name="AdjustSaveAction" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_AdjustSaveAction_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="prepareBillBody" refparamme="fi_arap_dj_prepareBillBody_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>            
+            <action id="fi_arap#dj_SaveActionNor" name="SaveActionNor" namespace="fi_arap">
+                <inputs>
+                    <input id="fi_arap_dj_SaveActionNor_param_1">
+                        <dataref attrname="djs">
+                            <ref refactname="prepareBillBody" refparamme="fi_arap_dj_prepareBillBody_output"/>
+                        </dataref>
+                    </input>
+                </inputs>
+            </action>
+        </actions>
+    </flow>
+    <!--纪录增加u8c3.6版本20230310-->
+	<flow desc="" id="fi_arap#cmp_flow_applyGTVoucher" name="上传金税"
+        namespace="fi_arap" startActName="applyGTVoucher">
+        <actions>
+            <action id="fi_arap#cmp_flow_applyGTVoucher" name="applyGTVoucher"/>
+        </actions>
+    </flow>
+</flows>

@@ -1,0 +1,62 @@
+//申请开票金额小于单张发票限额时，按申请开票金额				
+				//
+				/* 
+				if (dAmount==0.00) {
+					ChildrenVO childrenvo=getChildrenVO(inclusiveAmount,body,detail,iRow);
+					children.add(childrenvo);
+					iRow++;
+				}else if (inclusiveAmount<=dAmount) {
+					ChildrenVO childrenvo=getChildrenVO(inclusiveAmount,body,detail,iRow);
+					children.add(childrenvo);
+					iRow++;
+				}else if (inclusiveAmount>dAmount) {
+					//申请开票金额大于单张发票限额时，按单张发票限额
+					while (inclusiveAmount>dAmount) {
+						ChildrenVO childrenvo=getChildrenVO(dAmount,body,detail,iRow);
+						children.add(childrenvo);
+						iRow++;
+						//inclusiveAmount=inclusiveAmount-dAmount;
+						BigDecimal inclusiveAmountD2=new BigDecimal(inclusiveAmount-dAmount);
+						inclusiveAmount=inclusiveAmountD2.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+					} 
+					//最后余额开票
+					if(inclusiveAmount>0) {
+						BigDecimal inclusiveAmountD3=new BigDecimal(inclusiveAmount);
+						inclusiveAmount=inclusiveAmountD3.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+						ChildrenVO childrenvo=getChildrenVO(inclusiveAmount,body,detail,iRow);
+						children.add(childrenvo);
+						iRow++;
+					}
+				
+				childrenvo.setHbbm(body.getPayerCode());
+				if(!detail.getCurrency().equals("CNY")){
+					//childrenvo.setBbhl(detail.getCurRate());
+					//childrenvo.setBzbm(detail.getCurrency());
+					childrenvo.setZyx1(detail.getCurrency().toString()
+							+"金额:"
+							+detail.getInclusiveMoney().toString()
+							+"汇率:"
+							+detail.getCurRate().toString());
+				}
+				
+				//收支项目
+				sql3="select pk_costsubj,costcode,costname from bd_costsubj where pk_corp=(select pk_corp from bd_corp where unitcode='"+body.getComCode().toString()+"') and costname='"
+				//+detail.getInsurTypeName().toString()+"'";
+				+detail.getSupInsurTypeName().toString()+"'";
+				costsubjVO=(CostsubjVO)getDao().executeQuery(sql3, new BeanProcessor(CostsubjVO.class));
+				if (costsubjVO!=null){
+					//childrenvo.setSzxmid(costsubjVO.getPk_costsubj());
+					childrenvo.setSzxmid(costsubjVO.getCostcode());
+					childrenvo.setSzxmid_code(costsubjVO.getCostcode());
+					childrenvo.setSzxmid_name(costsubjVO.getCostname());
+				}else {
+					childrenvo.setSzxmid("A01001001");
+				}
+				childrenvo.setDeptid(XmlConfig.getDeptXml(body.getComCode(),  body.getDpName()));
+				childrenvo.setSl(detail.getTaxRate());
+				childrenvo.setJfbbje(Double.toString(detail.getInclusiveRMB()));
+				childrenvo.setJfybje(Double.toString(detail.getInclusiveRMB()));
+				childrenvo.setZyx1(detail.getInsurTypeCode());//自定义1 险种编码
+				childrenvo.setZyx2(detail.getInsurTypeName());//自定义2 险种名称
+				//childrenvo.setJfybje(detail.getInclusiveMoney());
+				*/
