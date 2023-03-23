@@ -167,6 +167,8 @@ public class reverseinvoice implements IAPICustmerDevelop {
 			parentvo.setZyx13(vos.getZyx13());//自定义2 项目
 			
 			
+
+			
 			billVO.setParentvo(parentvo);
 			// 单据体
 			List<ChildrenVO> children = new ArrayList();
@@ -197,7 +199,12 @@ public class reverseinvoice implements IAPICustmerDevelop {
 				 childrenvo.setZyx1(vob.getZyx1());// 自定义1 险种编码
 				 childrenvo.setZyx2(vob.getZyx2());// 自定义2 险种名称
 				 childrenvo.setZyx3(vob.getZyx3());// 自定义2 险种名称
+				 String zyx3="";
+				 if( (vob.getZyx3()!=null)||(!vob.getZyx3().isEmpty())||(!vob.getZyx3().equals(""))||(vob.getZyx3().trim().length()!=0)) {
+					 zyx3=vob.getZyx3();
+				 }
 				 
+				 parentvo.setZyx13(vob.getFb_oid()+"_"+zyx3);//原发票系统流水号
 				// childrenvo.setJfybje(detail.getInclusiveMoney());
 				/*
 				 * 收支项目
