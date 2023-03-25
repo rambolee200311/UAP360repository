@@ -57,7 +57,7 @@ public class ApplyGTVoucherAct extends DefaultAction{
 				 * uservo.getPrimaryKey());
 				 */
         	IGTVoucherSet gtvoucherSet=(IGTVoucherSet)NCLocator.getInstance().lookup(IGTVoucherSet.class);
-        	strResult=gtvoucherSet.uploadGTVoucher(djhead.getVouchid(), corpvo.getPk_corp(),uservo.getPrimaryKey());
+        	strResult=gtvoucherSet.uploadGTVoucher(djhead.getVouchid(), corpvo.getPk_corp(),uservo.getPrimaryKey(),"","");
         	this.getParent().showErrorMessage(strResult);
         	}
 			 

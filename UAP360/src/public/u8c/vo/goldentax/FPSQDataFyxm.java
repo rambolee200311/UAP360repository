@@ -10,7 +10,7 @@ public class FPSQDataFyxm {
 	private String spsl;//数量
 	private String je;//不含税金额
 	private String se;//税额
-	private double hsbz;//含税标记
+	private String hsbz;//含税标记
 	private String dw;//计量单位
 	private String ggxh;//规格型号
 	private String spbm;//分类编码
@@ -54,10 +54,10 @@ public class FPSQDataFyxm {
 	public void setSe(String se) {
 		this.se = se;
 	}
-	public double getHsbz() {
+	public String getHsbz() {
 		return hsbz;
 	}
-	public void setHsbz(double hsbz) {
+	public void setHsbz(String hsbz) {
 		this.hsbz = hsbz;
 	}
 	public String getDw() {

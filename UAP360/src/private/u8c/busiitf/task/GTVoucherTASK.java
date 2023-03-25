@@ -91,7 +91,7 @@ public class GTVoucherTASK implements nc.bs.pub.taskcenter.IBackgroundWorkPlugin
 		ArrayList<TaskParameterVO> taskParameterVOs=(ArrayList<TaskParameterVO>)getDao().executeQuery(sql1, new BeanListProcessor(TaskParameterVO.class));
 		GTVoucherSet gtvoucherSet=new GTVoucherSet();
 		for (TaskParameterVO tpvo:taskParameterVOs) {
-			strResult =gtvoucherSet.uploadGTVoucher(tpvo.getVouchid(), strPkCorp, pk_user);
+			strResult =gtvoucherSet.uploadGTVoucher(tpvo.getVouchid(), strPkCorp, pk_user,"","");
 		}
 		/*
 		 * String

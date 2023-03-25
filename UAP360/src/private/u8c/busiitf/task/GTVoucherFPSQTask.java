@@ -1,5 +1,6 @@
 package u8c.busiitf.task;
 
+import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import nc.jdbc.framework.processor.BeanProcessor;
 import nc.vo.ep.dj.DJZBHeaderVO;
 import nc.vo.pub.BusinessException;
 import u8c.server.Base64Converter;
+import u8c.server.GTVoucherSet;
 import u8c.server.HttpURLConnectionDemo;
 import u8c.vo.entity.CorpVO;
 import u8c.vo.goldentax.TokenGetVO;
@@ -51,7 +53,7 @@ public class GTVoucherFPSQTask  implements nc.bs.pub.taskcenter.IBackgroundWorkP
 		Logger.init("hanglianAPI");
 		try {
 			String strPkCorp = param.getPk_corp();
-			
+			String pk_user=param.getPk_user();
 			// 拿到参数
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			SimpleDateFormat dateFormat1 = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -75,20 +77,31 @@ public class GTVoucherFPSQTask  implements nc.bs.pub.taskcenter.IBackgroundWorkP
 			//应收单主表
 			ArrayList<DJZBHeaderVO> vos =(ArrayList<DJZBHeaderVO>) getDao().executeQuery(sql1, new BeanListProcessor(DJZBHeaderVO.class));
 			for(DJZBHeaderVO vo : vos){
-				vouchid=vo.getVouchid();
+				vouchid=""+vo.getVouchid();
 				xtlsh=vo.getZyx16();
+				
+				//debug xtlsh
+				//xtlsh="0001F810000000009BRH";
 				
 				FPListResult fPListResult=getFPListResult(strPkCorp,xtlsh);				
 				if (fPListResult.getResult().equals("1")) {
 					for (FPListRow row:fPListResult.getRows()) {
 						//strResult=row.getFpdm()+"_"+row.getFphm();
+						String YFPHM=""+row.getFpdm()+row.getFphm();
 						strResult=getFPSQData(strPkCorp,row);
 						FPSQResult fPSQResult=JSONObject.parseObject(strResult, FPSQResult.class);
 						if (fPSQResult!=null) {
 							if (fPSQResult.getResult().equals("1")) {
-								sql1="update arap_djzb set zyx17='"+fPSQResult.getXxbbh()+"' where vouchid='"+vouchid+"' and isnull(zyx17,'')=''";
+								/*
+								 * debug
+								 * */
+								String XXBBH=""+fPSQResult.getXxbbh();
+								sql1="update arap_djzb set zyx17='"+XXBBH+"',zyx8='"+YFPHM+"' where vouchid='" +vouchid+"' and isnull(zyx17,'')=''"; 								
 								getDao().executeUpdate(sql1);
 								strResult="红票申请成功,信息表编号:"+fPSQResult.getXxbbh();
+								GTVoucherSet gTVoucherSet=new  GTVoucherSet();
+								gTVoucherSet.uploadGTVoucher(vouchid, strPkCorp, pk_user,YFPHM,XXBBH);
+								
 							}
 						}
 						
@@ -167,7 +180,7 @@ public class GTVoucherFPSQTask  implements nc.bs.pub.taskcenter.IBackgroundWorkP
 			fPSQData.setFpdm(row.getFpdm());
 			fPSQData.setFphm(row.getFphm());
 			fPSQData.setSqlx(0);
-			fPSQData.setDslbz("");
+			fPSQData.setDslbz("0");
 			fPSQData.setGfsh(row.getGhdwsbh());
 			fPSQData.setGfmc(row.getGhdwmc());
 			fPSQData.setXfsh(row.getQysh());
@@ -182,13 +195,15 @@ public class GTVoucherFPSQTask  implements nc.bs.pub.taskcenter.IBackgroundWorkP
 				fyxm.setSpmc(fpmx.getSpmc());
 				fyxm.setSpbm(fpmx.getFlbm());
 				fyxm.setSpdj(fpmx.getDj());
-				fyxm.setSl(fpmx.getSl());
-				fyxm.setSpsl(fpmx.getSpsl());
-				fyxm.setJe(fpmx.getJe());
+				fyxm.setSl(getTax(fpmx.getSl()));//除100
+				fyxm.setSpsl(fpmx.getSpsl());				
+				fyxm.setJe(getNegative(fpmx.getJe()));//负数
+				fyxm.setSe(getNegative(fpmx.getSe()));//负数
 				fyxm.setGgxh(fpmx.getGgxh());
 				fyxm.setZxbm(fpmx.getCpdm());
 				fyxm.setYhzcbs(0);
-				fyxm.setLslbs(0);;
+				fyxm.setLslbs(0);
+				fyxm.setHsbz("N");
 				fyxms.add(fyxm);
 			}
 			fPSQData.setFyxm(fyxms);
@@ -246,4 +261,27 @@ public class GTVoucherFPSQTask  implements nc.bs.pub.taskcenter.IBackgroundWorkP
 		Logger.debug("tokenGetID:"+strResult);
 		return strResult;
 	}
+ 	//得到负数
+ 	private String getNegative(String je) {
+ 		try {
+ 			Double dJe=Double.parseDouble(je);
+ 			BigDecimal bJe=new BigDecimal(dJe);
+ 			dJe=bJe.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+ 			return Double.toString(dJe*-1);
+ 		}catch(Exception e){
+ 			return "-"+je;
+ 		}	
+ 	}
+ 	//得到税率
+ 	private String getTax(String se) {
+ 		try {
+ 			Double dSe=Double.parseDouble(se);
+ 			dSe=dSe/100;
+ 			BigDecimal bSe=new BigDecimal(dSe);
+ 			dSe=bSe.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+ 			return Double.toString(dSe);
+ 		}catch(Exception e){
+ 			return se;
+ 		}	
+ 	}
 }

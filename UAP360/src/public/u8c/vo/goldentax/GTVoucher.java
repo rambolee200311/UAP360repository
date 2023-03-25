@@ -31,8 +31,13 @@ public class GTVoucher {
     private String QYKHYHZH;
 	@JSONField(name = "QYDZDH")
     private String QYDZDH;
+	@JSONField(name = "YFPHM")
+	private String YFPHM;
+	@JSONField(name = "XXBBH")
+	private String XXBBH;
 	@JSONField(name = "ITEM")
     private List<GTVoucherItem> ITEM;
+	
     public void setXTLSH(String XTLSH) {
          this.XTLSH = XTLSH;
      }
@@ -126,4 +131,17 @@ public class GTVoucher {
      public String toString() {
     	 return JSONObject.toJSONString(this);
      }
+	public String getYFPHM() {
+		return YFPHM;
+	}
+	public void setYFPHM(String yFPHM) {
+		YFPHM = yFPHM;
+	}
+	public String getXXBBH() {
+		return XXBBH;
+	}
+	public void setXXBBH(String xXBBH) {
+		XXBBH = xXBBH;
+	}
+     
 }
