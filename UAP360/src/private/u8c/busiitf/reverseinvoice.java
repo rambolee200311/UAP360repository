@@ -164,9 +164,9 @@ public class reverseinvoice implements IAPICustmerDevelop {
 			//客户开票地址电话  zyx10
 			parentvo.setZyx10(vos.getZyx10());//自定义1 项目
 			//客户银行账号  zyx13
-			parentvo.setZyx13(vos.getZyx13());//自定义2 项目
-			
-			
+			parentvo.setZyx13(vos.getZyx13());//自定义2 项目			
+			//发票种类 zyx15
+			parentvo.setZyx15(vos.getZyx15());
 
 			
 			billVO.setParentvo(parentvo);
@@ -199,12 +199,16 @@ public class reverseinvoice implements IAPICustmerDevelop {
 				 childrenvo.setZyx1(vob.getZyx1());// 自定义1 险种编码
 				 childrenvo.setZyx2(vob.getZyx2());// 自定义2 险种名称
 				 childrenvo.setZyx3(vob.getZyx3());// 自定义2 险种名称
-				 String zyx3="";
-				 if( (vob.getZyx3()!=null)||(!vob.getZyx3().isEmpty())||(!vob.getZyx3().equals(""))||(vob.getZyx3().trim().length()!=0)) {
-					 zyx3=vob.getZyx3();
+				 //String zyx3=""+vob.getZyx3();
+				 //if( (vob.getZyx3()!=null)||(!vob.getZyx3().isEmpty())||(!vob.getZyx3().equals(""))||(vob.getZyx3().trim().length()!=0)) {
+				//	 zyx3=vob.getZyx3();
+				 //}
+				 if (vob.getZyx3()==null)				 {
+					 parentvo.setZyx16(vob.getFb_oid()+"_");//原发票系统流水号
+				 }else {
+					 parentvo.setZyx16(vob.getFb_oid()+"_"+vob.getZyx3());//原发票系统流水号
 				 }
 				 
-				 parentvo.setZyx16(vob.getFb_oid()+"_"+zyx3);//原发票系统流水号
 				// childrenvo.setJfybje(detail.getInclusiveMoney());
 				/*
 				 * 收支项目

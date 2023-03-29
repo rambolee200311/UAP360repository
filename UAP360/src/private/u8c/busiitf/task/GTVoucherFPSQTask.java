@@ -96,7 +96,7 @@ public class GTVoucherFPSQTask  implements nc.bs.pub.taskcenter.IBackgroundWorkP
 								 * debug
 								 * */
 								String XXBBH=""+fPSQResult.getXxbbh();
-								sql1="update arap_djzb set zyx17='"+XXBBH+"',zyx8='"+YFPHM+"' where vouchid='" +vouchid+"' and isnull(zyx17,'')=''"; 								
+								sql1="update arap_djzb set zyx17='"+XXBBH+"' where vouchid='" +vouchid+"' and isnull(zyx17,'')=''"; 								
 								getDao().executeUpdate(sql1);
 								strResult="红票申请成功,信息表编号:"+fPSQResult.getXxbbh();
 								GTVoucherSet gTVoucherSet=new  GTVoucherSet();

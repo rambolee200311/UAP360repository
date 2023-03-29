@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import nc.bs.dao.BaseDAO;
+import nc.bs.framework.common.NCLocator;
+
 import java.util.ArrayList;
 import u8c.bs.exception.SecurityException;
 import u8c.vo.reject.invoiceApply.Invoice;
@@ -18,6 +20,7 @@ import u8c.vo.entity.CustVO;
 import nc.bs.logging.Log;
 import nc.bs.logging.Logger;
 import nc.bs.pub.taskcenter.BgWorkingContext;
+import nc.itf.arap.api.iARAPVoucher;
 import nc.jdbc.framework.processor.BeanListProcessor;
 import nc.jdbc.framework.processor.BeanProcessor;
 import nc.jdbc.framework.processor.ColumnProcessor;
@@ -26,7 +29,7 @@ import nc.vo.ep.dj.DJZBItemVO;
 import nc.vo.pub.BusinessException;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-
+import u8c.vo.respmsg.BusiResult;
 import u8c.server.HttpURLConnectionDemo;
 
 public class RejectInvoiceAPITask implements nc.bs.pub.taskcenter.IBackgroundWorkPlugin{
@@ -40,6 +43,7 @@ public class RejectInvoiceAPITask implements nc.bs.pub.taskcenter.IBackgroundWor
 	@Override
 	public String executeTask(BgWorkingContext param) throws BusinessException {
 		String strResult="";
+		String vouchid="";
 		Logger.init("hanglianAPI");
 		
 		// 拿到参数
@@ -49,13 +53,22 @@ public class RejectInvoiceAPITask implements nc.bs.pub.taskcenter.IBackgroundWor
 		String strPkCorp=param.getPk_corp();
 		String sql1="select [bbje], [budgetcheck], [ddhbbm], [deinvdate], [djbh], [djdl], [djkjnd], [djkjqj], [djlxbm], [djrq], [djzt], [dr], [dwbm], [dyvouchid], [dzrq], [effectdate], [enduser], [fbje], [fcounteractflag], [feinvstatus], [finvoicetype], [fj], [fktjbm], [hzbz], [inner_effect_date], [isjszxzf], [isnetready], [isonlinepay], [ispaid], [isreded], [isselectedpay], [jszxzf], [kmbm], [kskhyh], [lastshr], [lasttzr], [lrr], [lybz], [officialprintdate], [officialprintuser], [outbusitype], [paydate], [payman], [pj_jsfs], [pj_num], [pj_oid], [prepay], [pzglh], [qcbz], [qrr], [scomment], [settlenum], [sfkr], [shkjnd], [shkjqj], [shr], [shrq], [shzd], [specflag], [spzt], [ssbh], [sscause], [sxbz], [sxkjnd], [sxkjqj], [sxr], [sxrq], [ts], [veinvcode], [veinvfailnote], [veinvnumber], [vouchid], [vsplitrecord], [vsrceinvcode], [vsrceinvnumber], [xslxbm], [ybje], [yhqrkjnd], [yhqrkjqj], [yhqrr], [yhqrrq], [ywbm], [zdr], [zdrq], [zgyf], [zyx1], [zyx10], [zyx11], [zyx12], [zyx13], [zyx14], [zyx15], [zyx16], [zyx17], [zyx18], [zyx19], [zyx2], [zyx20], [zyx21], [zyx22], [zyx23], [zyx24], [zyx25], [zyx26], [zyx27], [zyx28], [zyx29], [zyx3], [zyx30], [zyx4], [zyx5], [zyx6], [zyx7], [zyx8], [zyx9], [zzzt], [inccontype] " +
 					" from arap_djzb " +
-					" where djdl='ys' and djlxbm='"+strbilltype+"' and dr=0 and isnull(zyx1,'')!='' and dwbm='"+strPkCorp+"'";;
-		if (!(strDjbh==null)&&(!strDjbh.equals(null))&&(!strDjbh.isEmpty())){
-			sql1+=" and djbh='"+strDjbh+"'";
-		}		
-		
+					" where djzt=1 and djdl='ys' and dr=0 and isnull(zyx1,'')!='' and dwbm='"+strPkCorp+"' and";
+		StringBuilder where = new StringBuilder(sql1);
+        if (strbilltype != null && strbilltype.trim().length() > 0) {
+            where.append(" djlxbm='" + strbilltype + "' and");
+        }
+        if (strDjbh != null && strDjbh.trim().length() > 0) {
+            where.append(" djbh='" + strDjbh + "' and");
+        }
+        where.append(" vouchid not in (select vouchid from arap_djfb where isnull(zyx13,'')='success')"+" and");
+        
+        int index = where.lastIndexOf("and");
+        if (index > 0) {
+            where = where.delete(index, index + 3);
+        }
 		//主表vo
-		ArrayList<DJZBHeaderVO> vos =(ArrayList<DJZBHeaderVO>) getDao().executeQuery(sql1, new BeanListProcessor(DJZBHeaderVO.class));		
+		ArrayList<DJZBHeaderVO> vos =(ArrayList<DJZBHeaderVO>) getDao().executeQuery(where.toString(), new BeanListProcessor(DJZBHeaderVO.class));		
 				
 		//初始化报文		
 		Invoice invoice=new Invoice();
@@ -87,7 +100,7 @@ public class RejectInvoiceAPITask implements nc.bs.pub.taskcenter.IBackgroundWor
 			Double inclusive=(double) 0;
 			Double noInclusiveMoney=(double) 0;
 			Double specialMoney=(double) 0;
-			
+			vouchid=vo.getVouchid();
 			for(nc.vo.ep.dj.DJZBItemVO vob : vobs){
 				//客户
 				String sql3="select custcode,custname,conaddr,phone1,taxpayerid from bd_cubasdoc where pk_cubasdoc='"+vob.getHbbm()+"'";
@@ -112,7 +125,7 @@ public class RejectInvoiceAPITask implements nc.bs.pub.taskcenter.IBackgroundWor
 			invoiceData.setAdviceDate(vo.getDjrq().toString());
 			invoiceData.setBusiType(vo.getDjlxbm());
 			invoiceData.setTotleAmount(inclusiveMoney);
-			invoiceData.setValue1("abc");
+			//invoiceData.setValue1("abc");
 			invoiceData.setCurrency("CNY");//币种 人民币		
 			invoiceData.setOperatorCode(userCode);	
 			listInvoiceData.add(invoiceData);
@@ -147,7 +160,16 @@ public class RejectInvoiceAPITask implements nc.bs.pub.taskcenter.IBackgroundWor
 		RespMsg respMsg=JSON.toJavaObject(parameJson, RespMsg.class);
 		
 		try {
-			strResult=encryptHelper.decrypt(respMsg.getMessage().getData());			
+			strResult=encryptHelper.decrypt(respMsg.getMessage().getData());
+			JSONObject resultJson = JSONObject.parseObject(strResult);
+			BusiResult busiResult=JSON.toJavaObject(resultJson, BusiResult.class);
+			//20230329 delete vouch
+			if (busiResult.equals("0")) {
+				iARAPVoucher itfARAP=(iARAPVoucher)NCLocator.getInstance().lookup(iARAPVoucher.class);
+				itfARAP.delete(vouchid);
+			}
+			
+			
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
 			Logger.error(e.getMessage(),e);			

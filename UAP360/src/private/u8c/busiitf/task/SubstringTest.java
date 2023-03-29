@@ -10,6 +10,8 @@ import nc.vo.pub.BusinessException;
 import u8c.bs.exception.SecurityException;
 import u8c.vo.arrival.EncryptHelper;
 
+
+
 public class SubstringTest  implements nc.bs.pub.taskcenter.IBackgroundWorkPlugin {
 	private BaseDAO dao; 
 	private BaseDAO getDao() {

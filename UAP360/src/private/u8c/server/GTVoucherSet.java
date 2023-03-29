@@ -61,6 +61,7 @@ public class GTVoucherSet implements IGTVoucherSet{
 	public String uploadGTVoucher(String vouchid,String strPkCorp,String pk_user,String YFPHM,String XXBBH){
 		String strResult="";
 		Logger.init("hanglianAPI");
+		String xtlsh;
 		try {
 			String sql1="select [bbje], [budgetcheck], [ddhbbm], [deinvdate], [djbh], [djdl], [djkjnd], [djkjqj], [djlxbm], [djrq], [djzt], [dr], [dwbm], [dyvouchid], [dzrq], [effectdate], [enduser], [fbje], [fcounteractflag], [feinvstatus], [finvoicetype], [fj], [fktjbm], [hzbz], [inner_effect_date], [isjszxzf], [isnetready], [isonlinepay], [ispaid], [isreded], [isselectedpay], [jszxzf], [kmbm], [kskhyh], [lastshr], [lasttzr], [lrr], [lybz], [officialprintdate], [officialprintuser], [outbusitype], [paydate], [payman], [pj_jsfs], [pj_num], [pj_oid], [prepay], [pzglh], [qcbz], [qrr], [scomment], [settlenum], [sfkr], [shkjnd], [shkjqj], [shr], [shrq], [shzd], [specflag], [spzt], [ssbh], [sscause], [sxbz], [sxkjnd], [sxkjqj], [sxr], [sxrq], [ts], [veinvcode], [veinvfailnote], [veinvnumber], [vouchid], [vsplitrecord], [vsrceinvcode], [vsrceinvnumber], [xslxbm], [ybje], [yhqrkjnd], [yhqrkjqj], [yhqrr], [yhqrrq], [ywbm], [zdr], [zdrq], [zgyf], [zyx1], [zyx10], [zyx11], [zyx12], [zyx13], [zyx14], [zyx15], [zyx16], [zyx17], [zyx18], [zyx19], [zyx2], [zyx20], [zyx21], [zyx22], [zyx23], [zyx24], [zyx25], [zyx26], [zyx27], [zyx28], [zyx29], [zyx3], [zyx30], [zyx4], [zyx5], [zyx6], [zyx7], [zyx8], [zyx9], [zzzt], [inccontype] " +
 						" from arap_djzb " +
@@ -136,7 +137,8 @@ public class GTVoucherSet implements IGTVoucherSet{
 						
 						//gTVoucher.setXTLSH(vob.getFb_oid());
 						//2023-03-01 合并号zyx3
-						gTVoucher.setXTLSH(vouchid+"_"+cZyx3.getZyx3());
+						xtlsh=vouchid+"_"+cZyx3.getZyx3();
+						gTVoucher.setXTLSH(xtlsh);
 						/*
 						 * gTVoucher.setKHMC(custVO.getDef3());
 						 * gTVoucher.setKHSH(custVO.getTaxpayerid()); //gTVoucher.setXTLSH("gTVoucher");
@@ -209,25 +211,42 @@ public class GTVoucherSet implements IGTVoucherSet{
 				strResult=result.getMessage();
 				InvoiceUpdateSet invoiceUpdateSet=new InvoiceUpdateSet();
 				
-				for(SucessListVO sucessList:result.getSucessList()){
-					//sql1="update arap_djfb set zyx13='success',zyx14='发票代码:"+sucessList.getFpdm()+"_发票号码:"+sucessList.getFphm()+"',zyx15='"+sucessList.getKprq()+"'"
-					sql1="update arap_djfb set zyx13='success',zyx14='"+sucessList.getFpdm()+sucessList.getFphm()+"',zyx15='"+sucessList.getKprq()+"'"
-							+" where vouchid+'_'+isnull(zyx3,'')='"+sucessList.getXtlsh()+"' and isnull(zyx13,'')!='success'";
-					try {
-						dao.executeUpdate(sql1);					
-					} catch (DAOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-						Logger.error("GTVouchers success:"+e.getMessage());
+				if (result.getSucessList()!=null) {				
+					for(SucessListVO sucessList:result.getSucessList()){
+						//sql1="update arap_djfb set zyx13='success',zyx14='发票代码:"+sucessList.getFpdm()+"_发票号码:"+sucessList.getFphm()+"',zyx15='"+sucessList.getKprq()+"'"
+						sql1="update arap_djfb set zyx13='success',zyx14='"+sucessList.getFpdm()+sucessList.getFphm()+"',zyx15='"+sucessList.getKprq()+"'"
+								+" where vouchid+'_'+isnull(zyx3,'')='"+sucessList.getXtlsh()+"' and isnull(zyx13,'')!='success'";
+						try {
+							dao.executeUpdate(sql1);					
+						} catch (DAOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							Logger.error("GTVouchers success:"+e.getMessage());
+						}
+						invoiceUpdateSet.updateInvoiceData(sucessList.getXtlsh(),
+								pk_user,
+								sucessList.getFpdm()+sucessList.getFphm(),
+								sucessList.getKprq());
 					}
-					invoiceUpdateSet.updateInvoiceData(sucessList.getXtlsh(),
-							pk_user,
-							sucessList.getFpdm()+sucessList.getFphm(),
-							sucessList.getKprq());
 				}
-				for(ErrListVO errList:result.getErrList()){
-					sql1="update arap_djfb set zyx13='err',zyx14='错误信息:"+errList.getErrMsg()+"'"
-							+" where vouchid+'_'+isnull(zyx3,'')='"+errList.getXTLSH()+"' and isnull(zyx13,'')!='success'";
+				
+				if (result.getErrList()!=null) {			
+					for(ErrListVO errList:result.getErrList()){
+						sql1="update arap_djfb set zyx13='err',zyx14='错误信息:"+errList.getErrMsg()+"'"
+								+" where vouchid+'_'+isnull(zyx3,'')='"+errList.getXTLSH()+"' and isnull(zyx13,'')!='success'";
+						try {
+							dao.executeUpdate(sql1);
+						} catch (DAOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							Logger.error("GTVouchers err:"+e.getMessage());
+						}
+					}
+				}
+				/*
+				if (result.getReulst().equals("0")) {
+					sql1="update arap_djfb set zyx13='err',zyx14='错误信息:"+result.getMessage()+"'"
+							+" where vouchid+'_'+isnull(zyx3,'')='"+xtlsh+"' and isnull(zyx13,'')!='success'";
 					try {
 						dao.executeUpdate(sql1);
 					} catch (DAOException e) {
@@ -236,7 +255,7 @@ public class GTVoucherSet implements IGTVoucherSet{
 						Logger.error("GTVouchers err:"+e.getMessage());
 					}
 				}
-			
+				*/
 			
 			}
 		
