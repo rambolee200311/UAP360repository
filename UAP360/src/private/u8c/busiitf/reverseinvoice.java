@@ -37,7 +37,13 @@ import u8c.vo.applyInvoice.BillVO;
 import u8c.vo.applyInvoice.ChildrenVO;
 import u8c.vo.applyInvoice.ParentVO;
 import u8c.vo.arrival.EncryptHelper;
+import u8c.vo.entity.CorpVO;
+import u8c.vo.goldentax.FPListResult;
+import u8c.vo.goldentax.TokenGetVO;
+import u8c.vo.goldentax.Zyx3;
+import u8c.vo.invoice.FPFL;
 import u8c.vo.pub.APIMessageVO;
+import u8c.server.GTFPLISTSet;
 import u8c.server.HttpURLConnectionDemo;
 import u8c.vo.reverseInvoice.PostResult;
 import u8c.vo.reverseInvoice.ReverseInvoiceMessage;
@@ -115,7 +121,7 @@ public class reverseinvoice implements IAPICustmerDevelop {
 		sql2 = "select [accountid], [assetpactno], [bankrollprojet], [bbhl], [bbpjlx], [bbtxfy], [bbye], [bfyhzh], [billdate], [bjdwhsdj], [bjdwsl], [bjdwwsdj], [bjjldw], [blargessflag], [bz_date], [bz_kjnd], [bz_kjqj], [bzbm], [cashitem], [chbm_cl], [checkflag], [chmc], [cinventoryid], [ckbm], [ckdh], [ckdid], [cksqsh], [clbh], [commonflag], [contractno], [ctzhtlx_pk], [ddh], [ddhh], [ddhid], [ddlx], [deptid], [dfbbje], [dfbbsj], [dfbbwsje], [dffbje], [dffbsj], [dfjs], [dfshl], [dfybje], [dfybsj], [dfybwsje], [dfyhzh], [discountmny], [dj], [djbh], [djdl], [djlxbm], [djxtflag], [dr], [dstlsubcs], [dwbm], [encode], [equipmentcode], [facardbh], [fb_oid], [fbhl], [fbpjlx], [fbtxfy], [fbye], [fjldw], [fkyhdz], [fkyhmc], [flbh], [fph], [fphid], [freeitemid], [fx], [ggxh], [groupnum], [hbbm], [hsdj], [hsl], [htbh], [htmc], [innerorderno], [issfkxychanged], [isverifyfinished], [item_bill_pk], [itemstyle], [jfbbje], [jfbbsj], [jffbje], [jffbsj], [jfjs], [jfshl], [jfybje], [jfybsj], [jfybwsje], [jfzkfbje], [jfzkybje], [jobid], [jobphaseid], [jsfsbm], [jshj], [kmbm], [kprq], [ksbm_cl], [kslb], [kxyt], [notetype], [occupationmny], [old_flag], [old_sys_flag], [ordercusmandoc], [othersysflag], [pausetransact], [paydate], [payflag], [payman], [pch], [ph], [pj_jsfs], [pjdirection], [pjh], [pk_jobobjpha], [pk_taxclass], [produceorder], [productline], [pzflh], [qxrq], [sanhu], [seqnum], [sfbz], [sfkxyh], [shlye], [skyhdz], [skyhmc], [sl], [spzt], [srbz], [szxmid], [task], [tax_num], [tbbh], [ts], [txlx_bbje], [txlx_fbje], [txlx_ybje], [usedept], [verifyfinisheddate], [vouchid], [wbfbbje], [wbffbje], [wbfybje], [wldx], [xbbm3], [xgbh], [xm], [xmbm2], [xmbm4], [xmys], [xyzh], [ybpjlx], [ybtxfy], [ybye], [ycskrq], [ysbbye], [ysfbye], [ysybye], [ywbm], [ywxz], [ywybm], [zjldw], [zkl], [zrdeptid], [zy], [zyx1], [zyx10], [zyx11], [zyx12], [zyx13], [zyx14], [zyx15], [zyx16], [zyx17], [zyx18], [zyx19], [zyx2], [zyx20], [zyx21], [zyx22], [zyx23], [zyx24], [zyx25], [zyx26], [zyx27], [zyx28], [zyx29], [zyx3], [zyx30], [zyx4], [zyx5], [zyx6], [zyx7], [zyx8], [zyx9] "
 				+ "from arap_djfb " +
 				// "where vouchid='"+vos.get(0).getVouchid()+"';";
-				"where zyx14='" + body.getReverseInvoiceNo() + "';";
+				"where zyx14 like '%" + body.getReverseInvoiceNo() + "%';";
 		// 子表 vob
 		ArrayList<DJZBItemVO> vobs = (ArrayList<DJZBItemVO>) getDao().executeQuery(sql2,new BeanListProcessor(DJZBItemVO.class));
 		if (vobs.size() <= 0) {
@@ -170,15 +176,40 @@ public class reverseinvoice implements IAPICustmerDevelop {
 
 			
 			billVO.setParentvo(parentvo);
+			//公司
+			String sql3="select unitcode,unitname from bd_corp where pk_corp='"+vos.getDwbm()+"'";
+			CorpVO corpVO=(CorpVO)getDao().executeQuery(sql3, new BeanProcessor(CorpVO.class));
+			sql3="select isnull(zyx3,'') zyx3 from arap_djfb where vouchid='"+vobs.get(0).getVouchid()+"' group by zyx3";
+			ArrayList<Zyx3> zyx3s =(ArrayList<Zyx3>) getDao().executeQuery(sql3, new BeanListProcessor(Zyx3.class));
+			String fb_oid=vos.getVouchid()+"_"+zyx3s.get(0).getZyx3();
+			
+			/*
+			 * 2023-04-11
+			 * lijianqiang
+			 * 获取金税开票列表
+			 */
+			TokenGetVO tokenGetVO=u8c.server.XmlConfig.getTokenGetVO(corpVO.getUnitcode());
+			GTFPLISTSet gTFPLISTSet=new GTFPLISTSet();
+			String token=gTFPLISTSet.getGTToken(tokenGetVO);
+			String spid=tokenGetVO.getGTSPID();
+			sql2="select doccode,docname from bd_defdoc where pk_defdoclist in (select pk_defdoclist from bd_defdoclist where doclistcode='FPZL') and docname='"+vos.getZyx15()+"'";
+			FPFL fPFL=(FPFL)dao.executeQuery(sql2, new BeanProcessor(FPFL.class));	
+			String fpfl="004";
+			if (fPFL!=null) {
+				fpfl=fPFL.getDoccode();
+			}
+			
+			FPListResult fplist=gTFPLISTSet.getSingleFPlist(fb_oid, spid, token, fpfl,body.getReverseInvoiceNo());
+			
 			// 单据体
 			List<ChildrenVO> children = new ArrayList();
-			for (DJZBItemVO vob : vobs) {
+			//for (DJZBItemVO vob : vobs) {
 				ChildrenVO childrenvo = new ChildrenVO();
 				/*
 				 * 客户档案
 				 */
 				sql1 = "select pk_corp,pk_cubasdoc,custcode,custname" + " from bd_cubasdoc" + " where pk_cubasdoc='"
-						+ vob.getHbbm() + "';";
+						+ vobs.get(0).getHbbm() + "';";
 				CustBasVO custBasVO = (CustBasVO) getDao().executeQuery(sql1, new BeanProcessor(CustBasVO.class));
 				childrenvo.setHbbm(custBasVO.getCustcode());
 				/*
@@ -191,38 +222,39 @@ public class reverseinvoice implements IAPICustmerDevelop {
 				 * childrenvo.setJfbbje(Double.toString(body.getReverseInclusiveRMB()));
 				 * childrenvo.setJfybje(Double.toString(body.getReverseInclusiveRMB()));
 				 */
-				 childrenvo.setBbhl(vob.getBbhl().doubleValue());
+				 childrenvo.setBbhl(vobs.get(0).getBbhl().doubleValue());
 				 //childrenvo.setBzbm(vob.getBzbm());				 
-				 childrenvo.setSl(vob.getSl().toDouble());
-				 childrenvo.setJfbbje(Double.toString(vob.getJfbbje().toDouble()*-1));
-				 childrenvo.setJfybje(Double.toString(vob.getJfybje().toDouble()*-1));
-				 childrenvo.setZyx1(vob.getZyx1());// 自定义1 险种编码
-				 childrenvo.setZyx2(vob.getZyx2());// 自定义2 险种名称
-				 childrenvo.setZyx3(vob.getZyx3());// 自定义2 险种名称
+				 childrenvo.setSl(vobs.get(0).getSl().toDouble());
+				 childrenvo.setJfbbje(Double.toString(body.getReverseInclusiveRMB()));
+				 childrenvo.setJfybje(Double.toString(body.getReverseInclusiveRMB()));
+				 childrenvo.setZyx1(vobs.get(0).getZyx1());// 自定义1 险种编码
+				 childrenvo.setZyx2(vobs.get(0).getZyx2());// 自定义2 险种名称
+				 childrenvo.setZyx3(vobs.get(0).getZyx3());// 自定义2 险种名称
 				 //String zyx3=""+vob.getZyx3();
 				 //if( (vob.getZyx3()!=null)||(!vob.getZyx3().isEmpty())||(!vob.getZyx3().equals(""))||(vob.getZyx3().trim().length()!=0)) {
 				//	 zyx3=vob.getZyx3();
 				 //}
-				 if (vob.getZyx3()==null)				 {
-					 parentvo.setZyx16(vob.getFb_oid()+"_");//原发票系统流水号
-				 }else {
-					 parentvo.setZyx16(vob.getFb_oid()+"_"+vob.getZyx3());//原发票系统流水号
-				 }
+					/*
+					 * if (vob.getZyx3()==null) { parentvo.setZyx16(vob.getFb_oid()+"_");//原发票系统流水号
+					 * }else { parentvo.setZyx16(vob.getFb_oid()+"_"+vob.getZyx3());//原发票系统流水号 }
+					 */
 				 
 				// childrenvo.setJfybje(detail.getInclusiveMoney());
 				/*
 				 * 收支项目
 				 */
-					
-					  CostsubjVO costsubjVO = (CostsubjVO) dmo.queryByPrimaryKey(CostsubjVO.class, vobs.get(0).getSzxmid()); 
-					  childrenvo.setSzxmid(costsubjVO.getCostcode());
-					 
-					  DeptdocVO deptdocVO=(DeptdocVO) dmo.queryByPrimaryKey(DeptdocVO.class, vobs.get(0).getDeptid()); 
-					  childrenvo.setDeptid(deptdocVO.getDeptcode());
+				//金税系统流水号
+				parentvo.setZyx16 (fplist.getRows().get(0).getXtlsh());
+				
+				  CostsubjVO costsubjVO = (CostsubjVO) dmo.queryByPrimaryKey(CostsubjVO.class, vobs.get(0).getSzxmid()); 
+				  childrenvo.setSzxmid(costsubjVO.getCostcode());
+				 
+				  DeptdocVO deptdocVO=(DeptdocVO) dmo.queryByPrimaryKey(DeptdocVO.class, vobs.get(0).getDeptid()); 
+				  childrenvo.setDeptid(deptdocVO.getDeptcode());
 				 //childrenvo.setSzxmid(vob.getSzxmid());//收支项目
 				 
 				children.add(childrenvo);
-			}
+			//}
 			billVO.setChildren(children);
 
 			listBillVO.add(billVO);

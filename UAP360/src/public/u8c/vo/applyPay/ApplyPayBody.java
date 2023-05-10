@@ -25,7 +25,16 @@ public class ApplyPayBody {
 	private String acCode;//银行账号
 	private String bkName;//开户行名
 	private Double applyAmount;//转付金额：原币金额
-	private Double applyRMB;//转付金额：人民币金额
+	private Double applyRMB;//转付金额：人民币金额	
+	private String arrivalRegiCode;//业务到账登记号--交易流水号
+	private String recvCode;//收款客商编码
+	private String recvName;//收款客商名称
+	public String getArrivalRegiCode() {
+		return arrivalRegiCode;
+	}
+	public void setArrivalRegiCode(String arrivalRegiCode) {
+		this.arrivalRegiCode = arrivalRegiCode;
+	}
 	public String getTransferApplyNo() {
 		return transferApplyNo;
 	}
@@ -176,5 +185,16 @@ public class ApplyPayBody {
 	public void setApplyRMB(Double applyRMB) {
 		this.applyRMB = applyRMB;
 	}
-	
+	public String getRecvCode() {
+		return recvCode;
+	}
+	public void setRecvCode(String recvCode) {
+		this.recvCode = recvCode;
+	}
+	public String getRecvName() {
+		return recvName;
+	}
+	public void setRecvName(String recvName) {
+		this.recvName = recvName;
+	}
 }

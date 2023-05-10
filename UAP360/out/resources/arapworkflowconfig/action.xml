@@ -1,0 +1,1260 @@
+<?xml version="1.0" encoding="GBK"?>
+<actions>
+    <action desc="刷新界面" id="fi_arap#dj_RefreshUIaction"
+        impclass="nc.ui.arap.actions.RefreshUIaction"
+        method="refreshListUI" name="刷新界面" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="刷新按钮状态" id="fi_arap#dj_UpdateButtonStatAction"
+        impclass="nc.ui.arap.actions.UpdateButtonStatAction"
+        method="updateButtonStats" name="刷新按钮状态" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="删除确认" id="fi_arap#dj_ArapBillDeleteConform"
+        impclass="nc.ui.arap.actions.DeleteConformAction"
+        method="isConfirmDelete" name="删除确认" namespace="fi_arap"
+        refid="" servflag="false">
+        <output desc="" id="fi_arap_dj_ArapBillDeleteConform_output"
+            name="isConfirm" type="boolean"/>
+    </action>
+    <action desc="得到选择单据" id="fi_arap#dj_getbills"
+        impclass="nc.ui.arap.actions.DefaultAction"
+        method="getSelectedvos" name="得到选择单据" namespace="fi_arap"
+        refid="" servflag="false">
+        <output desc="" id="fi_arap_dj_getbills_output"
+            name="selectedbills" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="检查协同单据是否可删除" id="fi_arap#dj_ArapBillDeleteCheckXt"
+        impclass="nc.ui.arap.actions.DeleteCheckAction"
+        method="checkCandeleteXt" name="检查协同单据是否可删除" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_ArapBillDeleteCheckXt_param_1"
+                name="djs" type="nc.vo.ep.dj.DJZBVO[]"/>
+        </inputs>
+    </action>
+    <action desc="单据删除检查" id="fi_arap#dj_ArapBillDeleteCheck"
+        impclass="nc.ui.arap.actions.DeleteCheckAction"
+        method="checkCandelete" name="单据删除检查" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_ArapBillDeleteCheck_param_1"
+                name="djs" type="nc.vo.ep.dj.DJZBVO[]"/>
+        </inputs>
+    </action>
+    <action desc="删除单据" id="fi_arap#dj_ArapBillDelete"
+        impclass="nc.ui.arap.actions.DeleteAction" method="deletevos"
+        name="删除单据" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_ArapBillDelete_param_1"
+                name="res" type="nc.vo.ep.dj.DJZBVO[]"/>
+        </inputs>
+        <output desc="" id="fi_arap_dj_ArapBillDelete_output"
+            name="erromsg" type="java.util.String"/>
+    </action>
+    <action desc="删除单据服务" id="fi_arap#dj_ArapBillDeleteService"
+        impclass="nc.itf.arap.pub.IArapBillPublic"
+        method="deleteArapBill" name="删除单据服务" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_ArapBillDeleteService_param_1"
+                name="dj" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+        <output desc="" id="fi_arap_dj_ArapBillDeleteService_output"
+            name="outdj" type="nc.vo.ep.dj.DJZBVO"/>
+    </action>
+    <action desc="后台_保存单据服务" id="fi_arap#background_ArapSaveDjService"
+        impclass="nc.itf.arap.pub.IArapBillPrivate" method="saveDj"
+        name="后台_保存单据服" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc=""
+                id="fi_arap#background_ArapSaveDjService_param_1"
+                name="dj" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+        <output desc="" id="fi_arap_dj_ArapBillDeleteService_output"
+            name="outdj" type="nc.vo.ep.dj.DJZBVO"/>
+    </action>
+    <action desc="检查单据项" id="fi_arap#dj_ArapBillCheckPanel"
+        impclass="nc.ui.arap.actions.CombinePanelCheckAction"
+        method="CombinePanelCheck" name="检查单据项" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="调整单据项精度" id="fi_arap#dj_ArapBillAdjustDigit"
+        impclass="nc.ui.arap.actions.AdjustCurrencyDecimalDigitAction"
+        method="adjustCurrencyDecimalDigit" name="调整单据项精度"
+        namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="调整VO" id="fi_arap#dj_ArapBillConvertVO"
+        impclass="nc.ui.arap.actions.BillVOConvertAction"
+        method="getConvertedBillVO" name="调整VO" namespace="fi_arap"
+        refid="" servflag="false">
+        <output desc="" id="fi_arap_dj_ArapBillConvertVO_output"
+            name="convertout1" type="nc.vo.ep.dj.DJZBVO"/>
+    </action>
+    <action desc="检查BillItem" id="fi_arap#dj_ArapBillCheckItem"
+        impclass="nc.ui.arap.actions.CheckBillItemValueAction"
+        method="checkNullBefSave" name="检查BillItem" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_ArapBillCheckItem_param_1"
+                name="checkItem1" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+
+    </action>
+    <action desc="创建paramVO" id="fi_arap#dj_ArapBillCheckParam"
+        impclass="nc.ui.arap.actions.PrepareCheckParamVOAction"
+        method="getDjCheckParamVO" name="创建paramVO" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_ArapBillcheck_param_1"
+                name="Checkparaminput1" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+        <output desc="" id="fi_arap_dj_ArapBillCheckParam_output"
+            name="checkParamout1" type="nc.vo.arap.global.DjCheckParamVO"/>
+    </action>
+    <action desc="检查是否暂存" id="fi_arap#dj_ArapBillCheckIsTempSave"
+        impclass="nc.ui.arap.actions.CheckIsTempSaveAction"
+        method="isTempSave" name="检查是否暂存" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_ArapBillIsTempSave_param_1"
+                name="Tempsaveinput1" type="nc.vo.ep.dj.DJZBVO"/>
+            <input desc="" id="fi_arap_dj_ArapBillIsTempSave_param_2"
+                name="Tempsaveinput2" type="nc.vo.arap.global.DjCheckParamVO"/>
+        </inputs>
+    </action>
+    <action desc="准备单据Head" id="fi_arap#dj_PrepareBillHead"
+        impclass="nc.ui.arap.actions.PrepareBillHeadAction"
+        method="prepareBillHead" name="准备单据Head" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_prepareBillHead_param_1"
+                name="billHeadinput1" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+        <output desc="" id="fi_arap_dj_PrepareBillHead_output"
+            name="billHeadout1" type="nc.vo.ep.dj.DJZBVO"/>
+    </action>
+    <action desc="校验单据Head" id="fi_arap#dj_CheckBillHeadAction"
+        impclass="nc.ui.arap.actions.CheckBillHeadAction"
+        method="checkBillHead" name="校验单据Head" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_CheckBillHeadAction_param_1"
+                name="CheckBillHeadActioninput1" type="nc.vo.ep.dj.DJZBVO"/>
+            <input desc="" id="fi_arap_dj_CheckBillHeadAction_param_2"
+                name="CheckBillHeadActioninput2" type="nc.vo.arap.global.DjCheckParamVO"/>
+        </inputs>
+    </action>
+    <action desc="准备单据Body" id="fi_arap#dj_prepareBillBody"
+        impclass="nc.ui.arap.actions.PrepareBillBodyAction"
+        method="prepareBillBody" name="准备单据Body" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_prepareBillBody_param_1"
+                name="prepareBillBodyinput1" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+        <output desc="" id="fi_arap_dj_prepareBillBody_output"
+            name="prepareBillBodyout1" type="nc.vo.ep.dj.DJZBVO"/>
+    </action>
+    <action desc="校验VO" id="fi_arap#dj_ArapBillCheckVO"
+        impclass="nc.ui.arap.actions.CombineCheckVOAction"
+        method="combineCheckVO" name="校验VO" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_ArapBillCheckVO_param_1"
+                name="CheckVOinput1" type="nc.vo.ep.dj.DJZBVO"/>
+            <input desc="" id="fi_arap_dj_ArapBillCheckVO_param_2"
+                name="CheckVOinput2" type="nc.vo.arap.global.DjCheckParamVO"/>
+        </inputs>
+    </action>
+    <action desc="单据管理_保存单据" id="fi_arap#dj_SaveActionNor"
+        impclass="nc.ui.arap.actions.edit.SaveActionNor" method="save"
+        name="单据管理_保存单据" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_SaveActionNor_param_1"
+                name="SaveActionNorinput1" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+    </action>
+    <action desc="单据录入_保存单据" id="fi_arap#dj_SaveActionLr"
+        impclass="nc.ui.arap.actions.edit.SaveActionLr" method="save"
+        name="单据录入_保存单据" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_SaveActionLr_param_1"
+                name="SaveActionLrinput1" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+    </action>
+    <action desc="期初余额_保存单据" id="fi_arap#dj_SaveActionQc"
+        impclass="nc.ui.arap.actions.edit.SaveActionQc" method="save"
+        name="期初余额_保存单据" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_SaveActionQc_param_1"
+                name="SaveActionQcinput1" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+    </action>
+    <action desc="签字确认_保存单据" id="fi_arap#dj_SaveActionSn"
+        impclass="nc.ui.arap.actions.edit.SaveActionSn" method="save"
+        name="签字确认_保存单据" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_SaveActionSn_param_1"
+                name="SaveActionSninput1" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+    </action>
+    <action desc="事项审批单_保存单据" id="fi_arap#dj_SaveActionSs"
+        impclass="nc.ui.arap.actions.edit.SaveActionSs" method="save"
+        name="事项审批单_保存单据" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_SaveActionSs_param_1"
+                name="SaveActionSsinput1" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+    </action>
+    <action desc="预提单_保存单据" id="fi_arap#dj_SaveActionTb"
+        impclass="nc.ui.arap.actions.edit.SaveActionTb" method="save"
+        name="预提单_保存单据" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_SaveActionTb_param_1"
+                name="SaveActionTbinput1" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+    </action>
+    <action desc="单据确认操作" id="fi_arap#onConfirmBill"
+        impclass="nc.ui.arap.actions.BillConfirmAction"
+        method="onConfirmBill" name="确认单据操作" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="检查单据是否可以确认" id="fi_arap#checkCanConfirm"
+        impclass="nc.ui.arap.actions.BillConfirmAction"
+        method="checkCanConfirm" name="确认检查" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc="需要检查的单据" id="fi_arap_checkCanConfirm_param_1"
+                name="djvo" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+    </action>
+    <action desc="增加单据自由项" id="fi_arap#addfreeitem"
+        impclass="nc.ui.arap.actions.FreeItemOperateActions"
+        method="addFreeItem" name="增加单据自由项" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="自由项增行" id="fi_arap#addFreeitemRow"
+        impclass="nc.ui.arap.actions.FreeItemOperateActions"
+        method="addFreeitemRow" name="自由项增行" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="取消自由项编辑" id="fi_arap#cancelFreeitem"
+        impclass="nc.ui.arap.actions.FreeItemOperateActions"
+        method="cancelFreeitem" name="取消自由项编辑" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="删除自由项" id="fi_arap#delFreeItem"
+        impclass="nc.ui.arap.actions.FreeItemOperateActions"
+        method="delFreeItem" name="删除自由项" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="自由项删除行" id="fi_arap#delFreeItemRow"
+        impclass="nc.ui.arap.actions.FreeItemOperateActions"
+        method="delFreeItemRow" name="自由项删除行" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="修改自由项" id="fi_arap#editFreeItem"
+        impclass="nc.ui.arap.actions.FreeItemOperateActions"
+        method="editFreeItem" name="修改自由项" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="打印自由项" id="fi_arap#printFreeItem"
+        impclass="nc.ui.arap.actions.FreeItemOperateActions"
+        method="printFreeItem" name="打印自由项" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="增加或者修改自由项后保存自由项" id="fi_arap#saveFreeItem"
+        impclass="nc.ui.arap.actions.FreeItemOperateActions"
+        method="saveFreeItem" name="保存自由项" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="显示下一张单据" id="fi_arap#downPage"
+        impclass="nc.ui.arap.actions.TurnPageAction" method="downPage"
+        name="显示下一张单据" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="显示第一张单据" id="fi_arap#firstPage"
+        impclass="nc.ui.arap.actions.TurnPageAction" method="firstPage"
+        name="显示第一张单据" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="显示最后一张单据" id="fi_arap#lastPage"
+        impclass="nc.ui.arap.actions.TurnPageAction" method="lastPage"
+        name="显示最后一张单据" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="全选" id="fi_arap#selectedAll"
+        impclass="nc.ui.arap.actions.TurnPageAction"
+        method="selectedAll" name="全选" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="取消所有选中" id="fi_arap#unSelectedAll"
+        impclass="nc.ui.arap.actions.TurnPageAction"
+        method="unSelectedAll" name="取消所有选中" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="显示上一张单据" id="fi_arap#upPage"
+        impclass="nc.ui.arap.actions.TurnPageAction" method="upPage"
+        name="显示上一张单据" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="收付款" id="fi_arap#on_SFK"
+        impclass="nc.ui.arap.actions.SFKAction" method="on_SFK"
+        name="收付款" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="取消正式打印单据" id="fi_arap#on_CancelOfficialPrint"
+        impclass="nc.ui.arap.actions.PrintAction"
+        method="on_CancelOfficialPrint" name="取消正式打印单据"
+        namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="打印" id="fi_arap#on_Print"
+        impclass="nc.ui.arap.actions.PrintAction" method="on_Print"
+        name="打印" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="打印卡类型单据" id="fi_arap#on_PrintLr"
+        impclass="nc.ui.arap.actions.PrintAction" method="on_PrintLr"
+        name="打印卡类型单据" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="打印所有" id="fi_arap#on_Print_All"
+        impclass="nc.ui.arap.actions.PrintAction" method="on_Print_All"
+        name="打印所有" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="正式打印" id="fi_arap#on_Print_Official"
+        impclass="nc.ui.arap.actions.PrintAction"
+        method="on_Print_Official" name="正式打印" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="校验常用条件查询页（目前只是WSZZ专用）"
+        id="fi_arap#checkPanel_SearchAction"
+        impclass="nc.ui.arap.actions.SearchAction" method="checkPanel"
+        name="校验常用条件查询页（目前只是WSZZ专用）" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据管理-查询" id="fi_arap#showDjQuery_SearchActionNor"
+        impclass="nc.ui.arap.actions.SearchActionNor"
+        method="showDjQuery" name="单据管理-查询" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="得到查询vo数组" id="fi_arap#getCondArrayVO_SearchAction"
+        impclass="nc.ui.arap.actions.SearchAction"
+        method="getCondArrayVO" name="得到查询vo数组" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="单据管理-得到查询情况对话框" id="fi_arap#getQryDlg_SearchAction"
+        impclass="nc.ui.arap.actions.SearchActionNor" method="getQryDlg"
+        name="单据管理-得到查询情况对话框" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据管理-获得满足查询条件的表头列表"
+        id="fi_arap#getCondVO_SearchActionNor"
+        impclass="nc.ui.arap.actions.SearchActionNor" method="getCondVO"
+        name="单据管理-获得满足查询条件的表头列表" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据管理-查询表头" id="fi_arap#queryHeaders_SearchActionNor"
+        impclass="nc.ui.arap.actions.SearchActionNor"
+        method="queryHeaders" name="单据管理-查询表头" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc="初始位置" id="fi_arap_queryHeaders_param_1"
+                name="initPos" type="Integer "/>
+            <input desc="" id="fi_arap_queryHeaders_param_2"
+                name="initCount" type="Integer "/>
+        </inputs>
+    </action>
+    <action desc="单据管理-设置查询对话框尺寸"
+        id="fi_arap#setQryDlgSize_SearchActionNor"
+        impclass="nc.ui.arap.actions.SearchActionNor"
+        method="setQryDlgSize" name="单据管理-设置查询对话框尺寸" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="费用结算-改变页签(单据和列表之间)"
+        id="fi_arap#changeTab_SearchActionPay"
+        impclass="nc.ui.arap.actions.SearchActionPay" method="changeTab"
+        name="费用结算-改变页签(单据和列表之间)" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="费用结算-获得满足查询条件的表头列表"
+        id="fi_arap#getCondVO_SearchActionPay"
+        impclass="nc.ui.arap.actions.SearchActionPay" method="getCondVO"
+        name="费用结算-获得满足查询条件的表头列表" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="费用结算-查询表头" id="fi_arap#queryHeaders"
+        impclass="nc.ui.arap.actions.SearchActionPay"
+        method="queryHeaders" name="费用结算-查询表头" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_queryHeaders_param_1"
+                name=" initPos" type="Integer"/>
+            <input desc="" id="fi_arap_queryHeaders_param_2"
+                name=" initCount" type="Integer"/>
+        </inputs>
+    </action>
+    <action desc="费用结算-设置查询对话框尺寸"
+        id="fi_arap#setQryDlgSize_SearchActionPay"
+        impclass="nc.ui.arap.actions.SearchActionPay"
+        method="setQryDlgSize" name="费用结算-设置查询对话框尺寸" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="单据确认-获得满足查询条件的表头列表"
+        id="fi_arap#getCondVO_SearchActionQr"
+        impclass="nc.ui.arap.actions.SearchActionQr" method="getCondVO"
+        name="单据确认-获得满足查询条件的表头列表" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据确认-查询表头" id="fi_arap#queryHeaders_SearchActionQr"
+        impclass="nc.ui.arap.actions.SearchActionQr"
+        method="queryHeaders" name="单据确认-查询表头" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_queryHeaders_param_1"
+                name=" initPos" type="Integer"/>
+            <input desc="" id="fi_arap_queryHeaders_param_2"
+                name="initCount" type="Integer"/>
+        </inputs>
+    </action>
+    <action desc="单据确认-设置查询对话框尺寸"
+        id="fi_arap#setQryDlgSize_SearchActionQr"
+        impclass="nc.ui.arap.actions.SearchActionQr"
+        method="setQryDlgSize" name="单据确认-设置查询对话框尺寸" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="单据查询-获得满足查询条件的表头列表"
+        id="fi_arap#getCondVO_SearchActionQry"
+        impclass="nc.ui.arap.actions.SearchActionQry" method="getCondVO"
+        name="单据查询-获得满足查询条件的表头列表" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据查询-查询表头" id="fi_arap#queryHeaders_SearchActionQry"
+        impclass="nc.ui.arap.actions.SearchActionQry"
+        method="queryHeaders" name="单据查询-查询表头" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_queryHeaders_param_1"
+                name="initPos" type="Integer "/>
+            <input desc=""
+                id="fi_arap_queryHeaders_SearchActionQry_param_2"
+                name="initCount" type="Integer"/>
+        </inputs>
+    </action>
+    <action desc="单据查询-设置查询对话框尺寸"
+        id="fi_arap#setQryDlgSize_SearchActionQry"
+        impclass="nc.ui.arap.actions.SearchActionQry"
+        method="setQryDlgSize" name="单据查询-设置查询对话框尺寸" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="签字确认-获得满足查询条件的表头列表"
+        id="fi_arap#getCondVO_SearchActionSn"
+        impclass="nc.ui.arap.actions.SearchActionSn" method="getCondVO"
+        name="签字确认-获得满足查询条件的表头列表" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="签字确认-查询表头" id="fi_arap#queryHeaders_SearchActionSn"
+        impclass="nc.ui.arap.actions.SearchActionSn"
+        method="queryHeaders" name="签字确认-查询表头" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc=""
+                id="fi_arap_queryHeaders_SearchActionSn_param_1"
+                name="initPos" type="Integer"/>
+            <input desc=""
+                id="fi_arap_queryHeaders_SearchActionSn_param_2"
+                name="initCount" type="Integer"/>
+        </inputs>
+    </action>
+    <action desc="签字确认-设置查询对话框尺寸"
+        id="fi_arap#setQryDlgSize_SearchActionSn"
+        impclass="nc.ui.arap.actions.SearchActionSn"
+        method="setQryDlgSize" name="签字确认-设置查询对话框尺寸" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="事项审批单-获得满足查询条件的表头列表"
+        id="fi_arap#getCondVO_SearchActionSs"
+        impclass="nc.ui.arap.actions.SearchActionSs" method="getCondVO"
+        name="事项审批单-获得满足查询条件的表头列表" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="事项审批单-查询表头" id="fi_arap#queryHeaders_SearchActionSs"
+        impclass="nc.ui.arap.actions.SearchActionSs"
+        method="queryHeaders" name="事项审批单-查询表头" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc=""
+                id="fi_arap_queryHeaders_SearchActionSs_param_1"
+                name="initPos" type="Integer"/>
+            <input desc=""
+                id="fi_arap_queryHeaders_SearchActionSs_param_2"
+                name="initCount" type="Integer"/>
+        </inputs>
+    </action>
+    <action desc="事项审批单-设置查询对话框尺寸"
+        id="fi_arap#setQryDlgSize_SearchActionSs"
+        impclass="nc.ui.arap.actions.SearchActionSs"
+        method="setQryDlgSize" name="事项审批单-设置查询对话框尺寸"
+        namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="预提单-获得满足查询条件的表头列表"
+        id="fi_arap#getCondVO_SearchActionTb"
+        impclass="nc.ui.arap.actions.SearchActionTb" method="getCondVO"
+        name="预提单-获得满足查询条件的表头列表" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="预提单-初始化查询数据" id="fi_arap#initQueryData_SearchActionTb"
+        impclass="nc.ui.arap.actions.SearchActionTb"
+        method="initQueryData" name="预提单-初始化查询数据" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="预提单-查询表头" id="fi_arap#queryHeaders_SearchActionTb"
+        impclass="nc.ui.arap.actions.SearchActionTb"
+        method="queryHeaders" name="预提单-查询表头" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc=""
+                id="fi_arap_queryHeaders_SearchActionTb_param_1"
+                name="initPos" type="Integer"/>
+            <input desc=""
+                id="fi_arap_queryHeaders_SearchActionTb_param_2"
+                name="initCount" type="Integer"/>
+        </inputs>
+    </action>
+    <action desc="预提单-设置查询对话框尺寸"
+        id="fi_arap#setQryDlgSize_SearchActionTb"
+        impclass="nc.ui.arap.actions.SearchActionTb"
+        method="setQryDlgSize" name="预提单-设置查询对话框尺寸" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="网上转账-改变页签(单据和列表之间)"
+        id="fi_arap#checkPanel_SearchActionWz"
+        impclass="nc.ui.arap.actions.SearchActionWz" method="checkPanel"
+        name="网上转账-改变页签(单据和列表之间)" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="网上转账-获得满足查询条件的表头列表"
+        id="fi_arap#getCondVO_SearchActionWz"
+        impclass="nc.ui.arap.actions.SearchActionWz" method="getCondVO"
+        name="网上转账-获得满足查询条件的表头列表" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="网上转账-查询表头" id="fi_arap#queryHeaders_SearchActionWz"
+        impclass="nc.ui.arap.actions.SearchActionWz"
+        method="queryHeaders" name="网上转账-查询表头" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc=""
+                id="fi_arap_queryHeaders_SearchActionWz_param_1"
+                name="initPos" type="Integer"/>
+            <input desc=""
+                id="fi_arap_queryHeaders_SearchActionWz_param_2"
+                name="initCount" type="Integer"/>
+        </inputs>
+    </action>
+    <action desc="网上转账-设置查询对话框尺寸"
+        id="fi_arap#setQryDlgSize_SearchActionWz"
+        impclass="nc.ui.arap.actions.SearchActionWz"
+        method="setQryDlgSize" name="网上转账-设置查询对话框尺寸" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="拆分事项审批单表体行" id="fi_arap#onSplitSSItem_SSSplitAction"
+        impclass="nc.ui.arap.actions.SSSplitAction"
+        method="onSplitSSItem" name="拆分事项审批单表体行" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="费用结算-查询" id="fi_arap#showDjQuery_SearchActionPay"
+        impclass="nc.ui.arap.actions.SearchActionPay"
+        method="showDjQuery" name="费用结算-查询" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据确认-查询" id="fi_arap#showDjQuery_SearchActionQr"
+        impclass="nc.ui.arap.actions.SearchActionQr"
+        method="showDjQuery" name="单据确认-查询" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据查询-查询" id="fi_arap#showDjQuery_SearchActionQry"
+        impclass="nc.ui.arap.actions.SearchActionQry"
+        method="showDjQuery" name="签字确认-查询" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="签字确认-查询" id="fi_arap#showDjQuery_SearchActionSn"
+        impclass="nc.ui.arap.actions.SearchActionSn"
+        method="showDjQuery" name="签字确认-查询" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="事项审批单-查询" id="fi_arap#showDjQuery_SearchActionSs"
+        impclass="nc.ui.arap.actions.SearchActionSs"
+        method="showDjQuery" name="事项审批单-查询" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="预提单-查询单据" id="fi_arap#showDjQuery_SearchActionTb"
+        impclass="nc.ui.arap.actions.SearchActionTb"
+        method="showDjQuery" name="预提单-查询单据" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="网上转账-查询" id="fi_arap#showDjQuery_SearchActionWz"
+        impclass="nc.ui.arap.actions.SearchActionWz"
+        method="showDjQuery" name="网上转账-查询" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="网上转账_改变页签(单据和列表之间)"
+        id="fi_arap#changeTab_SearchActionWz"
+        impclass="nc.ui.arap.actions.SearchActionWz" method="changeTab"
+        name="网上转账_改变页签(单据和列表之间)" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="预提单_改变页签(单据和列表之间)"
+        id="fi_arap#changeTab_SearchActionTb"
+        impclass="nc.ui.arap.actions.SearchActionTb" method="changeTab"
+        name="预提单_改变页签(单据和列表之间)" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="事项审批单_改变页签(单据和列表之间)"
+        id="fi_arap#changeTab_SearchActionSs"
+        impclass="nc.ui.arap.actions.SearchActionSs" method="changeTab"
+        name="事项审批单_改变页签(单据和列表之间)" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="签字确认_改变页签(单据和列表之间)"
+        id="fi_arap#changeTab_SearchActionSn"
+        impclass="nc.ui.arap.actions.SearchActionSn" method="changeTab"
+        name="签字确认_改变页签(单据和列表之间)" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据查询_改变页签(单据和列表之间)"
+        id="fi_arap#changeTab_SearchActionQry"
+        impclass="nc.ui.arap.actions.SearchActionQry" method="changeTab"
+        name="单据查询_改变页签(单据和列表之间)" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据确认_改变页签(单据和列表之间)"
+        id="fi_arap#changeTab_SearchActionQr"
+        impclass="nc.ui.arap.actions.SearchActionQr" method="changeTab"
+        name="单据确认_改变页签(单据和列表之间)" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据管理_改变页签(单据和列表之间)"
+        id="fi_arap#changeTab_SearchActionNor"
+        impclass="nc.ui.arap.actions.SearchActionNor" method="changeTab"
+        name="单据管理_改变页签(单据和列表之间)" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据管理-更新列表页面" id="fi_arap#refersh_SearchActionNor"
+        impclass="nc.ui.arap.actions.SearchActionNor" method="refersh"
+        name="单据管理-更新列表页面" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="费用结算-更新列表页面" id="fi_arap#refersh_SearchActionPay"
+        impclass="nc.ui.arap.actions.SearchActionPay" method="refersh"
+        name="费用结算-更新列表页面" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据确认-更新列表页面" id="fi_arap#refersh_SearchActionQr"
+        impclass="nc.ui.arap.actions.SearchActionQr" method="refersh"
+        name="单据确认-更新列表页面" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据查询-更新列表页面" id="fi_arap#refersh_SearchActionQry"
+        impclass="nc.ui.arap.actions.SearchActionQry" method="refersh"
+        name="单据查询-更新列表页面" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="签字确认-更新列表页面" id="fi_arap#refersh_SearchActionSn"
+        impclass="nc.ui.arap.actions.SearchActionSn" method="refersh"
+        name="签字确认-更新列表页面" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="事项审批单-更新列表页面" id="fi_arap#refersh_SearchActionSs"
+        impclass="nc.ui.arap.actions.SearchActionSs" method="refersh"
+        name="事项审批单-更新列表页面" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="预提单-更新列表页面" id="fi_arap#refersh_SearchActionTb"
+        impclass="nc.ui.arap.actions.SearchActionTb" method="refersh"
+        name="预提单-更新列表页面" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="网上转账-更新列表页面" id="fi_arap#refersh_SearchActionWz"
+        impclass="nc.ui.arap.actions.SearchActionWz" method="refersh"
+        name="网上转账-更新列表页面" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据管理-上一页" id="fi_arap#previous_SearchActionNor"
+        impclass="nc.ui.arap.actions.SearchActionNor" method="previous"
+        name="单据管理-上一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="费用结算-上一页" id="fi_arap#previous_SearchActionPay"
+        impclass="nc.ui.arap.actions.SearchActionPay" method="previous"
+        name="费用结算-上一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据确认-上一页" id="fi_arap#previous_SearchActionQr"
+        impclass="nc.ui.arap.actions.SearchActionQr" method="previous"
+        name="单据确认-上一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据查询-上一页" id="fi_arap#previous_SearchActionQry"
+        impclass="nc.ui.arap.actions.SearchActionQry" method="previous"
+        name="单据查询-上一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="签字确认-上一页" id="fi_arap#previous_SearchActionSn"
+        impclass="nc.ui.arap.actions.SearchActionSn" method="previous"
+        name="签字确认-上一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="事项审批单-上一页" id="fi_arap#previous_SearchActionSs"
+        impclass="nc.ui.arap.actions.SearchActionSs" method="previous"
+        name="事项审批单-上一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="预提单-上一页" id="fi_arap#previous_SearchActionTb"
+        impclass="nc.ui.arap.actions.SearchActionTb" method="previous"
+        name="预提单-上一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="网上转账-上一页" id="fi_arap#previous_SearchActionWz"
+        impclass="nc.ui.arap.actions.SearchActionWz" method="previous"
+        name="网上转账-上一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据管理-下一页" id="fi_arap#next_SearchActionNor"
+        impclass="nc.ui.arap.actions.SearchActionNor" method="next"
+        name="单据管理-下一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="费用结算-下一页" id="fi_arap#next_SearchActionPay"
+        impclass="nc.ui.arap.actions.SearchActionPay" method="next"
+        name="费用结算-下一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据查询-下一页" id="fi_arap#next_SearchActionQry"
+        impclass="nc.ui.arap.actions.SearchActionQry" method="next"
+        name="单据查询-下一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据确认-下一页" id="fi_arap#next_SearchActionQr"
+        impclass="nc.ui.arap.actions.SearchActionQr" method="next"
+        name="单据确认-下一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="签字确认-下一页" id="fi_arap#next_SearchActionSn"
+        impclass="nc.ui.arap.actions.SearchActionSn" method="next"
+        name="签字确认-下一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="事项审批单-下一页" id="fi_arap#next_SearchActionSs"
+        impclass="nc.ui.arap.actions.SearchActionSs" method="next"
+        name="事项审批单-下一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="预提单-下一页" id="fi_arap#next_SearchActionTb"
+        impclass="nc.ui.arap.actions.SearchActionTb" method="next"
+        name="预提单-下一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="网上转账-下一页" id="fi_arap#next_SearchActionWz"
+        impclass="nc.ui.arap.actions.SearchActionWz" method="next"
+        name="网上转账-下一页" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="同固定资产的租金接口" id="fi_arap#on_Rent_AffiliatedAction"
+        impclass="nc.ui.arap.actions.AffiliatedAction" method="on_Rent"
+        name="同固定资产的租金接口" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="m_boCreatFABill"
+        id="fi_arap#on_creatFABill_AffiliatedAction"
+        impclass="nc.ui.arap.actions.AffiliatedAction"
+        method="on_creatFABill" name="m_boCreatFABill"
+        namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="补差" id="fi_arap#on_Bc_CounterActAction"
+        impclass="nc.ui.arap.actions.CounterActAction" method="on_Bc"
+        name="补差" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="返回 即时核销panel 特性值"
+        id="fi_arap#getVerifyInTimePanel_CounterActAction"
+        impclass="nc.ui.arap.actions.CounterActAction"
+        method="getVerifyInTimePane" name="返回 即时核销panel 特性值"
+        namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="核销" id="fi_arap#on_Verify_Hx_CounterActAction"
+        impclass="nc.ui.arap.actions.CounterActAction"
+        method="on_Verify_Hx" name="核销" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="按表体行核销" id="fi_arap#on_VerifySearch_CounterActAction"
+        impclass="nc.ui.arap.actions.CounterActAction"
+        method="on_VerifySearch" name="按表体行核销" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="过滤" id="fi_arap#on_Filter_CounterActAction"
+        impclass="nc.ui.arap.actions.CounterActAction"
+        method="on_Filter" name="过滤" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="按照单据核销，counteract the the whole bill"
+        id="fi_arap#on_VerifySearchWholeBill_CounterActActio"
+        impclass="nc.ui.arap.actions.CounterActAction"
+        method="on_VerifySearchWholeBill"
+        name="按照单据核销，counteract the the whole b" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="即时核销返回" id="fi_arap#on_VerifyGoBack_CounterActAction"
+        impclass="nc.ui.arap.actions.CounterActAction"
+        method="on_VerifyGoBack" name="即时核销返回" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="m_boVerify_ConfirmBc"
+        id="fi_arap#on_confirmBc_CounterActAction"
+        impclass="nc.ui.arap.actions.CounterActAction"
+        method="on_confirmBc" name="m_boVerify_ConfirmBc"
+        namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="取消补差" id="fi_arap#on_CancelBc_CounterActAction"
+        impclass="nc.ui.arap.actions.CounterActAction"
+        method="on_CancelBc" name="取消补差" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="切换到即时核销" id="fi_arap#on_Verify_CounterActAction"
+        impclass="nc.ui.arap.actions.CounterActAction"
+        method="on_Verify" name="切换到即时核销" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="即时核销_分配" id="fi_arap#onDistribute_VerifyInTimePanel"
+        impclass="nc.ui.arap.actions.CounterActAction"
+        method="onDistribute" name="即时核销_分配" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="即时核销_全选" id="fi_arap#onAllSelected_VerifyInTimePanel"
+        impclass="nc.ui.arap.actions.CounterActAction"
+        method="onAllSelected" name="即时核销_全选" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="即时核销_全消" id="fi_arap#onAllCancel_VerifyInTimePanel"
+        impclass="nc.ui.arap.actions.CounterActAction"
+        method="onAllCancel" name="即时核销_全消" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="即时核销_联查单据"
+        id="fi_arap#onShowDocInfo_VerifyInTimePanel"
+        impclass="nc.ui.arap.actions.CounterActAction"
+        method="onShowDocInfo" name="即时核销_联查单据" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc=" 租金" id="fi_arap#onArapToFts_FTSPaymentAction"
+        impclass="nc.ui.arap.actions.FTSPaymentAction"
+        method="onArapToFts" name=" 租金" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="m_boWTSK" id="fi_arap#onFTSRecive_FTSPaymentAction"
+        impclass="nc.ui.arap.actions.FTSPaymentAction"
+        method="onFTSRecive" name="m_boWTSK" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="单据表体挂起" id="fi_arap#on_Pausetransact_SuspendAction"
+        impclass="nc.ui.arap.actions.DjSuspendAction"
+        method="on_Pausetransact" name="单据表体挂起" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="单据表体取消挂起"
+        id="fi_arap#on_UnPausetransact_SuspendAction"
+        impclass="nc.ui.arap.actions.DjSuspendAction"
+        method="on_UnPausetransact" name="单据表体取消挂起" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="to generate proceeding bill refering YuTi bill items"
+        id="fi_arap#on_NewSSByTBYT_SSReferYuTiAction"
+        impclass="nc.ui.arap.actions.SSReferYuTiAction"
+        method="on_NewSSByTBYT"
+        name="to generate proceeding bill refering YuT"
+        namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="参照预算生成预提单" id="fi_arap#on_NewSSByTB_SSReferYuTiAction"
+        impclass="nc.ui.arap.actions.SSReferYuTiAction"
+        method="on_NewSSByTB" name="参照预算生成预提单" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="参照预算生成事项审批单"
+        id="fi_arap#on_NewSSByTB_SSReferBudgetAction"
+        impclass="nc.ui.arap.actions.SSReferBudgetAction"
+        method="on_NewSSByTB" name="参照预算生成事项审批单" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="关闭事项审批单" id="fi_arap#on_Close_SS"
+        impclass="nc.ui.arap.actions.SsCloseAction" method="on_Close_SS"
+        name="关闭事项审批单" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="事项审批单取消关闭" id="fi_arap#on_Cancel_Close_SS"
+        impclass="nc.ui.arap.actions.SsCloseAction"
+        method="on_Cancel_Close_SS" name="事项审批单取消关闭" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="事项审批单行关闭" id="fi_arap#on_Close_SSRow"
+        impclass="nc.ui.arap.actions.SsCloseAction"
+        method="on_Close_SSRow" name="事项审批单行关闭" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="事项审批单取消行关闭" id="fi_arap#on_Cancel_Close_SSRow"
+        impclass="nc.ui.arap.actions.SsCloseAction"
+        method="on_Cancel_Close_SSRow" name="事项审批单取消行关闭"
+        namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="显示单据类型" id="fi_arap#showDjlx"
+        impclass="nc.ui.arap.actions.ShowDjlx" method="showDjlx"
+        name="显示单据类型" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="显示第一面的另一个模块" id="fi_arap#backRelatedDj"
+        impclass="nc.ui.arap.actions.BackRelatedDj"
+        method="backRelatedDj" name="显示第一面的另一个模块" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="" id="fi_arap#getElementbyIdx"
+        impclass="nc.ui.arap.actions.common.ArrayElementActions"
+        method="getElementbyIdx" name="得到数组中指定元素" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc="数组" id="fi_arap_getElementbyIdx_param_1"
+                name="Array" type="java.lang.Object[]"/>
+            <input desc="索引号" id="fi_arap_getElementbyIdx_param_2"
+                name="idx" type="Integer"/>
+        </inputs>
+        <output desc="返回元素" id="fi_arap_getElementbyIdx_output"
+            name="element" type="java.lang.Object"/>
+    </action>
+    <action desc="取消确认" id="fi_arap#onCancelConfirm"
+        impclass="nc.ui.arap.actions.BillConfirmAction"
+        method="onCancelConfirm" name="取消确认" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="签字确认" id="fi_arap#signconfirm"
+        impclass="nc.ui.arap.actions.SingConfirmActions"
+        method="signconfirm" name="签字确认" namespace="fi_arap" refid="" servflag="false">
+        <output desc="" id="fi_arap_signconfirm_output" name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="取消签字确认" id="fi_arap#cancelSignconfirm"
+        impclass="nc.ui.arap.actions.SingConfirmActions"
+        method="cancelSignconfirm" name="取消签字确认" namespace="fi_arap"
+        refid="" servflag="false">
+        <output desc="" id="fi_arap_cancelSignconfirm_output"
+            name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="对话框_是否后台审核" id="fi_arap#dj_IsAuditInBackground"
+        impclass="nc.ui.arap.actions.IsAuditInBackground"
+        method="IsAuditBackground" name="对话框_是否后台审核" namespace="fi_arap"
+        refid="" servflag="false">
+        <output desc="" id="fi_arap_dj_IsAuditInBackground_output"
+            name="result" type="String"/>
+    </action>
+    <action desc="前台卡片状态下审核"
+        id="fi_arap#dj_AuditAction_shenhe_Dj_Display"
+        impclass="nc.ui.arap.actions.AuditAction" method="shenhe_Dj"
+        name="前台审核" namespace="fi_arap" refid="" servflag="false">
+        <output desc=""
+            id="fi_arap_dj_AuditAction_shenhe_Dj_Display_output"
+            name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="前台列表状态下审核"
+        id="fi_arap#dj_AuditAction_shenhe_LB_Display"
+        impclass="nc.ui.arap.actions.AuditAction" method="shenhe_LB"
+        name="前台审核" namespace="fi_arap" refid="" servflag="false">
+        <output desc=""
+            id="fi_arap_dj_AuditAction_shenhe_LB_Display_output"
+            name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="后台列表状态下审核" id="fi_arap#dj_AuditAction_shenhe_LB_S"
+        impclass="nc.ui.arap.actions.AuditAction" method="shenhe_LB_S"
+        name="后台审核" namespace="fi_arap" refid="" servflag="false">
+        <output desc="" id="fi_arap_dj_AuditAction_shenhe_LB_S_output"
+            name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="取消审核" id="fi_arap#dj_AuditAction_cancel"
+        impclass="nc.ui.arap.actions.AuditAction" method="cancel"
+        name="取消审核" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="对话框_是否后台反审核" id="fi_arap#dj_IsUnAuditInBackground"
+        impclass="nc.ui.arap.actions.IsUnAuditInBackground"
+        method="IsUnAuditBackground" name="对话框_是否后台反审核"
+        namespace="fi_arap" refid="" servflag="false">
+        <output desc="" id="fi_arap_dj_IsUnAuditInBackground_output"
+            name="result" type="String"/>
+    </action>
+    <action desc="列表状态前台反审核"
+        id="fi_arap#dj_UnAuditAction_unshenhe_LB_Display"
+        impclass="nc.ui.arap.actions.UnAuditAction" method="unshenhe_LB"
+        name="列表状态前台反审核" namespace="fi_arap" refid="" servflag="false">
+        <output desc=""
+            id="fi_arap_dj_UnAuditAction_unauditDisplay_output"
+            name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="列表状态后台反审核" id="fi_arap#dj_UnAuditAction_unshenhe_LB_s"
+        impclass="nc.ui.arap.actions.UnAuditAction"
+        method="unshenhe_LB_s" name="列表状态后台反审核" namespace="fi_arap"
+        refid="" servflag="false">
+        <output desc=""
+            id="fi_arap_dj_UnAuditAction_unshenhe_LB_s_output"
+            name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="卡片状态后台反审核" id="fi_arap#dj_UnAuditAction_unshenhe_Dj"
+        impclass="nc.ui.arap.actions.UnAuditAction" method="unshenhe_Dj"
+        name="卡片状态后台反审核" namespace="fi_arap" refid="" servflag="false">
+        <output desc="" id="fi_arap_dj_UnAuditAction_unshenhe_Dj_output"
+            name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="arap单据反审核" id="fi_arap#dj_unAuditbill"
+        impclass="nc.ui.arap.actions.UnAuditAction" method="unAudit"
+        name="unAudit" namespace="fi_arap" refid="" servflag="false">
+        <output desc="" id="fi_arap_dj_unAuditbill_output" name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="审核后根据是否网银后生效标志状态设置sxbz"
+        id="fi_arap#setSxbzValueInAuditAction"
+        impclass="nc.ui.arap.actions.setflagvalue.SetSxbzAction"
+        method="setSxbzValueInAuditAction"
+        name="setSxbzValueInAuditAction" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc=""
+                id="fi_arap_setSxbzValueInAuditAction_param_1"
+                name="djs" type="nc.vo.ep.dj.DJZBVO[]"/>
+        </inputs>
+        <output desc="" id="fi_arap_setSxbzValueInAuditAction_output"
+            name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="反审核后根据是否网银后生效标志状态设置sxbz"
+        id="fi_arap#setSxbzValueInUnAuditAction"
+        impclass="nc.ui.arap.actions.setflagvalue.SetSxbzAction"
+        method="setSxbzValueInUnAuditAction"
+        name="setSxbzValueInUnAuditAction" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc=""
+                id="fi_arap_setSxbzValueInUnAuditAction_param_1"
+                name="djs" type="nc.vo.ep.dj.DJZBVO[]"/>
+        </inputs>
+        <output desc="" id="fi_arap_setSxbzValueInUnAuditAction_output"
+            name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="签字确认后根据是否网银后生效标志状态设置sxbz"
+        id="fi_arap#setSxbzValueAfterYhqrSingConfirm"
+        impclass="nc.ui.arap.actions.setflagvalue.SetSxbzAction"
+        method="setSxbzValueAfterYhqrSingConfirm"
+        name="setSxbzValueAfterYhqrSingConfirm" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc=""
+                id="fi_arap_setSxbzValueAfterYhqrSingConfirm_param_1"
+                name="djs" type="nc.vo.ep.dj.DJZBVO[]"/>
+        </inputs>
+        <output desc=""
+            id="fi_arap_setSxbzValueAfterYhqrSingConfirm_output"
+            name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="取消签字确认后根据是否网银后生效标志状态设置sxbz"
+        id="fi_arap#setSxbzValueAfterUnYhqrSingConfirm"
+        impclass="nc.ui.arap.actions.setflagvalue.SetSxbzAction"
+        method="setSxbzValueAfterUnYhqrSingConfirm"
+        name="setSxbzValueAfterUnYhqrSingConfirm" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc=""
+                id="fi_arap_setSxbzValueAfterUnYhqrSingConfirm_param_1"
+                name="djs" type="nc.vo.ep.dj.DJZBVO[]"/>
+        </inputs>
+        <output desc=""
+            id="fi_arap_setSxbzValueAfterUnYhqrSingConfirm_output"
+            name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="网银支付后根据是否网银后生效标志状态设置sxbz"
+        id="fi_arap#setSxbzValueInPaymentAction"
+        impclass="nc.ui.arap.actions.setflagvalue.SetSxbzAction"
+        method="setSxbzValueInPaymentAction"
+        name="setSxbzValueInPaymentAction" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc=""
+                id="fi_arap_setSxbzValueInPaymentAction_param_1"
+                name="djs" type="nc.vo.ep.dj.DJZBVO[]"/>
+        </inputs>
+        <output desc="" id="fi_arap_setSxbzValueInPaymentAction_output"
+            name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="反审核后更新卡片界面显示"
+        id="fi_arap#updateViewAfterUnVerifyCardMode"
+        impclass="nc.ui.arap.actions.UnAuditAction"
+        method="updateViewAfterUnVerifyCardMode"
+        name="updateViewAfterUnVerifyCardMode" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc=""
+                id="fi_arap_updateViewAfterUnVerifyCardMode_param_1"
+                name="dj" type="nc.vo.ep.dj.DJZBVO[]"/>
+        </inputs>
+    </action>
+    <action desc="审核后更新卡片界面显示"
+        id="fi_arap#updateViewAfterVerifyCardMode"
+        impclass="nc.ui.arap.actions.AuditAction"
+        method="updateViewAfterVerifyCardMode"
+        name="updateViewAfterVerifyCardMode" namespace="fi_arap"
+        refid="" servflag="false">
+        <inputs>
+            <input desc=""
+                id="fi_arap_updateViewAfterVerifyCardMode_param_1"
+                name="dj" type="nc.vo.ep.dj.DJZBVO[]"/>
+        </inputs>
+    </action>
+    <action desc="arap单据红冲" id="fi_arap#dj_onredverify"
+        impclass="nc.ui.arap.actions.RedHandleAction"
+        method="onredverify" name="onredverify" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="arap单据网上转账" id="fi_arap#dj_onwszz"
+        impclass="nc.ui.arap.actions.PaymentAction" method="onWszz"
+        name="onWszz" namespace="fi_arap" refid="" servflag="false">
+        <output desc="" id="fi_arap_dj_onwszz_output" name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="arap单据合并支付" id="fi_arap#dj_combinePayment"
+        impclass="nc.ui.arap.actions.PaymentAction"
+        method="combinePayment" name="combinePayment"
+        namespace="fi_arap" refid="" servflag="false">
+        <output desc="" id="fi_arap_dj_combinePayment_output"
+            name="result" type="nc.vo.ep.dj.DJZBVO[]"/>
+    </action>
+    <action desc="arap单据手工支付" id="fi_arap#dj_on_handPay"
+        impclass="nc.ui.arap.actions.PaymentAction" method="on_handPay"
+        name="on_handPay" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap单据查询" id="fi_arap#dj_pjsearch"
+        impclass="nc.ui.arap.actions.PjSearchAction" method="searchPJ"
+        name="searchPJ" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap单据刷新" id="fi_arap#dj_refresh"
+        impclass="nc.ui.arap.actions.RefreshAction" method="refresh"
+        name="refresh" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap审批情况" id="fi_arap#dj_on_Approve"
+        impclass="nc.ui.arap.actions.RelatedQueryAction"
+        method="on_Approve" name="on_Approve" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="arap处理情况" id="fi_arap#dj_showParticularQueryDlg"
+        impclass="nc.ui.arap.actions.ParticularQueryAction"
+        method="showParticularQueryDlg" name="showParticularQueryDlg"
+        namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap联查发票" id="fi_arap#dj_on_Provide"
+        impclass="nc.ui.arap.actions.RelatedQueryAction"
+        method="on_Provide" name="on_Provide" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="arap预算执行情况" id="fi_arap#dj_on_Budgete"
+        impclass="nc.ui.arap.actions.RelatedQueryAction"
+        method="on_Budget" name="on_Budget" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="cmp资金计划执行情况" id="fi_arap#cmpdj_on_Fp"
+        impclass="nc.ui.arap.actions.RelatedQueryAction"
+        method="on_QueryFpForCmp" name="on_QueryFpForCmp" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap联查信贷" id="fi_arap#dj_on_Credit"
+        impclass="nc.ui.arap.actions.RelatedQueryAction"
+        method="on_Credit" name="on_Credit" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap联查凭证" id="fi_arap#dj_on_QueryPf"
+        impclass="nc.ui.arap.actions.RelatedQueryAction"
+        method="on_QueryPf" name="on_QueryPf" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="arap联查协同单据" id="fi_arap#dj_on_QueryXtDj"
+        impclass="nc.ui.arap.actions.RelatedQueryAction"
+        method="on_QueryXtDj" name="on_QueryXtDj" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="arap联查委托付款书" id="fi_arap#dj_on_queryFTSPayment"
+        impclass="nc.ui.arap.actions.RelatedQueryAction"
+        method="on_queryFTSPayment" name="on_queryFTSPayment"
+        namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap联查账户预计余额" id="fi_arap#dj_on_queryAccount"
+        impclass="nc.ui.arap.actions.RelatedQueryAction"
+        method="on_queryAccount" name="on_queryAccount"
+        namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap联查余额表" id="fi_arap#dj_on_queryList"
+        impclass="nc.ui.arap.actions.RelatedQueryAction"
+        method="on_queryList" name="on_queryList" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="arap联查委托收款书" id="fi_arap#dj_on_queryFTSReceiver"
+        impclass="nc.ui.arap.actions.RelatedQueryAction"
+        method="on_queryFTSReceiver" name="on_queryFTSReceiver"
+        namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap联查单据" id="fi_arap#dj_on_ssQyrDJ"
+        impclass="nc.ui.arap.actions.RelatedQueryAction"
+        method="on_ssQyrDJ" name="on_ssQyrDJ" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="arap联查事项审批单" id="fi_arap#dj_on_djQrySS"
+        impclass="nc.ui.arap.actions.RelatedQueryAction"
+        method="on_djQrySS" name="on_djQrySS" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="arap期初关闭" id="fi_arap#dj_onQcClose"
+        impclass="nc.ui.arap.actions.QcCloseAction"
+        method="onQcClose" name="onQcClose" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap取消关闭" id="fi_arap#dj_onQcCancelClose"
+        impclass="nc.ui.arap.actions.QcCloseAction"
+        method="onQcCancelClose" name="onQcCancelClose"
+        namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="文档管理" id="fi_arap#ShowDocument"
+        impclass="nc.ui.arap.actions.ShowDocumentAction"
+        method="ShowDocument" name="文档管理" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap增行" id="fi_arap#dj_addrow"
+        impclass="nc.ui.arap.actions.AddRowAction" method="addRow"
+        name="addRow" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap删行" id="fi_arap#dj_delrow"
+        impclass="nc.ui.arap.actions.DelRowAction" method="delRow"
+        name="delRow" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap复制行" id="fi_arap#dj_copyrow"
+        impclass="nc.ui.arap.actions.CopyRowAction" method="copyRow"
+        name="copyRow" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap粘贴行" id="fi_arap#dj_pasterow"
+        impclass="nc.ui.arap.actions.PasteRowAction" method="pasteRow"
+        name="pasteRow" namespace="fi_arap" refid="" servflag="false"/>       
+    <action desc="arap插入行" id="fi_arap#dj_insertrow"
+        impclass="nc.ui.arap.actions.InsertRowAction" method="insertRow"
+        name="insertRow" namespace="fi_arap" refid="" servflag="false"/>  
+    <action desc="arap粘贴行至表尾" id="fi_arap#dj_PasteLineToTail"
+        impclass="nc.ui.arap.actions.PasteLineToTailAction" method="pasteLineToTail"
+        name="pasteLineToTail" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap复制" id="fi_arap#dj_copydj"
+        impclass="nc.ui.arap.actions.CopyDjAction" method="copyDj"
+        name="copyDj" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap取消" id="fi_arap#dj_cancel"
+        impclass="nc.ui.arap.actions.CancelAction" method="cancel"
+        name="cancel" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap编辑" id="fi_arap#dj_edit"
+        impclass="nc.ui.arap.actions.EditAction" method="edit"
+        name="edit" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap临时保存" id="fi_arap#dj_tempsave"
+        impclass="nc.ui.arap.actions.TempSaveAction" method="onTempSave"
+        name="onTempSave" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap设置预收付标志" id="fi_arap#dj_onysf"
+        impclass="nc.ui.arap.actions.SetYsfAction" method="onYsf"
+        name="onYsf" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="arap增加" id="fi_arap#dj_add"
+        impclass="nc.ui.arap.actions.AddAction" method="add" name="add"
+        namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据录入_删除" id="fi_arap#m_boDelDj_Lr"
+        impclass="nc.ui.arap.actions.edit.DeleteActionLr"
+        method="onDelete" name="单据录入_删除" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据管理_删除" id="fi_arap#m_boDelDj_Nor"
+        impclass="nc.ui.arap.actions.edit.DeleteActionNor"
+        method="onDelete" name="单据管理_删除" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="期初余额_删除" id="fi_arap#m_boDelDj_Qc"
+        impclass="nc.ui.arap.actions.DeleteActionQc"
+        method="onDelete" name="期初余额_删除" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="签字确认_删除" id="fi_arap#m_boDelDj_Sn"
+        impclass="nc.ui.arap.actions.edit.DeleteActionSn"
+        method="onDelete" name="签字确认_删除" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="事项审批单_删除" id="fi_arap#m_boDelDj_Ss"
+        impclass="nc.ui.arap.actions.edit.DeleteActionSs"
+        method="onDelete" name="事项审批单_删除" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="预提单_删除" id="fi_arap#m_boDelDj_Tb"
+        impclass="nc.ui.arap.actions.edit.DeleteActionTb"
+        method="onDelete" name="预提单_删除" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="对话框_窗口关闭前是否保存" id="fi_arap#dj_IsSaveBeforeCloseAction"
+        impclass="nc.ui.arap.actions.IsSaveBeforeCloseAction"
+        method="IsSaveBeforeClose" name="对话框_窗口关闭前是否保存"
+        namespace="fi_arap" refid="" servflag="false">
+        <output desc="" id="fi_arap_dj_IsSaveBeforeCloseAction_output"
+            name="result" type="String"/>
+    </action>
+    <action desc="取消窗口关闭动作" id="fi_arap#btn_cancelclosingdefault"
+        impclass="nc.ui.arap.actions.CancelclosingAction"
+        method="cancelClosing" name="取消窗口关闭动作" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="判断是列表还是卡片" id="fi_arap#judgeListOrCard"
+        impclass="nc.ui.arap.actions.ramus.JudgeListOrCard"
+        method="judgeListOrCard" name="judgeListOrCard"
+        namespace="fi_arap" refid="" servflag="false">
+        <output desc="" id="fi_arap_judgeListOrCard_output"
+            name="result" type="String"/>
+    </action>
+    <action desc="批复制" id="fi_arap#btn_batchcopy"
+        impclass="nc.ui.arap.actions.batchcopy.BatchCopyAction"
+        method="batchCopy" name="batchCopy" namespace="fi_arap" refid="" servflag="false"/>
+    <action desc="单据管理_设置可调整字段 " id="fi_arap#dj_EditAction"
+        impclass="nc.ui.arap.actions.DjAdjustAction"
+        method="setEditStatus" name="单据管理_设置状态" namespace="fi_arap"
+        refid="" servflag="false"/>
+    <action desc="是否单据调整保存" id="fi_arap#isAdjustSaveAction"
+        impclass="nc.ui.arap.actions.IsAdjustSaveAction"
+        method="isAdjustSave" name="是否单据调整保存" namespace="fi_arap"
+        refid="" servflag="false">
+        <output desc="" id="fi_arap#isAdjustSaveAction_output"
+        name="result" type="String"/>
+	</action>
+    <action desc="单据调整保存" id="fi_arap#AdjustSaveAction"
+        impclass="nc.ui.arap.actions.AdjustSaveAction"
+        method="adjustSave" name="单据调整保存" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_dj_AdjustSaveAction_param_1"
+                name="AdjustSaveActioninput1" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs> 
+    </action>
+    <action desc="联查上下游单据" id="fi_arap#RelatedQueryBackOrNextDj"
+        impclass="nc.ui.arap.actions.RelatedQueryBackOrNextDj"
+        method="relatedQueryBackOrNextDj" name="联查上下游单据" namespace="fi_arap" refid="" servflag="false">
+    </action>
+	<action desc="联查银行回单" id="fi_arap#yhhdLink"
+        impclass="nc.ui.arap.actions.YhhdLinkAction"
+        method="yhhdLink" name="联查银行回单" namespace="fi_arap" refid="" servflag="false">
+    </action>
+	<action desc="联查银行回单" id="fi_arap#yhhdLinkSkFk"
+        impclass="nc.ui.arap.actions.YhhdLinkActionSkFk"
+        method="yhhdLink" name="联查银行回单" namespace="fi_arap" refid="" servflag="false">
+    </action>
+	<action desc="联查银行回单" id="fi_arap#yhhdLinkErm"
+        impclass="nc.ui.er.pub.actions.YhhdLinkActionErm"
+        method="yhhdLink" name="联查银行回单" namespace="fi_arap" refid="" servflag="false">
+    </action>
+     <action desc="现金流平台_联查上下游单据" id="fi_arap#cmp_RelatedQueryBackOrNextDj"
+        impclass="nc.ui.arap.actions.RelatedQueryAction"
+        method="relatedQueryBackOrNextDj" name="联查上下游单据" namespace="fi_arap" refid="" servflag="false">
+    </action>
+    <action desc="检查交易对象类型对应的对象是否填写" id="fi_arap#CheckTraderTypeAction"
+        impclass="nc.ui.arap.actions.check.CheckTraderTypeAction"
+        method="checkTraderType" name="检查交易对象类型对应的对象是否填写" namespace="fi_arap" refid="" servflag="false">
+         <inputs>
+            <input desc="" id="fi_arap_CheckTraderTypeAction_param_1"
+                name="checkTraderType1" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+    </action>
+    <action desc="单据管理-资金申请" id="fi_arap#cmp_cashapply"
+        impclass="nc.ui.cmp.actions.CashApplyAction"
+        method="cashApplay" name="单据管理-资金申请" namespace="fi_arap" refid="" servflag="false">
+    </action>
+   <action desc="收票登记" id="fi_arap#cmp_pjregister"
+        impclass="nc.ui.arap.pj.PjRegisterAct"
+        method="on_pjRegister" name="收票登记" namespace="fi_arap" refid="" servflag="false">
+    </action>
+    <action desc="增行" id="fi_arap#cmp_addLine"
+        impclass="nc.ui.arap.actions.operation.AddLineAction"
+        method="addLine" name="增行" namespace="fi_arap" refid="" servflag="false">
+    </action>
+    <action desc="复制行" id="fi_arap#cmp_copyLine"
+        impclass="nc.ui.arap.actions.operation.CopyLineAction"
+        method="copyLine" name="复制行" namespace="fi_arap" refid="" servflag="false">
+    </action>
+    <action desc="删行" id="fi_arap#cmp_delLine"
+        impclass="nc.ui.arap.actions.operation.DeleteLineAction"
+        method="delLine" name="删行" namespace="fi_arap" refid="" servflag="false">
+    </action>
+    <action desc="插入行" id="fi_arap#cmp_insertLine"
+        impclass="nc.ui.arap.actions.operation.InsertLineAction"
+        method="insertLine" name="插入行" namespace="fi_arap" refid="" servflag="false">
+    </action>
+    <action desc="粘贴行" id="fi_arap#cmp_pasteLine"
+        impclass="nc.ui.arap.actions.operation.PasteLineAction"
+        method="pasteLine" name="粘贴行" namespace="fi_arap" refid="" servflag="false">
+    </action>
+    <action desc="粘贴行到表尾" id="fi_arap#cmp_pasteLineToTail"
+        impclass="nc.ui.arap.actions.operation.PasteLineToTailAction"
+        method="pasteLineToTail" name="粘贴行到表尾" namespace="fi_arap" refid="" servflag="false">
+    </action>
+    <action desc="补录网银信息" id="fi_arap#cmp_prepareNetBank"
+        impclass="nc.ui.arap.actions.PaymentAction"
+        method="prepareNetBank" name="补录网银信息" namespace="fi_arap" refid="" servflag="false">
+    </action>
+    <action desc="制单" id="fi_arap#MergePfAct"
+        impclass="nc.ui.arap.actions.dj.MergePfAct"
+        method="mergePf" name="制单" namespace="fi_arap" refid="" servflag="false">
+    </action>
+    <action desc="检查帐号对应币种与单据对应币种的一致性" id="fi_arap#cmp_checkAccountAndCurrency"
+        impclass="nc.bs.cmp.action.validate.CheckAccountAndCurrency"
+        method="checkAccountAndCurrency" name="检查币种一致性" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_cmp_checkAccountAndCurrency_param_1"
+                name="checkAccountAndCurrency1" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+    </action>
+    <action desc="检查管理帐号的主账号和对应本方帐号的一致性" id="fi_arap#cmp_checkMngAccAndBankAcc"
+        impclass="nc.bs.cmp.action.validate.CheckMngaccAndBankacc"
+        method="checkMngaccAndBankacc" name="检查管理帐号一致性" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_cmp_checkMngAccAndBankAcc_param_1"
+                name="checkMngAccAndBankAcc1" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+    </action>
+     <action desc="检查已协同的单据是否可以修改" id="fi_arap#cmp_checkXtedBillCanBeModifyAction"
+        impclass="nc.bs.cmp.action.validate.CheckXTedBillCanBeModifyAction"
+        method="checkXtedBillCanBeModifyAction" name="检查已协同的单据是否可以修改" namespace="fi_arap" refid="" servflag="false">
+        <inputs>
+            <input desc="" id="fi_arap_cmp_checkXtedBillCanBeModifyAction_param_1"
+                name="checkXtedBillCanBeModifyAction1" type="nc.vo.ep.dj.DJZBVO"/>
+        </inputs>
+    </action>
+     <action desc="列表保存" id="fi_arap#listsave"
+        impclass="nc.ui.arap.actions.edit.ListSaveAction"
+        method="listSave" name="listsave" namespace="fi_arap" refid="" servflag="false">
+    </action>
+     <action desc="列表批审核" id="fi_arap#listaudit"
+        impclass="nc.ui.arap.actions.ListBatchAudit"
+        method="listBatchAudit" name="listBatchAudit" namespace="fi_arap" refid="" servflag="false">
+    </action>
+     <action desc="列表批反审核" id="fi_arap#listunaudit"
+        impclass="nc.ui.arap.actions.ListBatchUnaudit"
+        method="listBatchUnaudit" name="listBatchUnaudit" namespace="fi_arap" refid="" servflag="false">
+    </action>
+    <action desc="列表批删除" id="fi_arap#listbatchdelete"
+        impclass="nc.ui.arap.actions.ListBatchDeleteAction"
+        method="deletevos" name="ListBatchDeleteAction" namespace="fi_arap" refid="" servflag="false">
+    </action>
+   
+ <!-- 常用单据 @author wuzhwa -->
+    <action desc="保存常用单据" id="fi_arap#cmpgeneralbillsave"
+        impclass="nc.ui.arap.actions.CmpGeneralBillSaveAction"
+        method="doAction" name="CmpGeneralBillSaveAction" namespace="fi_arap" refid="" servflag="false">
+    </action>
+    <action desc="调用常用单据" id="fi_arap#cmpgeneralbillview"
+        impclass="nc.ui.arap.actions.CmpGeneralBillViewAction"
+        method="doAction" name="CmpGeneralBillViewAction" namespace="fi_arap" refid="" servflag="false">
+    </action>   
+    <!-- 常用单据 end -->
+	<!--纪录增加u8c2.5版本,20181120-->
+	<action desc="申请开票" id="fi_arap#cmp_applyinvoice"
+        impclass="nc.ui.arap.pj.ApplyInvoiceAct"
+        method="on_applyinvoice" name="收票登记" namespace="fi_arap" refid="" servflag="false">
+    </action>
+	<!--纪录增加u8c2.6版本,20190415-->
+	<action desc="导入数据" id="fi_arap#cmp_boImportData4YS"
+        impclass="nc.ui.arap.pj.ImportDataAct4YS"
+        method="on_importData" name="导入数据" namespace="fi_arap" refid="" servflag="false">
+    </action>
+	<action desc="导出模板" id="fi_arap#cmp_boExportTemplate4YS"
+        impclass="nc.ui.arap.pj.ExportTemplateAct4YS"
+        method="on_exportTemplate" name="导出模板" namespace="fi_arap" refid="" servflag="false">
+    </action>
+	<action desc="导入数据" id="fi_arap#cmp_boImportData4SK"
+        impclass="nc.ui.arap.pj.ImportDataAct4SK"
+        method="on_importData" name="导入数据" namespace="fi_arap" refid="" servflag="false">
+    </action>
+	<action desc="导出模板" id="fi_arap#cmp_boExportTemplate4SK"
+        impclass="nc.ui.arap.pj.ExportTemplateAct4SK"
+        method="on_exportTemplate" name="导出模板" namespace="fi_arap" refid="" servflag="false">
+    </action>
+	<action desc="导入数据" id="fi_arap#cmp_boImportData4YF"
+        impclass="nc.ui.arap.pj.ImportDataAct4YF"
+        method="on_importData" name="导入数据" namespace="fi_arap" refid="" servflag="false">
+    </action>
+	<action desc="导出模板" id="fi_arap#cmp_boExportTemplate4YF"
+        impclass="nc.ui.arap.pj.ExportTemplateAct4YF"
+        method="on_exportTemplate" name="导出模板" namespace="fi_arap" refid="" servflag="false">
+    </action>
+	<action desc="导入数据" id="fi_arap#cmp_boImportData4FK"
+        impclass="nc.ui.arap.pj.ImportDataAct4FK"
+        method="on_importData" name="导入数据" namespace="fi_arap" refid="" servflag="false">
+    </action>
+	<action desc="导出模板" id="fi_arap#cmp_boExportTemplate4FK"
+        impclass="nc.ui.arap.pj.ExportTemplateAct4FK"
+        method="on_exportTemplate" name="导出模板" namespace="fi_arap" refid="" servflag="false">
+    </action>
+    <!--纪录增加u8c3.6版本20230310-->
+	<action desc="上传金税" id="fi_arap#cmp_flow_applyGTVoucher"
+        impclass="nc.ui.arap.pj.ApplyGTVoucherAct"
+        method="on_applyGTVoucher" name="上传金税" namespace="fi_arap" refid="" servflag="false">
+    </action>
+</actions>

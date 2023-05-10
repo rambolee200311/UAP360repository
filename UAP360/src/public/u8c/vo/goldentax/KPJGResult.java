@@ -1,4 +1,5 @@
 package u8c.vo.goldentax;
+import java.util.List;
 public class KPJGResult {
 
     private String Result;
@@ -16,6 +17,7 @@ public class KPJGResult {
     private String URL;
     private String PDF;
     private String FPZT;
+    private List<KPJGRow> Rows;
     public void setResult(String Result) {
          this.Result = Result;
      }
@@ -120,5 +122,11 @@ public class KPJGResult {
      public String getFPZT() {
          return FPZT;
      }
-
+	public List<KPJGRow> getRows() {
+		return Rows;
+	}
+	public void setRows(List<KPJGRow> rows) {
+		Rows = rows;
+	}
+     
 }

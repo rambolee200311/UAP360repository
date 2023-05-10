@@ -12,6 +12,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+
+import nc.bs.dao.BaseDAO;
+import nc.jdbc.framework.processor.ColumnProcessor;
 import nc.vo.pub.BusinessException;
 import nc.vo.pub.lang.UFDateTime;
 import u8c.bs.APIConst;
@@ -32,7 +35,13 @@ import u8c.vo.pub.APIMessageVO;
 import u8c.vo.xmldata.BusiXml;
 import u8c.server.HttpURLConnectionDemo;
 	public class transfer implements IAPICustmerDevelop{
-		
+		private BaseDAO dao; 
+		private BaseDAO getDao() {
+			if (dao == null) {
+				dao = new BaseDAO();
+			}
+			return dao;
+		}
 		@Override
 		public String doAction(HttpServletRequest request)  throws BusinessException, ConfigException{
 			// 第一步：解析数据
@@ -64,8 +73,16 @@ import u8c.server.HttpURLConnectionDemo;
 				for(ApplyPayBody body:bodys){
 					BusiXml busiXml=u8c.server.XmlConfig.getBusiXml(body.getTransferBusinType());
 					if (busiXml!=null) {
-					PostResult postResult=setPostResultFK(body,busiXml.getBusiTypeCode());
-					listPostResult.add(postResult);
+						//付款
+						PostResult postResult=setPostResultFK(body,busiXml.getBusiTypeCode());
+						listPostResult.add(postResult);
+						if (postResult.getStatus().equals("success")){
+							if (busiXml.getAppBusiTypeCode()!=null && busiXml.getAppBusiTypeCode().trim().length()!=0) {
+								//收款
+								PostResult postResult1=setPostResultSK(body,busiXml.getAppBusiTypeCode());
+								listPostResult.add(postResult1);
+							}
+						}
 					}
 				}
 				// 第三步：返回结果
@@ -115,8 +132,104 @@ import u8c.server.HttpURLConnectionDemo;
 			}
 			return retStr;
 		}
-		//sokuan red
-		
+		//sokuan 
+		private PostResult setPostResultSK(ApplyPayBody body,String strDjlxbm) {
+			PostResult postResult=new PostResult();
+			postResult.setBillID(body.getTransferApplyNo());
+			
+			String strBody="";
+			try{
+				// 第一步：组装数据
+				BillRootVO billRootVO=new BillRootVO();			
+				List<BillVO> listBillVO=new ArrayList();			
+				BillVO billVO=new BillVO();		
+				//单据头
+				ParentVO parentvo=new ParentVO();				
+				parentvo.setDjlxbm(strDjlxbm);
+				parentvo.setDjrq(body.getTransferApplyDate());
+				parentvo.setDwbm(body.getComCode());				
+				parentvo.setLrr("13501036623");
+				parentvo.setPrepay(false);
+				parentvo.setScomment(body.getZyx1());				
+				parentvo.setXslxbm("arap");
+				parentvo.setPrepay(false);
+				parentvo.setQcbz(false);
+				parentvo.setZyx1(body.getTransferApplyNo());
+				parentvo.setZyx2(body.getArrivalRegiCode());
+				parentvo.setPj_jsfs("2");
+				parentvo.setZyx3(body.getAcCode());
+				parentvo.setZyx4(body.getBkName());
+				parentvo.setZyx5(body.getRecvCode());
+				parentvo.setZyx6(body.getRecvName());
+				billVO.setParentvo(parentvo);
+				
+				//单据体
+				List<ChildrenVO> children=new ArrayList();
+				ChildrenVO childrenvo=new ChildrenVO();
+				if (!body.getCurrency().equals("CNY")){
+					childrenvo.setBbhl(body.getCurRate());
+					childrenvo.setBzbm(body.getCurrency());
+				}else{
+					childrenvo.setDfbbje(Double.toString(body.getTransferRMB()));
+				}
+				childrenvo.setDfybje(Double.toString(body.getTransferAmount()));
+				
+				childrenvo.setHbbm(body.getInsuranceCode());
+				if (strDjlxbm.equals("F2-08")) {//F2-08 到账转户收款
+					childrenvo.setHbbm(body.getComCode());
+					parentvo.setHbbm(body.getComCode());
+					String sql="select accountcode from bd_bankaccbas where pk_bankaccbas=(select bfyhzh from arap_djfb where vouchid='"+body.getArrivalRegiCode()+"')";
+					String yhzh=(String)getDao().executeQuery(sql, new ColumnProcessor());
+					if (yhzh!=null && yhzh.trim().length()!=0) {
+						childrenvo.setBfyhzh(yhzh);;
+					}
+				}
+				//childrenvo.setSzxmid("A00001");
+				//childrenvo.setWldx("1");
+				//F3-03 再保费 分入保费金额
+				
+				
+				
+				children.add(childrenvo);
+				billVO.setChildren(children);
+				
+				listBillVO.add(billVO);
+				billRootVO.setBillvo(listBillVO);
+				
+				// 第二步：提交到API				
+				// 服务器访问地址及端口,例如 http://ip:port
+				String serviceUrl = u8c.server.XmlConfig.getUrl("u8carapskinsert");
+				//"http://127.0.0.1:9099/u8cloud/api/arap/fk/insert";
+				// 使用U8cloud系统中设置，具体节点路径为：
+				// 应用集成 - 系统集成平台 - 系统信息设置
+				// 设置信息中具体属性的对照关系如下：
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("trantype", "code"); // 档案翻译方式，枚举值为：编码请录入 code， 名称请录入 name， 主键请录入 pk
+				map.put("system", "busiitf"); // 系统编码
+				map.put("usercode", "busiuser"); // 用户
+				map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入				
+				map.put("uniquekey", body.getTransferApplyNo());
+				strBody=HttpURLConnectionDemo.operator(serviceUrl, map,JSON.toJSONString(billRootVO));
+				
+				// 第三步：处理结果
+				JSONObject jsonResult =JSON.parseObject(strBody);
+				u8c.vo.applyPay.DataResponse dataResponse=JSON.toJavaObject(jsonResult, u8c.vo.applyPay.DataResponse.class);		
+				if (dataResponse.getStatus().equals("success")){// 正常的返回
+					postResult.setStatus(dataResponse.getStatus());		
+					List<BillVO> billvoResult=JSON.parseArray(dataResponse.getData(),BillVO.class);
+					postResult.setU8cCode(billvoResult.get(0).getParentvo().getDjbh());
+				}else{// 异常的返回
+					//postResult.setStatus(dataResponse.getStatus());		
+					postResult.setStatus("fail");
+					postResult.setU8cCode(dataResponse.getErrorcode()+"-"+dataResponse.getErrormsg());
+				}
+			}catch(Exception e){
+				postResult.setStatus("fail");			
+				postResult.setU8cCode(e.getMessage());
+				e.printStackTrace();
+			}
+			return postResult;
+		}
 		//fukuan
 		private PostResult setPostResultFK(ApplyPayBody body,String strDjlxbm){
 			PostResult postResult=new PostResult();
@@ -140,6 +253,7 @@ import u8c.server.HttpURLConnectionDemo;
 				parentvo.setPrepay(false);
 				parentvo.setQcbz(false);
 				parentvo.setZyx1(body.getTransferApplyNo());
+				parentvo.setZyx2(body.getArrivalRegiCode());
 				parentvo.setPj_jsfs("2");
 				
 				billVO.setParentvo(parentvo);
@@ -156,6 +270,17 @@ import u8c.server.HttpURLConnectionDemo;
 				childrenvo.setJfybje(Double.toString(body.getTransferAmount()));
 				
 				childrenvo.setHbbm(body.getInsuranceCode());
+				if (strDjlxbm.equals("F3-09")) {//F2-08 到账转户付款
+					childrenvo.setHbbm(body.getComCode());
+					parentvo.setHbbm(body.getComCode());
+					String sql="select accountcode from bd_bankaccbas where pk_bankaccbas=(select bfyhzh from arap_djfb where vouchid='"+body.getArrivalRegiCode()+"')";
+					String yhzh=(String)getDao().executeQuery(sql, new ColumnProcessor());
+					if (yhzh!=null && yhzh.trim().length()!=0) {
+						childrenvo.setBfyhzh(yhzh);;
+					}
+					
+				}
+				
 				childrenvo.setSzxmid("A00001");
 				childrenvo.setWldx("1");
 				//F3-03 再保费 分入保费金额

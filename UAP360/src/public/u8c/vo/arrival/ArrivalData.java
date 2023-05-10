@@ -7,6 +7,8 @@ public class ArrivalData {
    private String arrivalRegiCode;//业务到账登记号--交易流水号
    private String payerCode;//支付方编号 u8c客商编号
    private String payerName;//支付方名称 u8c客商名称
+   private String acCode;//支付方 银行账号
+   private String bkName;//支付方 银行名称
    private String arrivalDate;//到账时间 trans_date交易日期
    private String currency;//币种 c_ccynbr 转换币种代码
    private Double arrivalAmount;//到账金额 trsamt 原币金额
@@ -35,7 +37,19 @@ public class ArrivalData {
         return payerName;
     }
 
-   public void setArrivalDate(String arrivalDate) {
+   public String getAcCode() {
+		return acCode;
+	}
+	public void setAcCode(String acCode) {
+		this.acCode = acCode;
+	}
+	public String getBkName() {
+		return bkName;
+	}
+	public void setBkName(String bkName) {
+		this.bkName = bkName;
+	}
+public void setArrivalDate(String arrivalDate) {
         this.arrivalDate = arrivalDate;
     }
     public String getArrivalDate() {

@@ -13,7 +13,10 @@ import u8c.bs.exception.ConfigException;
 import u8c.bs.exception.SecurityException;
 import u8c.vo.entity.CorpVO;
 import u8c.vo.entity.CustVO;
+import u8c.vo.goldentax.FPListResult;
+import u8c.vo.goldentax.TokenGetVO;
 import u8c.vo.goldentax.Zyx3;
+import u8c.vo.invoice.FPFL;
 import u8c.vo.invoice.Invoice;
 import u8c.vo.invoice.InvoiceData;
 import u8c.vo.invoice.InvoiceDataRoot;
@@ -35,6 +38,7 @@ import nc.vo.pub.BusinessException;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import u8c.server.GTFPLISTSet;
 import u8c.server.HttpURLConnectionDemo;
 
 public class InvoiceAPITask implements nc.bs.pub.taskcenter.IBackgroundWorkPlugin{
@@ -105,7 +109,7 @@ public class InvoiceAPITask implements nc.bs.pub.taskcenter.IBackgroundWorkPlugi
 				Double inclusive=(double) 0;
 				Double noInclusiveMoney=(double) 0;
 				Double specialMoney=(double) 0;
-				
+				String fb_oid=vo.getVouchid()+"_"+cZyx3.getZyx3();
 					for(nc.vo.ep.dj.DJZBItemVO vob : vobs){
 						//客户
 						String sql3="select custcode,custname,conaddr,phone1,taxpayerid from bd_cubasdoc where pk_cubasdoc='"+vob.getHbbm()+"'";
@@ -113,14 +117,16 @@ public class InvoiceAPITask implements nc.bs.pub.taskcenter.IBackgroundWorkPlugi
 						//公司
 						sql3="select unitcode,unitname from bd_corp where pk_corp='"+vo.getDwbm()+"'";
 						corpVO=(CorpVO)getDao().executeQuery(sql3, new BeanProcessor(CorpVO.class));
+						
 						//操作员
 						//sql3="select user_name from sm_user where cuserid='"+vo.getLrr()+"'";
 						sql3="select user_name from sm_user where cuserid='"+param.getPk_user()+"'";
 						userCode=(String)getDao().executeQuery(sql3, new ColumnProcessor());
-						inclusive=vob.getSl().toDouble();
-						inclusiveMoney+=vob.getJfbbje().toDouble();
-						specialMoney+=vob.getJfbbsj().toDouble();
-						noInclusiveMoney+=(vob.getJfybwsje().toDouble()*vob.getBbhl().toDouble());
+						/*
+						 * inclusive=vob.getSl().toDouble(); inclusiveMoney+=vob.getJfbbje().toDouble();
+						 * specialMoney+=vob.getJfbbsj().toDouble();
+						 * noInclusiveMoney+=(vob.getJfybwsje().toDouble()*vob.getBbhl().toDouble());
+						 */
 						//inclusive=vob.getSl().toDouble();
 						//inclusiveMoney=vob.getJfbbje().toDouble();
 						//specialMoney=vob.getJfbbsj().toDouble();
@@ -128,57 +134,84 @@ public class InvoiceAPITask implements nc.bs.pub.taskcenter.IBackgroundWorkPlugi
 					}
 						//数据data
 						String operationType="1";
-						InvoiceData invoiceData=new InvoiceData();
-						int isVatInvoice=0;
-						switch(vo.getZyx4()){
-							case "蓝票":
-								operationType="1";
-								isVatInvoice=0;
-								break;
-							case "红票":
-								operationType="2";
-								invoiceData.setReverseInvoiceNo(vo.getZyx8());
-								isVatInvoice=1;
-								break;
-							case "作废":
-								operationType="3";
-								invoiceData.setReverseInvoiceNo(vo.getZyx8());
-								isVatInvoice=0;
-								break;
-							default:
-								operationType="1";
-						}
-						invoiceData.setInvoiceSeqNo(vo.getDjbh());//发票流水号 U8C发票号
-						//invoiceData.setInvoiceNo(vo.getZyx2());//发票号  金税发票号
-						invoiceData.setAdviceNote(vo.getZyx1());//通知书编号 开票通知书编号（唯一）
-						//invoiceData.setAdviceType(Integer.valueOf(vo.getZyx7()));//通知书类型 业务类型 (1-保司经纪费,2-客户经纪费,3-咨询经纪费,4-转付保费到账,5-再保结算到站,6-理赔款结算,7-再保理赔,8-退保经纪费）
+						
 						/*
-						 * 2023-02-15
-						 * adviceType 整数型改成字符串类型
-						*/
-						invoiceData.setAdviceType(vo.getDjlxbm());
-						invoiceData.setInvoiceType("增值税");//发票类型 （普通发票、增值税）
-						invoiceData.setCurrency("CNY");//币种 人民币
-						invoiceData.setInclusiveMoney(inclusiveMoney);//发票含税金额 金额	
-						invoiceData.setInclusive(inclusive);//含税税率 整数（6，13）
-						invoiceData.setSpecialMoney(specialMoney);//增值税金额 税额
-						invoiceData.setNoInclusiveMoney(inclusiveMoney-specialMoney);//不含税金额 金额
-						invoiceData.setPayerCode(custVO.getCustcode());//支付方编号 u8c客商编号
-						invoiceData.setPayerName(custVO.getCustname());//支付方名称 u8c客商名称
-						//invoiceData.setInvoiceTime(vo.getZyx3());//发票日期
-						invoiceData.setInvoiceNo(vobs.get(0).getZyx14());//发票号  金税发票号
-						invoiceData.setInvoiceTime(vobs.get(0).getZyx15());//发票日期
-						invoiceData.setIsVatInvoice(isVatInvoice);//是否红票 是否红票
-						invoiceData.setRemark(vo.getScomment());
-						invoiceData.setVatPayerId(custVO.getTaxpayerid());//纳税人识别号 u8c税号
-						invoiceData.setComCode(corpVO.getUnitcode());//经办人归属机构 公司编码
-						invoiceData.setComName(corpVO.getUnitname());
-						invoiceData.setOperatorCode(userCode);	
-						invoiceData.setOperationType(operationType);
+						 * 2023-04-11
+						 * lijianqiang
+						 * 获取金税开票列表
+						 */
+						TokenGetVO tokenGetVO=u8c.server.XmlConfig.getTokenGetVO(corpVO.getUnitcode());
+						GTFPLISTSet gTFPLISTSet=new GTFPLISTSet();
+						String token=gTFPLISTSet.getGTToken(tokenGetVO);
+						String spid=tokenGetVO.getGTSPID();
+						sql2="select doccode,docname from bd_defdoc where pk_defdoclist in (select pk_defdoclist from bd_defdoclist where doclistcode='FPZL') and docname='"+vo.getZyx15()+"'";
+						FPFL fPFL=(FPFL)dao.executeQuery(sql2, new BeanProcessor(FPFL.class));	
+						String fpfl="004";
+						if (fPFL!=null) {
+							fpfl=fPFL.getDoccode();
+						}
+						List<FPListResult> fplists=gTFPLISTSet.getFPLISTS(fb_oid, spid, token, fpfl);
 						
-						
-						listInvoiceData.add(invoiceData);
-						iRow++;
+						for(FPListResult fplist:fplists) {
+							InvoiceData invoiceData=new InvoiceData();
+							int isVatInvoice=0;
+							switch(vo.getZyx4()){
+								case "蓝票":
+									operationType="1";
+									isVatInvoice=0;
+									break;
+								case "红票":
+									operationType="2";
+									invoiceData.setReverseInvoiceNo(vo.getZyx8());
+									isVatInvoice=1;
+									break;
+								case "作废":
+									operationType="3";
+									invoiceData.setReverseInvoiceNo(vo.getZyx8());
+									isVatInvoice=0;
+									break;
+								default:
+									operationType="1";
+							}
+							invoiceData.setInvoiceSeqNo(vo.getDjbh());//发票流水号 U8C发票号
+							//invoiceData.setInvoiceNo(vo.getZyx2());//发票号  金税发票号
+							invoiceData.setAdviceNote(vo.getZyx1());//通知书编号 开票通知书编号（唯一）
+							//invoiceData.setAdviceType(Integer.valueOf(vo.getZyx7()));//通知书类型 业务类型 (1-保司经纪费,2-客户经纪费,3-咨询经纪费,4-转付保费到账,5-再保结算到站,6-理赔款结算,7-再保理赔,8-退保经纪费）
+							/*
+							 * 2023-02-15
+							 * adviceType 整数型改成字符串类型
+							*/
+							invoiceData.setAdviceType(vo.getDjlxbm());
+							invoiceData.setInvoiceType("增值税");//发票类型 （普通发票、增值税）
+							invoiceData.setCurrency("CNY");//币种 人民币
+							
+							inclusiveMoney=Double.valueOf(fplist.getRows().get(0).getJshj());
+							invoiceData.setInclusiveMoney(inclusiveMoney);//发票含税金额 金额	
+							inclusive=Double.valueOf(fplist.getRows().get(0).getZhsl());
+							invoiceData.setInclusive(inclusive);//含税税率 整数（6，13）
+							specialMoney=Double.valueOf(fplist.getRows().get(0).getHjse());
+							invoiceData.setSpecialMoney(specialMoney);//增值税金额 税额
+							noInclusiveMoney=Double.valueOf(fplist.getRows().get(0).getHjje());
+							invoiceData.setNoInclusiveMoney(noInclusiveMoney);//不含税金额 金额
+							
+							invoiceData.setPayerCode(custVO.getCustcode());//支付方编号 u8c客商编号
+							invoiceData.setPayerName(custVO.getCustname());//支付方名称 u8c客商名称
+							//invoiceData.setInvoiceTime(vo.getZyx3());//发票日期
+							invoiceData.setInvoiceNo(fplist.getRows().get(0).getFpdm()+fplist.getRows().get(0).getFphm());//(vobs.get(0).getZyx14());//发票号  金税发票号
+							invoiceData.setInvoiceTime(fplist.getRows().get(0).getKprq());//(vobs.get(0).getZyx15());//发票日期
+							invoiceData.setVatPayerId(fplist.getRows().get(0).getGhdwsbh());//纳税人识别号 u8c税号
+							
+							invoiceData.setIsVatInvoice(isVatInvoice);//是否红票 是否红票
+							invoiceData.setRemark(vo.getScomment());
+							invoiceData.setComCode(corpVO.getUnitcode());//经办人归属机构 公司编码
+							invoiceData.setComName(corpVO.getUnitname());
+							invoiceData.setOperatorCode(userCode);	
+							invoiceData.setOperationType(operationType);
+							
+							
+							listInvoiceData.add(invoiceData);
+							iRow++;
+						}
 						
 					
 			}

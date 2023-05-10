@@ -17,6 +17,8 @@ public class ApplyInvoiceBody {
 	private String zyx3;//扩展字段3
 	private String zyx4;//扩展字段4
 	private String zyx5;//扩展字段5
+	private String fpflCode;//发票分类编号
+	private String fpflName;//发票分类名称
 	private List<ApplyInvoiceDetail> detail;
 	public String getAdviceNote() {
 		return adviceNote;
@@ -121,4 +123,16 @@ public class ApplyInvoiceBody {
 		this.detail = detail;
 	}
 	
+	public String getFpflCode() {
+		return fpflCode;
+	}
+	public void setFpflCode(String fpflCode) {
+		this.fpflCode = fpflCode;
+	}
+	public String getFpflName() {
+		return fpflName;
+	}
+	public void setFpflName(String fpflName) {
+		this.fpflName = fpflName;
+	}
 }

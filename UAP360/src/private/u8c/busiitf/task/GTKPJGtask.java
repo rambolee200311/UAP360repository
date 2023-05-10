@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
@@ -19,13 +20,16 @@ import nc.jdbc.framework.processor.BeanListProcessor;
 import nc.jdbc.framework.processor.BeanProcessor;
 import nc.vo.ep.dj.DJZBHeaderVO;
 import nc.vo.pub.BusinessException;
+import u8c.server.GTFPLISTSet;
 import u8c.server.HttpURLConnectionDemo;
 import u8c.server.InvoiceUpdateSet;
 import u8c.vo.entity.CorpVO;
 import u8c.vo.goldentax.TokenGetVO;
 import u8c.vo.goldentax.TokenResult;
 import u8c.vo.goldentax.Zyx3;
+import u8c.vo.goldentax.FPListResult;
 import u8c.vo.goldentax.KPJGResult;
+import u8c.vo.goldentax.KPJGRow;
 import u8c.vo.invoice.FPFL;
 /*
  * 20230306
@@ -86,8 +90,8 @@ public class GTKPJGtask implements nc.bs.pub.taskcenter.IBackgroundWorkPlugin{
 				
 				
 				Map<String, Object> headparams = new HashMap<String, Object>();
-				
-				headparams.put("xtlsh", cZyx3.getZyx3());
+				String xtlsh=cZyx3.getZyx3();
+				headparams.put("xtlsh", xtlsh);
 				headparams.put("spid", tokenGetVO.getGTSPID());
 				headparams.put("fpzl", fPFL.getDoccode());
 				
@@ -116,7 +120,35 @@ public class GTKPJGtask implements nc.bs.pub.taskcenter.IBackgroundWorkPlugin{
 							+" where vouchid+'_'+isnull(zyx3,'')='"+kPJGResult.getXTLSH()+"' and isnull(zyx13,'')!='success'";
 				}else if (kPJGResult.getResult().equals("0")) {//失败
 					sql4="update arap_djfb set zyx13='err',zyx14='错误信息:"+kPJGResult.getMessage()+"'"
-							+" where vouchid+'_'+isnull(zyx3,'')='"+kPJGResult.getXTLSH()+"' and isnull(zyx13,'')!='success'";
+							+" where vouchid+'_'+isnull(zyx3,'')='"+xtlsh+"' and isnull(zyx13,'')!='success'";
+					/*
+					 * 2023-04-11
+					 * lijianqiang
+					 * 获取金税开票列表
+					 */
+					if (kPJGResult.getRows().size()>0) {
+						GTFPLISTSet gTFPLISTSet=new GTFPLISTSet();
+						String fphm="";
+						String kprq="";
+						List<FPListResult> fplists=new ArrayList();
+						for(KPJGRow row:kPJGResult.getRows()) {
+							FPListResult fplist=gTFPLISTSet.getFPLIST(row.getXTLSH(),tokenGetVO.getGTSPID(),strToken);
+							fplists.add(fplist);
+						}
+						for(FPListResult fplist:fplists) {
+							fphm+=""+fplist.getRows().get(0).getFpdm()+fplist.getRows().get(0).getFphm()+",";
+							kprq=fplist.getRows().get(0).getKprq();
+							
+							invoiceUpdateSet.updateInvoiceData(xtlsh, 
+									param.getPk_user(),
+									fplist.getRows().get(0).getFpdm()+fplist.getRows().get(0).getFphm(),
+									fplist.getRows().get(0).getKprq());
+							
+						}
+						sql4="update arap_djfb set zyx13='success',zyx14='"+fphm+"',zyx15='"+kprq+"'"
+								+" where vouchid+'_'+isnull(zyx3,'')='"+xtlsh+"' and isnull(zyx13,'')!='success'";
+					}				
+					
 				}
 				
 				try {

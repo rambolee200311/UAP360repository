@@ -7,6 +7,7 @@ public class ParentVO {
     private String dwbm_name;
     private String djbh;
     private String djrq;
+    private String hbbm;
     private boolean prepay;
     private boolean qcbz;
     private String lrr;
@@ -32,9 +33,31 @@ public class ParentVO {
     private String zyx3;
     private String zyx4;
     private String zyx5;
+    private String zyx6;
+    private String zyx7;
+    private String zyx8;
+    private String zyx9;
+    private String zyx10;
+    private String zyx11;
+    private String zyx12;
+    private String zyx13;
+    private String zyx14;
+    private String zyx15;
+    private String zyx16;
+    private String zyx17;
+    private String zyx18;
+    private String zyx19;
+    private String zyx20;
     private String pj_jsfs;
     private String pj_jsfs_code;
     private String pj_jsfs_name;
+    
+	public String getHbbm() {
+		return hbbm;
+	}
+	public void setHbbm(String hbbm) {
+		this.hbbm = hbbm;
+	}
 	public String getVouchid() {
 		return vouchid;
 	}
@@ -238,6 +261,96 @@ public class ParentVO {
 	}
 	public void setPj_jsfs_name(String pj_jsfs_name) {
 		this.pj_jsfs_name = pj_jsfs_name;
+	}
+	public String getZyx6() {
+		return zyx6;
+	}
+	public void setZyx6(String zyx6) {
+		this.zyx6 = zyx6;
+	}
+	public String getZyx7() {
+		return zyx7;
+	}
+	public void setZyx7(String zyx7) {
+		this.zyx7 = zyx7;
+	}
+	public String getZyx8() {
+		return zyx8;
+	}
+	public void setZyx8(String zyx8) {
+		this.zyx8 = zyx8;
+	}
+	public String getZyx9() {
+		return zyx9;
+	}
+	public void setZyx9(String zyx9) {
+		this.zyx9 = zyx9;
+	}
+	public String getZyx10() {
+		return zyx10;
+	}
+	public void setZyx10(String zyx10) {
+		this.zyx10 = zyx10;
+	}
+	public String getZyx11() {
+		return zyx11;
+	}
+	public void setZyx11(String zyx11) {
+		this.zyx11 = zyx11;
+	}
+	public String getZyx12() {
+		return zyx12;
+	}
+	public void setZyx12(String zyx12) {
+		this.zyx12 = zyx12;
+	}
+	public String getZyx13() {
+		return zyx13;
+	}
+	public void setZyx13(String zyx13) {
+		this.zyx13 = zyx13;
+	}
+	public String getZyx14() {
+		return zyx14;
+	}
+	public void setZyx14(String zyx14) {
+		this.zyx14 = zyx14;
+	}
+	public String getZyx15() {
+		return zyx15;
+	}
+	public void setZyx15(String zyx15) {
+		this.zyx15 = zyx15;
+	}
+	public String getZyx16() {
+		return zyx16;
+	}
+	public void setZyx16(String zyx16) {
+		this.zyx16 = zyx16;
+	}
+	public String getZyx17() {
+		return zyx17;
+	}
+	public void setZyx17(String zyx17) {
+		this.zyx17 = zyx17;
+	}
+	public String getZyx18() {
+		return zyx18;
+	}
+	public void setZyx18(String zyx18) {
+		this.zyx18 = zyx18;
+	}
+	public String getZyx19() {
+		return zyx19;
+	}
+	public void setZyx19(String zyx19) {
+		this.zyx19 = zyx19;
+	}
+	public String getZyx20() {
+		return zyx20;
+	}
+	public void setZyx20(String zyx20) {
+		this.zyx20 = zyx20;
 	}
     
 }

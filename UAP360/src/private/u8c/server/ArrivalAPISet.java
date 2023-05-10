@@ -39,6 +39,8 @@ public class ArrivalAPISet implements IArrivalAPISet {
 	public String uploadBusiSys (String vouchid,String strPkCorp,String pk_user,String strDdate){
 		String strResult="";
 		String zyx1="";
+		String zyx2="";
+		String vVouchid="";
 		Logger.init("hanglianAPI");
 		String strTemp = "";
 		try {
@@ -74,15 +76,25 @@ public class ArrivalAPISet implements IArrivalAPISet {
 			//if(strbilltype.equals("F2-01")){
 				int iRow=0;
 				for(DJZBHeaderVO vo : vos){
-					zyx1=vo.getVouchid();
+					vVouchid=vo.getVouchid();
+					zyx1=vo.getZyx1();
 					String sql2="select [accountid], [assetpactno], [bankrollprojet], [bbhl], [bbpjlx], [bbtxfy], [bbye], [bfyhzh], [billdate], [bjdwhsdj], [bjdwsl], [bjdwwsdj], [bjjldw], [blargessflag], [bz_date], [bz_kjnd], [bz_kjqj], [bzbm], [cashitem], [chbm_cl], [checkflag], [chmc], [cinventoryid], [ckbm], [ckdh], [ckdid], [cksqsh], [clbh], [commonflag], [contractno], [ctzhtlx_pk], [ddh], [ddhh], [ddhid], [ddlx], [deptid], [dfbbje], [dfbbsj], [dfbbwsje], [dffbje], [dffbsj], [dfjs], [dfshl], [dfybje], [dfybsj], [dfybwsje], [dfyhzh], [discountmny], [dj], [djbh], [djdl], [djlxbm], [djxtflag], [dr], [dstlsubcs], [dwbm], [encode], [equipmentcode], [facardbh], [fb_oid], [fbhl], [fbpjlx], [fbtxfy], [fbye], [fjldw], [fkyhdz], [fkyhmc], [flbh], [fph], [fphid], [freeitemid], [fx], [ggxh], [groupnum], [hbbm], [hsdj], [hsl], [htbh], [htmc], [innerorderno], [issfkxychanged], [isverifyfinished], [item_bill_pk], [itemstyle], [jfbbje], [jfbbsj], [jffbje], [jffbsj], [jfjs], [jfshl], [jfybje], [jfybsj], [jfybwsje], [jfzkfbje], [jfzkybje], [jobid], [jobphaseid], [jsfsbm], [jshj], [kmbm], [kprq], [ksbm_cl], [kslb], [kxyt], [notetype], [occupationmny], [old_flag], [old_sys_flag], [ordercusmandoc], [othersysflag], [pausetransact], [paydate], [payflag], [payman], [pch], [ph], [pj_jsfs], [pjdirection], [pjh], [pk_jobobjpha], [pk_taxclass], [produceorder], [productline], [pzflh], [qxrq], [sanhu], [seqnum], [sfbz], [sfkxyh], [shlye], [skyhdz], [skyhmc], [sl], [spzt], [srbz], [szxmid], [task], [tax_num], [tbbh], [ts], [txlx_bbje], [txlx_fbje], [txlx_ybje], [usedept], [verifyfinisheddate], [vouchid], [wbfbbje], [wbffbje], [wbfybje], [wldx], [xbbm3], [xgbh], [xm], [xmbm2], [xmbm4], [xmys], [xyzh], [ybpjlx], [ybtxfy], [ybye], [ycskrq], [ysbbye], [ysfbye], [ysybye], [ywbm], [ywxz], [ywybm], [zjldw], [zkl], [zrdeptid], [zy], [zyx1], [zyx10], [zyx11], [zyx12], [zyx13], [zyx14], [zyx15], [zyx16], [zyx17], [zyx18], [zyx19], [zyx2], [zyx20], [zyx21], [zyx22], [zyx23], [zyx24], [zyx25], [zyx26], [zyx27], [zyx28], [zyx29], [zyx3], [zyx30], [zyx4], [zyx5], [zyx6], [zyx7], [zyx8], [zyx9] " +
 							"from arap_djfb " +
-							"where vouchid='"+vo.getVouchid()+"';";
+							"where vouchid='"+vVouchid+"';";
 					//子表 vob
 					ArrayList<DJZBItemVO> vobs =(ArrayList<DJZBItemVO>)dao.executeQuery(sql2, new BeanListProcessor(DJZBItemVO.class));
 					for(nc.vo.ep.dj.DJZBItemVO vob : vobs){
+						
+						
 						//客户
-						String sql3="select custcode,custname,conaddr,phone1,taxpayerid from bd_cubasdoc where pk_cubasdoc='"+vob.getHbbm()+"'";
+						String hbbm=vob.getHbbm();
+						//到款退回客户
+						if (vo.getDjlxbm().equals("F2-08")) {
+							zyx2=vo.getZyx2();
+							sql2="select hbbm from arap_djfb where vouchid in (select vouchid from arap_djzb where vouchid='"+zyx2+"' and djdl='sk' and dr=0)";
+							hbbm=(String)dao.executeQuery(sql2, new ColumnProcessor());							
+						}
+						String sql3="select custcode,custname,conaddr,phone1,taxpayerid from bd_cubasdoc where pk_cubasdoc='"+hbbm+"'";
 						CustVO custVO=(CustVO)dao.executeQuery(sql3, new BeanProcessor(CustVO.class));		
 						//公司
 						sql3="select unitcode,unitname from bd_corp where pk_corp='"+vo.getDwbm()+"'";
@@ -94,9 +106,55 @@ public class ArrivalAPISet implements IArrivalAPISet {
 						//币种
 						sql3="select currtypecode from bd_currtype where pk_currtype='"+vob.getBzbm()+"'";
 						String currency=(String)dao.executeQuery(sql3, new ColumnProcessor());
+						
+						
+						switch(vo.getDjlxbm().toString()) {
+							default:
+								//单据日期
+								sql3="select djrq from arap_djzb where vouchid='"+vVouchid+"'";
+							case "F2-01": 
+								//到账日期
+								sql3="select rq from arap_dztz where pk_dztz='"+vob.getDdhh()+"'";
+							case "F2-02":
+								//到账日期
+								sql3="select rq from arap_dztz where pk_dztz='"+vob.getDdhh()+"'";
+							case "F2-08":
+								//付款日期
+								sql3="select paydate from arap_djzb where zyx1='"+zyx1+"' and zyx2='"+zyx2+"' and djdl='fk' and dr=0";
+							case "F2-09":
+								//单据日期
+								sql3="select djrq from arap_djzb where vouchid='"+vVouchid+"'";
+						}
+						/*
+						//到账日期
 						sql3="select rq from arap_dztz where pk_dztz='"+vob.getDdhh()+"'";
-						Logger.info("sql rq:"+sql3);
+						
+						//到款退回日期
+						if (vo.getDjlxbm().equals("F2-08")) {
+							sql3="select paydate from arap_djzb where zyx1='"+zyx1+"' and zyx2='"+zyx2+"' and djdl='fk' and dr=0";
+						}
+						if (vo.getDjlxbm().equals("F2-09")) {
+							sql3="select djrq from arap_djzb where vouchid='"+vVouchid+"'";
+						}
+						//Logger.info("sql rq:"+sql3);
+						 * 
+						 */
 						String rq=(String)dao.executeQuery(sql3, new ColumnProcessor());
+						
+						String acCode="";
+						String bkName="";
+						if (vob.getDfyhzh()!=null && vob.getDfyhzh().trim().length()!=0) {
+							sql3="select accountcode from bd_bankaccbas where pk_bankaccbas='"+vob.getDfyhzh()+"'";
+							acCode=(String)dao.executeQuery(sql3, new ColumnProcessor());
+							sql3="select pk_bankdoc from bd_bankaccbas where pk_bankaccbas='"+vob.getDfyhzh()+"'";
+							String pk_bankdoc=(String)dao.executeQuery(sql3, new ColumnProcessor());
+							if (pk_bankdoc!=null && pk_bankdoc.trim().length()!=0) {
+								sql3="select bankdocname from bd_bankdoc where pk_bankdoc='"+pk_bankdoc+"'";
+								bkName=(String)dao.executeQuery(sql3, new ColumnProcessor());
+							}
+						}
+						
+						
 						//数据data
 						ArrivalData arrivalData=new ArrivalData();
 						arrivalData.setArrivalRegiCode(vob.getDdhh());
@@ -110,6 +168,8 @@ public class ArrivalAPISet implements IArrivalAPISet {
 						arrivalData.setCurrency(currency);
 						arrivalData.setArrivalRegiCode(vo.getVouchid());
 						arrivalData.setArrivalDate(rq);
+						arrivalData.setAcCode(acCode);
+						arrivalData.setBkName(bkName);
 						listArrivalData.add(arrivalData);
 					}			
 					arrivalDataRoot.setArrivalBusinType(vo.getDjlxbm());
@@ -174,7 +234,7 @@ public class ArrivalAPISet implements IArrivalAPISet {
 					 * 20220320
 					 * 回写结果到zyx11,zyx12
 					 */
-					strResult=updateArrival(strTemp,zyx1);
+					strResult=updateArrival(strTemp,vVouchid);
 				} catch (SecurityException e) {
 					// TODO Auto-generated catch block
 					
@@ -190,14 +250,14 @@ public class ArrivalAPISet implements IArrivalAPISet {
 		return strResult;
 	}
 	@Override
-	public String updateArrival(String strResult,String zyx1) {
+	public String updateArrival(String strResult,String vouchid) {
 		
 		JSONObject parameJson = JSONObject.parseObject(strResult);
 		ArrivalResultData arrivalResultData = JSON.toJavaObject(parameJson, ArrivalResultData.class);
 		for (ArrivalResult arrivalResult : arrivalResultData.getArrivalData()) {
-			String vouchid = arrivalResult.getArrivalRegiCode();
+			String cvouchid = arrivalResult.getArrivalRegiCode();
 			String sql = "update arap_djzb set zyx11='" + arrivalResult.getResultCode() + "',zyx12='"
-					+ arrivalResult.getResultDesc() + "'" + " where vouchid='" + zyx1 + "'";
+					+ arrivalResult.getResultDesc() + "'" + " where vouchid='" + cvouchid + "'";
 			strResult=arrivalResult.getResultDesc();
 			try {
 				dao.executeUpdate(sql);

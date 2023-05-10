@@ -165,6 +165,10 @@ public class invoice  implements IAPICustmerDevelop{
 				parentvo.setZyx15(tokenGetVO.getGTFPZL());
 			}
 			
+			if (body.getFpflName()!=null) {
+				parentvo.setZyx15(body.getFpflName());
+			}
+			
 			billVO.setParentvo(parentvo);
 			int iRow=0;
 			//µ¥¾ÝÌå

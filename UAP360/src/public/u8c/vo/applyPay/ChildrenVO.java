@@ -6,6 +6,8 @@ public class ChildrenVO {
 	    private Double sl;
 	    private String jfybje;
 	    private String jfbbje;
+	    private String dfybje;
+	    private String dfbbje;
 	    private Double bbhl;
 	    private Double jfybsj;
 	    private Double jfbbsj;
@@ -36,6 +38,33 @@ public class ChildrenVO {
 	    private String zyx4;
 	    private String zyx5;
 	    private String zyx6;
+	    private String bfyhzh;
+	    private String dfyhzh;
+	    
+		public String getBfyhzh() {
+			return bfyhzh;
+		}
+		public void setBfyhzh(String bfyhzh) {
+			this.bfyhzh = bfyhzh;
+		}
+		public String getDfyhzh() {
+			return dfyhzh;
+		}
+		public void setDfyhzh(String dfyhzh) {
+			this.dfyhzh = dfyhzh;
+		}
+		public String getDfybje() {
+			return dfybje;
+		}
+		public void setDfybje(String dfybje) {
+			this.dfybje = dfybje;
+		}
+		public String getDfbbje() {
+			return dfbbje;
+		}
+		public void setDfbbje(String dfbbje) {
+			this.dfbbje = dfbbje;
+		}
 		public String getFb_oid() {
 			return fb_oid;
 		}

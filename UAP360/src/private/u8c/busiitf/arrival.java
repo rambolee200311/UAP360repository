@@ -45,6 +45,7 @@ public class arrival implements IAPICustmerDevelop{
 	public String doAction(HttpServletRequest request)  throws BusinessException, ConfigException{
 		// 第一步：解析数据
 		String obj = "";
+		String zyx2="";
 		String strBody = "";
 		String strTemp = "";
 		APIMessageVO messageVO = new APIMessageVO();
@@ -164,10 +165,23 @@ public class arrival implements IAPICustmerDevelop{
 			// 第一步：组装数据
 			BillRootVO billRootVO=new BillRootVO();			
 			List<BillVO> listBillVO=new ArrayList();
-			String sql="select custcode from bd_cubasdoc a" 
+			String ArrivalRegiCode=confirmArrivalBody.getArrivalRegiCode();
+			String sql="";
+			
+			String djlxbm="";		
+			sql="select djlxbm from arap_djzb where vouchid='"+ArrivalRegiCode+"'";	
+			djlxbm=(String)getDao().executeQuery(sql, new ColumnProcessor());
+			
+			sql="select custcode from bd_cubasdoc a" 
 				+" inner join arap_djfb b on a.pk_cubasdoc=b.hbbm"
 				+" inner join arap_djzb c on b.vouchid=c.vouchid"
-				+" where c.vouchid='"+confirmArrivalBody.getArrivalRegiCode()+"'";
+				+" where c.vouchid='"+ArrivalRegiCode+"'";
+			//到款退回客户
+			if (djlxbm.equals("F2-08")) {
+				sql="select custcode from bd_cubasdoc a" 
+						+" inner join (select hbbm from arap_djfb where vouchid in (select zyx2 from arap_djzb where vouchid='"+ArrivalRegiCode+"' and djdl='sk' and dr=0)) b on a.pk_cubasdoc=b.hbbm";						
+			}
+			
 			String custcode="";
 			custcode=(String)getDao().executeQuery(sql, new ColumnProcessor());
 			//到账认领收款
