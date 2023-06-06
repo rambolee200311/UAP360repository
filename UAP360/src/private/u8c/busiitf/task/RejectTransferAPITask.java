@@ -153,7 +153,7 @@ public class RejectTransferAPITask implements nc.bs.pub.taskcenter.IBackgroundWo
 			JSONObject resultJson = JSONObject.parseObject(strResult);
 			BusiResult busiResult=JSON.toJavaObject(resultJson, BusiResult.class);
 			//20230329 delete vouch
-			if (busiResult.equals("0")) {
+			if (busiResult.getResultCode().equals("0")) {
 				iARAPVoucher itfARAP=(iARAPVoucher)NCLocator.getInstance().lookup(iARAPVoucher.class);
 				itfARAP.delete(vouchid);
 			}

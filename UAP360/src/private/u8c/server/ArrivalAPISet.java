@@ -108,22 +108,27 @@ public class ArrivalAPISet implements IArrivalAPISet {
 						String currency=(String)dao.executeQuery(sql3, new ColumnProcessor());
 						
 						
-						switch(vo.getDjlxbm().toString()) {
-							default:
-								//单据日期
-								sql3="select djrq from arap_djzb where vouchid='"+vVouchid+"'";
+						switch(vo.getDjlxbm().toString()) {							
 							case "F2-01": 
 								//到账日期
 								sql3="select rq from arap_dztz where pk_dztz='"+vob.getDdhh()+"'";
+								break;
 							case "F2-02":
 								//到账日期
 								sql3="select rq from arap_dztz where pk_dztz='"+vob.getDdhh()+"'";
+								break;
 							case "F2-08":
 								//付款日期
 								sql3="select paydate from arap_djzb where zyx1='"+zyx1+"' and zyx2='"+zyx2+"' and djdl='fk' and dr=0";
+								break;
 							case "F2-09":
 								//单据日期
 								sql3="select djrq from arap_djzb where vouchid='"+vVouchid+"'";
+								break;
+							default:
+								//单据日期
+								sql3="select djrq from arap_djzb where vouchid='"+vVouchid+"'";
+								break;
 						}
 						/*
 						//到账日期
