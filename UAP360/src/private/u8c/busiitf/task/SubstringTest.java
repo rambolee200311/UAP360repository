@@ -9,7 +9,7 @@ import nc.jdbc.framework.processor.ColumnProcessor;
 import nc.vo.pub.BusinessException;
 import u8c.bs.exception.SecurityException;
 import u8c.vo.arrival.EncryptHelper;
-
+import u8c.server.XmlConfig;
 
 
 public class SubstringTest  implements nc.bs.pub.taskcenter.IBackgroundWorkPlugin {
@@ -26,7 +26,7 @@ public class SubstringTest  implements nc.bs.pub.taskcenter.IBackgroundWorkPlugi
 		Logger.init("hanglianAPI");
 		LinkedHashMap<String, Object> para = param.getKeyMap();
 		//strResult = (String) para.get("temp");
-		
+		String type=(String) para.get("type");
 		String sql3="select user_name from sm_user where cuserid='"+param.getPk_user()+"'";
 		String userCode=(String)getDao().executeQuery(sql3, new ColumnProcessor());
 		strResult=param.getPk_user()+"_"+userCode;
@@ -36,6 +36,7 @@ public class SubstringTest  implements nc.bs.pub.taskcenter.IBackgroundWorkPlugi
 		
 		try {
 			//strResult=getSubString(strResult,30);
+			strResult=XmlConfig.getQryParam(type);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Logger.error(e.getMessage(),e);

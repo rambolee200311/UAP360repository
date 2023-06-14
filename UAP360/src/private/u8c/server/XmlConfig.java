@@ -2,7 +2,9 @@ package u8c.server;
 import nc.fi.arap.pubutil.RuntimeEnv;
 import java.io.File;
 import java.math.BigDecimal;
+import java.util.List;
 
+import org.dom4j.Node;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -19,6 +21,10 @@ public class XmlConfig {
 			+ File.separator+"resources"
 			+ File.separator+"busiitf"
 			+File.separator+"config.xml";
+	private static String fileQryParamName=RuntimeEnv.getNCHome()
+			+ File.separator+"resources"
+			+ File.separator+"busiitf"
+			+File.separator+"qryparam.xml";
 	
 	public static String getUrl(String id){
 		String strResult="";
@@ -165,5 +171,31 @@ public class XmlConfig {
 		}
 		Logger.debug("getGTFLBM result:"+JSON.toJSONString(gTFLBM));
 		return gTFLBM;
+	}
+	
+	//查询参数获取 20230607
+	public static String getQryParam(String type) {
+		String strResult="";
+		SAXReader reader = new SAXReader();
+		StringBuilder temp = new StringBuilder(strResult);
+		try {
+			Document document = reader.read(new File(fileQryParamName));
+			List<Node> nodes= document.selectNodes("//datas/qryparam[@type='"+type+"']");
+			for (Node node:nodes) {
+				temp.append("'"+node.getText()+"',");
+			}
+			int index = temp.lastIndexOf(",");
+	        if (index > 0) {
+	        	temp = temp.delete(index, index + 1);
+	        }
+	        strResult=temp.toString();
+		}catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			Logger.error("getQryParamresult err:"+e.getMessage(),e);			
+			e.printStackTrace();
+		}
+		Logger.debug("getQryParamresult:"+JSON.toJSONString(strResult));
+		
+		return strResult;
 	}
 }
