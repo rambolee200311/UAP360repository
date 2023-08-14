@@ -1,5 +1,6 @@
 package u8c.vo.applyInvoice;
 import java.util.List;
+
 public class BillVO {
 	private ParentVO parentvo;
 	private List<ChildrenVO> children;

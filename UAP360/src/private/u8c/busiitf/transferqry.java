@@ -146,9 +146,9 @@ public class transferqry  implements IAPICustmerDevelop{
 						detail.setAcceptDate(vo.getPaydate().toString());//划拨日期
 					}
 					detail.setCurrency(currency);//币种
-					detail.setTransferAmount(vob.getDfybje().toDouble());//开票金额							
-					detail.setTransferComCode(corpVO.getUnitcode());//开票机构编码
-					detail.setTransferComName(corpVO.getUnitname());//开票机构名称
+					detail.setTransferAmount(vob.getJfybje().toDouble());//支付金额							
+					detail.setTransferComCode(corpVO.getUnitcode());//支付机构编码
+					detail.setTransferComName(corpVO.getUnitname());//支付机构名称
 					if (custVO!=null) {
 					detail.setInsuranceCode(custVO.getCustcode());//支付方编号
 					detail.setInsuranceName(custVO.getCustname());//支付方名称

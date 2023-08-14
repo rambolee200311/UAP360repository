@@ -118,6 +118,12 @@ public class GTKPJGtask implements nc.bs.pub.taskcenter.IBackgroundWorkPlugin{
 							kPJGResult.getKPRQ());
 					sql4="update arap_djfb set zyx13='success',zyx14='"+kPJGResult.getFPHM()+"',zyx15='"+kPJGResult.getKPRQ()+"'"
 							+" where vouchid+'_'+isnull(zyx3,'')='"+kPJGResult.getXTLSH()+"' and isnull(zyx13,'')!='success'";
+					sql3="update bd_cubasdoc set taxpayerid=b.zyx14,def1=b.zyx10,def2=b.zyx13,def3=b.zyx9"
+							+" from bd_cubasdoc a inner join" 
+							+" (select a.vouchid,a.dwbm,a.djbh,b.hbbm,a.zyx9,a.zyx10,a.zyx13,a.zyx14 from arap_djzb a" 
+							+" inner join arap_djfb b on a.vouchid=b.vouchid " 
+							+" where a.djdl='ys' and isnull(a.zyx14,'')!='' and a.dr=0 and b.zyx13='success') b" 
+							+" on a.pk_cubasdoc=b.hbbm where b.vouchid='"+vouchid+"'";
 				}else if (kPJGResult.getResult().equals("0")) {// ß∞‹
 					sql4="update arap_djfb set zyx13='err',zyx14='¥ÌŒÛ–≈œ¢:"+kPJGResult.getMessage()+"'"
 							+" where vouchid+'_'+isnull(zyx3,'')='"+xtlsh+"' and isnull(zyx13,'')!='success'";
@@ -147,12 +153,19 @@ public class GTKPJGtask implements nc.bs.pub.taskcenter.IBackgroundWorkPlugin{
 						}
 						sql4="update arap_djfb set zyx13='success',zyx14='"+fphm+"',zyx15='"+kprq+"'"
 								+" where vouchid+'_'+isnull(zyx3,'')='"+xtlsh+"' and isnull(zyx13,'')!='success'";
+						sql3="update bd_cubasdoc set taxpayerid=b.zyx14,def1=b.zyx10,def2=b.zyx13,def3=b.zyx9"
+								+" from bd_cubasdoc a inner join" 
+								+" (select a.vouchid,a.dwbm,a.djbh,b.hbbm,a.zyx9,a.zyx10,a.zyx13,a.zyx14 from arap_djzb a" 
+								+" inner join arap_djfb b on a.vouchid=b.vouchid " 
+								+" where a.djdl='ys' and isnull(a.zyx14,'')!='' and a.dr=0 and b.zyx13='success') b" 
+								+" on a.pk_cubasdoc=b.hbbm where b.vouchid='"+vouchid+"'";
 					}				
 					
 				}
 				
 				try {
 					getDao().executeUpdate(sql4);
+					getDao().executeUpdate(sql3);
 				} catch (DAOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

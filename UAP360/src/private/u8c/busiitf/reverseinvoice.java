@@ -34,6 +34,7 @@ import u8c.pubitf.action.IAPICustmerDevelop;
 import u8c.vo.applyInvoice.ApplyInvoiceData;
 import u8c.vo.applyInvoice.BillRootVO;
 import u8c.vo.applyInvoice.BillVO;
+import u8c.vo.applyInvoice.U8CBillVO;
 import u8c.vo.applyInvoice.ChildrenVO;
 import u8c.vo.applyInvoice.ParentVO;
 import u8c.vo.arrival.EncryptHelper;
@@ -244,8 +245,11 @@ public class reverseinvoice implements IAPICustmerDevelop {
 				 * 收支项目
 				 */
 				//金税系统流水号
-				parentvo.setZyx16 (fplist.getRows().get(0).getXtlsh());
-				
+				if(fplist!=null) {
+					if (fplist.getRows()!=null) {
+						parentvo.setZyx16 (fplist.getRows().get(0).getXtlsh());
+					}
+				}
 				  CostsubjVO costsubjVO = (CostsubjVO) dmo.queryByPrimaryKey(CostsubjVO.class, vobs.get(0).getSzxmid()); 
 				  childrenvo.setSzxmid(costsubjVO.getCostcode());
 				 
@@ -273,8 +277,12 @@ public class reverseinvoice implements IAPICustmerDevelop {
 			map.put("usercode", "busiuser"); // 用户
 			map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入
 			map.put("uniquekey", body.getAdviceNote() + body.getZyx1());
-			strBody = HttpURLConnectionDemo.operator(serviceUrl, map, JSON.toJSONString(billRootVO));
-
+			strBody =JSON.toJSONString(billRootVO);
+			// 写入输入中间文件
+			writeMiddleFile(APIConst.RETURNDATAPATH + "u8c.busiitf.reverseInvoice", strBody);
+			strBody = HttpURLConnectionDemo.operator(serviceUrl, map,strBody );
+			// 写入输入中间文件
+			writeMiddleFile(APIConst.RETURNDATAPATH + "u8c.busiitf.reverseInvoice", strBody);
 			// 第三步：处理结果
 			JSONObject jsonResult = JSON.parseObject(strBody);
 			u8c.vo.applyInvoice.DataResponse dataResponse = JSON.toJavaObject(jsonResult,

@@ -176,8 +176,25 @@ public class ArrivalAPISet implements IArrivalAPISet {
 						arrivalData.setAcCode(acCode);
 						arrivalData.setBkName(bkName);
 						listArrivalData.add(arrivalData);
+						
+						
 					}			
-					arrivalDataRoot.setArrivalBusinType(vo.getDjlxbm());
+					
+					//2023-06-29 到账转户，根据银行账号性质返回djlxbm
+					String Djlxbm=vo.getDjlxbm();
+					
+					
+					if (Djlxbm.trim().equals("F2-08")) {
+						if (vobs.get(0).getBfyhzh()!=null&&vobs.get(0).getBfyhzh().trim().length()!=0) {
+							String sql4="select def1 from bd_bankaccbas where pk_bankaccbas='"+vobs.get(0).getBfyhzh()+"'";
+							String def1=(String)dao.executeQuery(sql4, new ColumnProcessor());
+							if (def1!=null && def1.trim().length()!=0) {
+								Djlxbm=def1.trim();
+							}
+						}
+					}
+					
+					arrivalDataRoot.setArrivalBusinType(Djlxbm);
 					iRow++;
 				}
 				

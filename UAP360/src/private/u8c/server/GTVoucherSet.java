@@ -80,7 +80,7 @@ public class GTVoucherSet implements IGTVoucherSet{
 			for(DJZBHeaderVO vo : vos){
 				vouchid=vo.getVouchid();
 				List<GTVoucher> gTVouchers=new ArrayList();
-				sql2="select isnull(zyx3,'') zyx3 from arap_djfb where vouchid='"+vouchid+"' group by zyx3";
+				sql2="select isnull(zyx3,'') zyx3 from arap_djfb where dr=0 and vouchid='"+vouchid+"' group by zyx3";
 				ArrayList<Zyx3> zyx3s =(ArrayList<Zyx3>)dao.executeQuery(sql2, new BeanListProcessor(Zyx3.class));
 				//2023-03-01 合并号zyx3
 				for(Zyx3 cZyx3:zyx3s) {
@@ -126,7 +126,7 @@ public class GTVoucherSet implements IGTVoucherSet{
 					
 					sql2="select [accountid], [assetpactno], [bankrollprojet], [bbhl], [bbpjlx], [bbtxfy], [bbye], [bfyhzh], [billdate], [bjdwhsdj], [bjdwsl], [bjdwwsdj], [bjjldw], [blargessflag], [bz_date], [bz_kjnd], [bz_kjqj], [bzbm], [cashitem], [chbm_cl], [checkflag], [chmc], [cinventoryid], [ckbm], [ckdh], [ckdid], [cksqsh], [clbh], [commonflag], [contractno], [ctzhtlx_pk], [ddh], [ddhh], [ddhid], [ddlx], [deptid], [dfbbje], [dfbbsj], [dfbbwsje], [dffbje], [dffbsj], [dfjs], [dfshl], [dfybje], [dfybsj], [dfybwsje], [dfyhzh], [discountmny], [dj], [djbh], [djdl], [djlxbm], [djxtflag], [dr], [dstlsubcs], [dwbm], [encode], [equipmentcode], [facardbh], [fb_oid], [fbhl], [fbpjlx], [fbtxfy], [fbye], [fjldw], [fkyhdz], [fkyhmc], [flbh], [fph], [fphid], [freeitemid], [fx], [ggxh], [groupnum], [hbbm], [hsdj], [hsl], [htbh], [htmc], [innerorderno], [issfkxychanged], [isverifyfinished], [item_bill_pk], [itemstyle], [jfbbje], [jfbbsj], [jffbje], [jffbsj], [jfjs], [jfshl], [jfybje], [jfybsj], [jfybwsje], [jfzkfbje], [jfzkybje], [jobid], [jobphaseid], [jsfsbm], [jshj], [kmbm], [kprq], [ksbm_cl], [kslb], [kxyt], [notetype], [occupationmny], [old_flag], [old_sys_flag], [ordercusmandoc], [othersysflag], [pausetransact], [paydate], [payflag], [payman], [pch], [ph], [pj_jsfs], [pjdirection], [pjh], [pk_jobobjpha], [pk_taxclass], [produceorder], [productline], [pzflh], [qxrq], [sanhu], [seqnum], [sfbz], [sfkxyh], [shlye], [skyhdz], [skyhmc], [sl], [spzt], [srbz], [szxmid], [task], [tax_num], [tbbh], [ts], [txlx_bbje], [txlx_fbje], [txlx_ybje], [usedept], [verifyfinisheddate], [vouchid], [wbfbbje], [wbffbje], [wbfybje], [wldx], [xbbm3], [xgbh], [xm], [xmbm2], [xmbm4], [xmys], [xyzh], [ybpjlx], [ybtxfy], [ybye], [ycskrq], [ysbbye], [ysfbye], [ysybye], [ywbm], [ywxz], [ywybm], [zjldw], [zkl], [zrdeptid], [zy], [zyx1], [zyx10], [zyx11], [zyx12], [zyx13], [zyx14], [zyx15], [zyx16], [zyx17], [zyx18], [zyx19], [zyx2], [zyx20], [zyx21], [zyx22], [zyx23], [zyx24], [zyx25], [zyx26], [zyx27], [zyx28], [zyx29], [zyx3], [zyx30], [zyx4], [zyx5], [zyx6], [zyx7], [zyx8], [zyx9] " +
 							"from arap_djfb " +
-							"where vouchid='"+vouchid+"' and isnull(zyx13,'')!='success' and isnull(zyx3,'')='"+cZyx3.getZyx3()+"'";
+							"where dr=0 and vouchid='"+vouchid+"' and isnull(zyx13,'')!='success' and isnull(zyx3,'')='"+cZyx3.getZyx3()+"'";
 					ArrayList<DJZBItemVO> vobs =(ArrayList<DJZBItemVO>)dao.executeQuery(sql2, new BeanListProcessor(DJZBItemVO.class));
 					//zyx3 合并号
 					

@@ -36,6 +36,8 @@ public class ChildrenVO {
 	    private String zyx4;
 	    private String zyx5;
 	    private String deptid;
+	    private String deptid_code;
+	    private String deptid_name;
 	    
 		public String getDeptid() {
 			return deptid;
@@ -246,6 +248,18 @@ public class ChildrenVO {
 		}
 		public void setZyx5(String zyx5) {
 			this.zyx5 = zyx5;
+		}
+		public String getDeptid_code() {
+			return deptid_code;
+		}
+		public void setDeptid_code(String deptid_code) {
+			this.deptid_code = deptid_code;
+		}
+		public String getDeptid_name() {
+			return deptid_name;
+		}
+		public void setDeptid_name(String deptid_name) {
+			this.deptid_name = deptid_name;
 		}
 	    
 }

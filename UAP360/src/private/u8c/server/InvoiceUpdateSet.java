@@ -16,6 +16,8 @@ import nc.jdbc.framework.processor.BeanProcessor;
 import nc.jdbc.framework.processor.ColumnProcessor;
 import nc.vo.ep.dj.DJZBItemVO;
 import u8c.bs.exception.SecurityException;
+import u8c.vo.arrival.ArrivalResult;
+import u8c.vo.arrival.ArrivalResultData;
 import u8c.vo.arrival.EncryptHelper;
 import u8c.vo.entity.CorpVO;
 import u8c.vo.entity.CustVO;
@@ -27,6 +29,9 @@ import u8c.vo.invoice.InvoiceData;
 import u8c.vo.invoice.InvoiceDataRoot;
 import u8c.vo.invoice.InvoiceHead;
 import u8c.vo.invoice.InvoiceMessage;
+import u8c.vo.invoice.InvoiceResultData;
+import u8c.vo.invoice.InvoiceResult;
+
 import u8c.vo.respmsg.RespMsg;
 
 public class InvoiceUpdateSet {
@@ -215,13 +220,41 @@ public class InvoiceUpdateSet {
 		try {
 			strResult=encryptHelper.decrypt(respMsg.getMessage().getData());
 			Logger.debug("Invoice Resultencrypt:"+strResult);
-			//updateInvoice(strResult,vouchid);
+			
+			strResult=updateInvoice(strResult,vouchid);
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
 			Logger.error("Invoice err:"+e.getMessage(),e);				
 			e.printStackTrace();
 		}
 		Logger.debug(strResult);
+		return strResult;
+	}
+	
+	public String updateInvoice(String strResult,String vouchid) {
+		
+		JSONObject parameJson = JSONObject.parseObject(strResult);
+		InvoiceResultData arrivalResultData = JSON.toJavaObject(parameJson, InvoiceResultData.class);
+		for (InvoiceResult arrivalResult : arrivalResultData.getInvoiceData()) {
+			//String cvouchid = arrivalResult.getArrivalRegiCode();
+			String sql = "update arap_djzb set zyx11='" + arrivalResult.getResultCode() + "',zyx12='"
+					+ arrivalResult.getResultDesc() + "'" + " where vouchid='" + vouchid + "'";
+			String sql3="update bd_cubasdoc set taxpayerid=b.zyx14,def1=b.zyx10,def2=b.zyx13,def3=b.zyx9"
+					+" from bd_cubasdoc a inner join" 
+					+" (select a.vouchid,a.dwbm,a.djbh,b.hbbm,a.zyx9,a.zyx10,a.zyx13,a.zyx14 from arap_djzb a" 
+					+" inner join arap_djfb b on a.vouchid=b.vouchid " 
+					+" where a.djdl='ys' and a.dr=0) b" 
+					+" on a.pk_cubasdoc=b.hbbm where b.vouchid='"+vouchid+"'";
+			strResult=arrivalResult.getResultDesc();
+			try {
+				dao.executeUpdate(sql);
+				dao.executeUpdate(sql3);
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				strResult=e.getMessage();
+				e.printStackTrace();
+			}
+		}
 		return strResult;
 	}
 }
