@@ -113,7 +113,10 @@ public class GTVoucherSet implements IGTVoucherSet{
 					gTVoucher.setKHDZ(vo.getZyx10());
 					//客户银行账号  zyx13
 					gTVoucher.setKHKHYHZH(vo.getZyx13());
-					//gTVoucher.setBZ(vob.getZyx2());
+					
+					//20230925 表头自定义项2 金税发票备注
+					gTVoucher.setBZ(vo.getZyx2());
+					
 					
 					/*
 					 * 20230325 lijianqiang
