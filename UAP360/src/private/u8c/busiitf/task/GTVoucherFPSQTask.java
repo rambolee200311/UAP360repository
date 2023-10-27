@@ -33,6 +33,8 @@ import u8c.vo.goldentax.FPListRowFpmx;
 import u8c.vo.goldentax.FPSQData;
 import u8c.vo.goldentax.FPSQDataFyxm;
 import u8c.vo.goldentax.FPSQResult;
+import u8c.vo.goldentax.GTVoucher;
+import u8c.vo.goldentax.GTVoucherItem;
 
 public class GTVoucherFPSQTask  implements nc.bs.pub.taskcenter.IBackgroundWorkPlugin {
 	private BaseDAO dao;
@@ -88,24 +90,30 @@ public class GTVoucherFPSQTask  implements nc.bs.pub.taskcenter.IBackgroundWorkP
 					for (FPListRow row:fPListResult.getRows()) {
 						//strResult=row.getFpdm()+"_"+row.getFphm();
 						String YFPHM=""+row.getFpdm()+row.getFphm();
-						strResult=getFPSQData(strPkCorp,row);
-						FPSQResult fPSQResult=JSONObject.parseObject(strResult, FPSQResult.class);
-						if (fPSQResult!=null) {
-							if (fPSQResult.getResult().equals("1")) {
-								/*
-								 * debug
-								 * */
-								String XXBBH=""+fPSQResult.getXxbbh();
-								sql1="update arap_djzb set zyx17='"+XXBBH+"' where vouchid='" +vouchid+"' and isnull(zyx17,'')=''"; 								
-								getDao().executeUpdate(sql1);
-								strResult="红票申请成功,信息表编号:"+fPSQResult.getXxbbh();
-								GTVoucherSet gTVoucherSet=new  GTVoucherSet();
-								gTVoucherSet.uploadGTVoucher(vouchid, strPkCorp, pk_user,YFPHM,XXBBH);
-								
+						if (vo.getZyx15().equals("纸质专票"))//纸质专票 红字申请
+						{
+							strResult=getFPSQData(strPkCorp,row);
+							FPSQResult fPSQResult=JSONObject.parseObject(strResult, FPSQResult.class);
+							if (fPSQResult!=null) {
+								if (fPSQResult.getResult().equals("1")) {
+									/*
+									 * debug
+									 * */
+									String XXBBH=""+fPSQResult.getXxbbh();
+									sql1="update arap_djzb set zyx17='"+XXBBH+"' where vouchid='" +vouchid+"' and isnull(zyx17,'')=''"; 								
+									getDao().executeUpdate(sql1);
+									strResult="红票申请成功,信息表编号:"+fPSQResult.getXxbbh();
+									GTVoucherSet gTVoucherSet=new  GTVoucherSet();
+									gTVoucherSet.uploadGTVoucher(vouchid, strPkCorp, pk_user,YFPHM,XXBBH);
+									
+								}
 							}
+						}else {//非纸质专票 直接发票
+							String XXBBH="";
+							GTVoucherSet gTVoucherSet=new  GTVoucherSet();
+							gTVoucherSet.uploadGTVoucher(vouchid, strPkCorp, pk_user,YFPHM,XXBBH);
 						}
-						
-					}
+					}//end for
 				}else if (fPListResult.getResult().equals("0")) {
 					strResult=fPListResult.getMessage();
 				}
@@ -164,7 +172,7 @@ public class GTVoucherFPSQTask  implements nc.bs.pub.taskcenter.IBackgroundWorkP
 		}
 		return fPListResult;
 	}
-	
+	//纸质专票 红字申请
 	private String getFPSQData(String strPkCorp,FPListRow row) throws DAOException {
 		String strResult="";
 		Logger.init("hanglianAPI");
@@ -236,7 +244,30 @@ public class GTVoucherFPSQTask  implements nc.bs.pub.taskcenter.IBackgroundWorkP
 		}
 		return strResult;
 	}
-	
+	//非纸质专票 直接发票
+	/*
+	private String setGTVoucher(String strPkCorp,FPListRow row) throws DAOException{
+		String strResult="";
+		Logger.init("hanglianAPI");
+		//公司
+		String sql2="select unitcode,unitname from bd_corp where pk_corp='"+strPkCorp+"'";
+		CorpVO corpVO=(CorpVO)getDao().executeQuery(sql2, new BeanProcessor(CorpVO.class));	
+		TokenGetVO tokenGetVO=u8c.server.XmlConfig.getTokenGetVO(corpVO.getUnitcode());
+		
+		//token
+		String strToken=getGTToken(tokenGetVO);
+		try {
+			GTVoucher gTVoucher=new GTVoucher();
+			List<GTVoucherItem> items=new ArrayList();
+			gTVoucher.setFPZL("004");
+			
+		}catch(Exception e) {
+			strResult=e.getMessage();
+			Logger.error("setGTVoucher error:"+strResult,e);
+		}
+		return strResult;
+	}
+	*/
  	public String getGTToken(TokenGetVO tokenGetVO){
 		String strResult="";
 		Logger.init("hanglianAPI");		
