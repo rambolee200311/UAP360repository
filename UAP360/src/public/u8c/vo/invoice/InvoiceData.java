@@ -22,6 +22,8 @@ public class InvoiceData {
 	private String comCode;//经办人归属机构 公司编码
 	private String comName;//经办人归属机构 公司名称
 	private String remark; //备注 发票备注	
+	
+	
 	private String operationType;//操作类型：（1-蓝票，2-红票，3-作废）
 	
 	public String getOperationType() {

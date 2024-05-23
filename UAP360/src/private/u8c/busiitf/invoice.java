@@ -144,13 +144,27 @@ public class invoice  implements IAPICustmerDevelop{
 			}
 			
 			//客户名称 zyx9
-			parentvo.setZyx9(custVO.getDef3());//自定义3 项目
+			//parentvo.setZyx9(custVO.getDef3());//自定义3 项目
 			//客户税号  zyx14
-			parentvo.setZyx14(custVO.getTaxpayerid());//客户税号
+			//parentvo.setZyx14(custVO.getTaxpayerid());//客户税号
 			//客户开票地址电话  zyx10
-			parentvo.setZyx10(custVO.getDef1());//自定义1 项目
+			//parentvo.setZyx10(custVO.getDef1());//自定义1 项目
 			//客户银行账号  zyx13
-			parentvo.setZyx13(custVO.getDef2());//自定义2 项目
+			//parentvo.setZyx13(custVO.getDef2());//自定义2 项目
+			
+			//2024-05-17新增增值税信息
+			//客户名称 zyx9
+			parentvo.setZyx9(body.getVatPayerName());//自定义3 项目
+			//客户税号  zyx14
+			parentvo.setZyx14(body.getVatPayerId());//客户税号
+			//客户开票地址电话  zyx10
+			parentvo.setZyx10(body.getVatPayerAdd());//自定义1 项目
+			//客户银行账号  zyx13
+			parentvo.setZyx13(body.getVatPayerAcc());//自定义2 项目
+			
+			
+			
+			
 			//公司
 			
 			TokenGetVO tokenGetVO=u8c.server.XmlConfig.getTokenGetVO(body.getComCode());

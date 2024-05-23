@@ -135,4 +135,35 @@ public class ApplyInvoiceBody {
 	public void setFpflName(String fpflName) {
 		this.fpflName = fpflName;
 	}
+	
+	//2024-05-17新增增值税信息
+	private String vatPayerId;//纳税人识别号 u8c税号
+	private String vatPayerName;//纳税人名称
+	private String vatPayerAcc;//纳税人银行账户
+	private String vatPayerAdd;//纳税人地址电话
+	
+	public String getVatPayerId() {
+		return vatPayerId;
+	}
+	public void setVatPayerId(String vatPayerId) {
+		this.vatPayerId = vatPayerId;
+	}
+	public String getVatPayerName() {
+		return vatPayerName;
+	}
+	public void setVatPayerName(String vatPayerName) {
+		this.vatPayerName = vatPayerName;
+	}
+	public String getVatPayerAcc() {
+		return vatPayerAcc;
+	}
+	public void setVatPayerAcc(String vatPayerAcc) {
+		this.vatPayerAcc = vatPayerAcc;
+	}
+	public String getVatPayerAdd() {
+		return vatPayerAdd;
+	}
+	public void setVatPayerAdd(String vatPayerAdd) {
+		this.vatPayerAdd = vatPayerAdd;
+	}
 }
