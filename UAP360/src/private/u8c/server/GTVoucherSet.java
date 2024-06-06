@@ -174,6 +174,11 @@ public class GTVoucherSet implements IGTVoucherSet{
 							flbm=gTFLBM.getVal();
 						}
 						item.setFLBM(flbm);
+						//20240606 add serviceName,serviceMemo
+						if (vo.getZyx18().toLowerCase().equals("true")) {
+							zyx2="·þÎñ·Ñ";
+						}
+						
 						item.setCPMC(zyx2);
 						
 						item.setKCJE("0");
