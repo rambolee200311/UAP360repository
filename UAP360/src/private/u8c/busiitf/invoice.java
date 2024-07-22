@@ -17,6 +17,7 @@ import nc.bs.dao.BaseDAO;
 import nc.bs.dao.DAOException;
 import nc.bs.logging.Logger;
 import nc.jdbc.framework.processor.BeanProcessor;
+import nc.jdbc.framework.processor.ColumnProcessor;
 import nc.vo.pub.BusinessException;
 import nc.vo.pub.lang.UFDateTime;
 import u8c.bs.APIConst;
@@ -27,6 +28,7 @@ import u8c.pubitf.action.IAPICustmerDevelop;
 import u8c.vo.arrival.EncryptHelper;
 import u8c.vo.pub.APIMessageVO;
 import u8c.server.HttpURLConnectionDemo;
+import u8c.server.SecureRandomStringGenerator;
 import u8c.server.XmlConfig;
 import u8c.vo.entity.CorpVO;
 import u8c.vo.entity.CostsubjVO;
@@ -162,7 +164,16 @@ public class invoice  implements IAPICustmerDevelop{
 			//客户银行账号  zyx13
 			parentvo.setZyx13(body.getVatPayerAcc());//自定义2 项目
 			
-			
+			//20240606 add serviceName,serviceMemo
+			parentvo.setZyx18("false");
+			parentvo.setZyx19(body.getServiceMemo());
+			if (!(body.getServiceName()==null)&&!(body.getServiceName().equals(null))&&!(body.getServiceName().isEmpty())) {
+				if (body.getServiceName().toLowerCase().equals("true")) {
+					//zyx2 金税发票备注
+					parentvo.setZyx2(body.getServiceMemo());
+					parentvo.setZyx18(body.getServiceName());
+				}
+			}
 			
 			
 			//公司
@@ -217,8 +228,20 @@ public class invoice  implements IAPICustmerDevelop{
 			map.put("trantype", "code"); // 档案翻译方式，枚举值为：编码请录入 code， 名称请录入 name， 主键请录入 pk
 			map.put("system", "busiitf"); // 系统编码
 			map.put("usercode", "busiuser"); // 用户
-			map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入				
-			map.put("uniquekey", body.getAdviceNote());
+			map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入	
+			
+			
+			//2024-07-22 uniquekey  自定义1 发票申请单号
+			String sql1="select vouchid from arap_djzb where djdl='ys' and dr=1 and zyx1='"+body.getAdviceNote()+"'";
+			String uniquekey=(String)getDao().executeQuery(sql1, new ColumnProcessor());
+			if (uniquekey!=null) {
+				uniquekey="_"+SecureRandomStringGenerator.generateRandomString(4);
+			}else {
+				uniquekey="";
+			}
+			uniquekey=body.getAdviceNote()+uniquekey;			
+			map.put("uniquekey", uniquekey);
+			
 			strBody=HttpURLConnectionDemo.operator(serviceUrl, map,JSON.toJSONString(billRootVO));
 			
 			// 第三步：处理结果	

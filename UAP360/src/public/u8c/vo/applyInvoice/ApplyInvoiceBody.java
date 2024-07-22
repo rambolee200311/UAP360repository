@@ -19,6 +19,22 @@ public class ApplyInvoiceBody {
 	private String zyx5;//扩展字段5
 	private String fpflCode;//发票分类编号
 	private String fpflName;//发票分类名称
+	//20240606 add serviceName,serviceMemo
+	private String serviceName;//产品名称是否服务费
+	private String serviceMemo;//服务费险种备注
+	public String getServiceName() {
+		return serviceName;
+	}
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
+	}
+	public String getServiceMemo() {
+		return serviceMemo;
+	}
+	public void setServiceMemo(String serviceMemo) {
+		this.serviceMemo = serviceMemo;
+	}
+
 	private List<ApplyInvoiceDetail> detail;
 	public String getAdviceNote() {
 		return adviceNote;

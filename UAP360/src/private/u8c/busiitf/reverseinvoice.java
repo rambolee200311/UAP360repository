@@ -18,6 +18,7 @@ import nc.bs.dao.DAOException;
 import nc.bs.trade.business.HYPubBO;
 import nc.jdbc.framework.processor.BeanListProcessor;
 import nc.jdbc.framework.processor.BeanProcessor;
+import nc.jdbc.framework.processor.ColumnProcessor;
 import nc.vo.bd.b04.DeptdocVO;
 import nc.vo.bd.b08.CustBasVO;
 import nc.vo.bd.b28.CostsubjVO;
@@ -46,6 +47,7 @@ import u8c.vo.invoice.FPFL;
 import u8c.vo.pub.APIMessageVO;
 import u8c.server.GTFPLISTSet;
 import u8c.server.HttpURLConnectionDemo;
+import u8c.server.SecureRandomStringGenerator;
 import u8c.vo.reverseInvoice.PostResult;
 import u8c.vo.reverseInvoice.ReverseInvoiceMessage;
 import u8c.vo.reverseInvoice.ReverseInvoiceData;
@@ -280,7 +282,20 @@ public class reverseinvoice implements IAPICustmerDevelop {
 			map.put("system", "busiitf"); // 系统编码
 			map.put("usercode", "busiuser"); // 用户
 			map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入
-			map.put("uniquekey", body.getAdviceNote() + body.getZyx1());
+			
+			//2024-07-22 uniquekey  自定义1 发票申请单号
+			sql1="select vouchid from arap_djzb where djdl='ys' and dr=1 and zyx1='"+body.getAdviceNote()+"'";
+			String uniquekey=(String)getDao().executeQuery(sql1, new ColumnProcessor());
+			if (uniquekey!=null) {
+				uniquekey="_"+SecureRandomStringGenerator.generateRandomString(4);
+			}else {
+				uniquekey="";
+			}
+			uniquekey=body.getAdviceNote()+ body.getZyx1()+uniquekey;			
+			map.put("uniquekey", uniquekey);
+			//map.put("uniquekey", body.getAdviceNote() + body.getZyx1());			
+			
+			
 			strBody =JSON.toJSONString(billRootVO);
 			// 写入输入中间文件
 			writeMiddleFile(APIConst.RETURNDATAPATH + "u8c.busiitf.reverseInvoice", strBody);

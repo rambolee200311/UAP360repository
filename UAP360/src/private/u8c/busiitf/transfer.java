@@ -34,6 +34,7 @@ import u8c.vo.applyPay.PostResult;
 import u8c.vo.pub.APIMessageVO;
 import u8c.vo.xmldata.BusiXml;
 import u8c.server.HttpURLConnectionDemo;
+import u8c.server.SecureRandomStringGenerator;
 	public class transfer implements IAPICustmerDevelop{
 		private BaseDAO dao; 
 		private BaseDAO getDao() {
@@ -154,7 +155,7 @@ import u8c.server.HttpURLConnectionDemo;
 				parentvo.setXslxbm("arap");
 				parentvo.setPrepay(false);
 				parentvo.setQcbz(false);
-				parentvo.setZyx1(body.getTransferApplyNo());
+				parentvo.setZyx1(body.getTransferApplyNo()); //自定义1 付款申请单号
 				parentvo.setZyx2(body.getArrivalRegiCode());
 				parentvo.setPj_jsfs("2");
 				parentvo.setZyx3(body.getAcCode());
@@ -208,7 +209,19 @@ import u8c.server.HttpURLConnectionDemo;
 				map.put("system", "busiitf"); // 系统编码
 				map.put("usercode", "busiuser"); // 用户
 				map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入				
-				map.put("uniquekey", body.getTransferApplyNo());
+				
+				//2024-07-22 uniquekey  自定义1 付款申请单号
+				String sql1="select vouchid from arap_djzb where djdl='fk' and dr=1 and zyx1='"+body.getTransferApplyNo()+"'";
+				String uniquekey=(String)getDao().executeQuery(sql1, new ColumnProcessor());
+				if (uniquekey!=null) {
+					uniquekey="_"+SecureRandomStringGenerator.generateRandomString(4);
+				}else {
+					uniquekey="";
+				}
+				uniquekey=body.getTransferApplyNo()+uniquekey;			
+				map.put("uniquekey", uniquekey);
+				//map.put("uniquekey", body.getTransferApplyNo());				
+				
 				strBody=HttpURLConnectionDemo.operator(serviceUrl, map,JSON.toJSONString(billRootVO));
 				
 				// 第三步：处理结果
@@ -284,7 +297,10 @@ import u8c.server.HttpURLConnectionDemo;
 				childrenvo.setSzxmid("A00001");
 				childrenvo.setWldx("1");
 				//F3-03 再保费 分入保费金额
-				if (strDjlxbm.equals("F3-03")) {					
+				
+				//if (strDjlxbm.equals("F3-03")) {	
+				//20240729 F3-11 支付赔款（再保轧差）
+				if ((strDjlxbm.equals("F3-03"))||(strDjlxbm.equals("F3-11"))) {	
 					childrenvo.setZyx4(Double.toString(body.getApplyRMB()));
 					childrenvo.setZyx6(Double.toString(body.getApplyRMB()-body.getTransferRMB()));
 					if (!body.getCurrency().equals("CNY")){

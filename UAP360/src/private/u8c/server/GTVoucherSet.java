@@ -175,8 +175,10 @@ public class GTVoucherSet implements IGTVoucherSet{
 						}
 						item.setFLBM(flbm);
 						//20240606 add serviceName,serviceMemo
-						if (vo.getZyx18().toLowerCase().equals("true")) {
-							zyx2="服务费";
+						if ((vo.getZyx18()!=null)&&(!vo.getZyx18().equals(""))&&(vo.getZyx18().length()>0)&&(!vo.getZyx18().isEmpty())){						
+							if (vo.getZyx18().toLowerCase().equals("true")) {
+								zyx2="服务费";
+							}
 						}
 						
 						item.setCPMC(zyx2);
@@ -203,9 +205,14 @@ public class GTVoucherSet implements IGTVoucherSet{
 				headparams.put("token", strToken);
 				//headparams.put("data", "["+strResult+"]");
 				headparams.put("spid", tokenGetVO.getGTSPID());
+				//20240627 增加ver参数固定2
+				headparams.put("ver", 2);
+				
 				Logger.debug("GTVouchers map:"+JSON.toJSONString(headparams));
 				String data="data="+"["+strResult+"]";
 				Logger.debug("GTVouchers data:"+data);
+				
+				
 				try {
 					strResult=HttpURLConnectionDemo.goldenTax(tokenGetVO.getGTFPKJUrl1(), tokenGetVO.getGTTokeContentType(), headparams, data);
 					Logger.debug("GTVouchers result:"+JSON.toJSONString(strResult));

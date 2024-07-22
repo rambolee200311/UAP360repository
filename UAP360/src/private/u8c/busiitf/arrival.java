@@ -231,8 +231,12 @@ public class arrival implements IAPICustmerDevelop{
 			map.put("trantype", "code"); // 档案翻译方式，枚举值为：编码请录入 code， 名称请录入 name， 主键请录入 pk
 			map.put("system", "busiitf"); // 系统编码
 			map.put("usercode", "busiuser"); // 用户
-			map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入				
-			map.put("uniquekey",confirmArrivalBody.getBillID());
+			map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入	
+			
+			//2024-07-22 uniquekey+收款红字
+			String uniquekey=confirmArrivalBody.getBillID()+"_SKHZ";		
+			map.put("uniquekey",uniquekey);
+			
 			strBody=HttpURLConnectionDemo.operator(serviceUrl, map,JSON.toJSONString(billRootVO));
 			
 			// 第三步：处理结果	
@@ -321,8 +325,12 @@ public class arrival implements IAPICustmerDevelop{
 				map.put("trantype", "code"); // 档案翻译方式，枚举值为：编码请录入 code， 名称请录入 name， 主键请录入 pk
 				map.put("system", "busiitf"); // 系统编码
 				map.put("usercode", "busiuser"); // 用户
-				map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入				
-				map.put("uniquekey",confirmArrivalBody.getBillID());
+				map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入	
+				
+				//2024-07-22 uniquekey+收款蓝字
+				String uniquekey=confirmArrivalBody.getBillID()+"_SKLZ";		
+				map.put("uniquekey",uniquekey);
+				
 				strBody=HttpURLConnectionDemo.operator(serviceUrl, map,JSON.toJSONString(billRootVO));
 				
 				// 第三步：处理结果	
@@ -404,8 +412,12 @@ public class arrival implements IAPICustmerDevelop{
 			map.put("trantype", "code"); // 档案翻译方式，枚举值为：编码请录入 code， 名称请录入 name， 主键请录入 pk
 			map.put("system", "busiitf"); // 系统编码
 			map.put("usercode", "busiuser"); // 用户
-			map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入				
-			map.put("uniquekey",confirmArrivalBody.getBillID());
+			map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入	
+			
+			//2024-07-22 uniquekey+应付
+			String uniquekey=confirmArrivalBody.getBillID()+"_YF";		
+			map.put("uniquekey",uniquekey);
+			
 			strBody=HttpURLConnectionDemo.operator(serviceUrl, map,JSON.toJSONString(billRootVO));
 			
 			// 第三步：处理结果	
