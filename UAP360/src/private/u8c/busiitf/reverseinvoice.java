@@ -90,10 +90,12 @@ public class reverseinvoice implements IAPICustmerDevelop {
 			List<ReverseInvoiceBody> bodys = JSON.parseArray(strBody, ReverseInvoiceBody.class);
 			List<PostResult> listPostResult = new ArrayList();// 返回结果
 			ApplyInvoiceData dataResult = new ApplyInvoiceData();
-
+			//20240804 uniquekey加行号
+			int iRow=1;
 			for (ReverseInvoiceBody body : bodys) {
-				PostResult postResult = setPostResult(body);
+				PostResult postResult = setPostResult(body,iRow);
 				listPostResult.add(postResult);
+				iRow++;
 			}
 			// 第三步：返回结果
 			obj = JSON.toJSONString(listPostResult);
@@ -114,7 +116,7 @@ public class reverseinvoice implements IAPICustmerDevelop {
 		return strBody;
 	}
 
-	private PostResult setPostResult(ReverseInvoiceBody body) throws BusinessException {
+	private PostResult setPostResult(ReverseInvoiceBody body,int iRow) throws BusinessException {
 		PostResult postResult = new PostResult();
 		postResult.setAdviceNote(body.getAdviceNote());
 		HYPubBO dmo = new HYPubBO();
@@ -291,6 +293,8 @@ public class reverseinvoice implements IAPICustmerDevelop {
 			}else {
 				uniquekey="";
 			}
+			//20240804 uniquekey加行号
+			uniquekey+="_"+Integer.toString(iRow);
 			uniquekey=body.getAdviceNote()+ body.getZyx1()+uniquekey;			
 			map.put("uniquekey", uniquekey);
 			//map.put("uniquekey", body.getAdviceNote() + body.getZyx1());			

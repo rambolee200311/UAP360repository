@@ -69,25 +69,27 @@ public class arrival implements IAPICustmerDevelop{
 			List<ConfirmArrivalBody> listConfirmArrivalBody=JSON.parseArray(strBody,ConfirmArrivalBody.class);
 			List<PostResult> listPostResult=new ArrayList();//返回结果
 			ConfirmArrivalData dataResult=new ConfirmArrivalData();	
-			
+			//20240804 uniquekey加行号
+			int iRow=1;
 			for(ConfirmArrivalBody confirmArrivalBody:listConfirmArrivalBody){
 				BusiXml busiXml=u8c.server.XmlConfig.getBusiXml(confirmArrivalBody.getBusiType());
 				if (busiXml!=null) {
 					PostResult postResult=null;
 					if (busiXml.getU8Ctype().equalsIgnoreCase("yf")) {
 						//yf 应付单
-						postResult=setPostResultYF(confirmArrivalBody,busiXml.getBusiTypeCode());			
+						postResult=setPostResultYF(confirmArrivalBody,busiXml.getBusiTypeCode(),iRow);			
 					}else if (busiXml.getU8Ctype().equalsIgnoreCase("sk")) {
 						//sk 收款单
-						postResult=setPostResultSKLZ(confirmArrivalBody,busiXml.getBusiTypeCode());			
+						postResult=setPostResultSKLZ(confirmArrivalBody,busiXml.getBusiTypeCode(),iRow);			
 					}
 					listPostResult.add(postResult);
 					if (postResult.getStatus().equals("success")){			
 						//skred 红字收款单
-						PostResult postResult1=setPostResultSKHZ(confirmArrivalBody,busiXml.getAppBusiTypeCode());
+						PostResult postResult1=setPostResultSKHZ(confirmArrivalBody,busiXml.getAppBusiTypeCode(),iRow);
 						listPostResult.add(postResult1);
 					}
 				}
+				iRow++;
 			}
 			// 第三步：返回结果
 			obj=JSON.toJSONString(listPostResult);
@@ -156,7 +158,7 @@ public class arrival implements IAPICustmerDevelop{
 		return billVO;
 	}
 	//到账认领收款红字 F2-03
-	private PostResult setPostResultSKHZ(ConfirmArrivalBody confirmArrivalBody,String strDjlxbm){
+	private PostResult setPostResultSKHZ(ConfirmArrivalBody confirmArrivalBody,String strDjlxbm,int iRow){
 		PostResult postResult=new PostResult();
 		postResult.setBillID(confirmArrivalBody.getBillID());
 		postResult.setArrivalRegiCode(confirmArrivalBody.getArrivalRegiCode());
@@ -234,7 +236,9 @@ public class arrival implements IAPICustmerDevelop{
 			map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入	
 			
 			//2024-07-22 uniquekey+收款红字
-			String uniquekey=confirmArrivalBody.getBillID()+"_SKHZ";		
+			String uniquekey=confirmArrivalBody.getBillID()+"_SKHZ";
+			//20240804 uniquekey加行号
+			uniquekey+="_"+Integer.toString(iRow);
 			map.put("uniquekey",uniquekey);
 			
 			strBody=HttpURLConnectionDemo.operator(serviceUrl, map,JSON.toJSONString(billRootVO));
@@ -259,7 +263,7 @@ public class arrival implements IAPICustmerDevelop{
 		return postResult;
 	}
 	//到账认领收款蓝字 F2-05
-	private PostResult setPostResultSKLZ(ConfirmArrivalBody confirmArrivalBody,String strDjlxbm){
+	private PostResult setPostResultSKLZ(ConfirmArrivalBody confirmArrivalBody,String strDjlxbm,int iRow){
 			PostResult postResult=new PostResult();
 			postResult.setBillID(confirmArrivalBody.getBillID());
 			postResult.setArrivalRegiCode(confirmArrivalBody.getArrivalRegiCode());
@@ -328,7 +332,9 @@ public class arrival implements IAPICustmerDevelop{
 				map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入	
 				
 				//2024-07-22 uniquekey+收款蓝字
-				String uniquekey=confirmArrivalBody.getBillID()+"_SKLZ";		
+				String uniquekey=confirmArrivalBody.getBillID()+"_SKLZ";
+				//20240804 uniquekey加行号
+				uniquekey+="_"+Integer.toString(iRow);
 				map.put("uniquekey",uniquekey);
 				
 				strBody=HttpURLConnectionDemo.operator(serviceUrl, map,JSON.toJSONString(billRootVO));
@@ -354,7 +360,7 @@ public class arrival implements IAPICustmerDevelop{
 		}
 		
 	//到账认领应付 F1-01
-	private PostResult setPostResultYF(ConfirmArrivalBody confirmArrivalBody,String strDjlxbm){
+	private PostResult setPostResultYF(ConfirmArrivalBody confirmArrivalBody,String strDjlxbm,int iRow){
 		PostResult postResult=new PostResult();
 		postResult.setBillID(confirmArrivalBody.getBillID());
 		postResult.setArrivalRegiCode(confirmArrivalBody.getArrivalRegiCode());
@@ -415,7 +421,9 @@ public class arrival implements IAPICustmerDevelop{
 			map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入	
 			
 			//2024-07-22 uniquekey+应付
-			String uniquekey=confirmArrivalBody.getBillID()+"_YF";		
+			String uniquekey=confirmArrivalBody.getBillID()+"_YF";
+			//20240804 uniquekey加行号
+			uniquekey+="_"+Integer.toString(iRow);
 			map.put("uniquekey",uniquekey);
 			
 			strBody=HttpURLConnectionDemo.operator(serviceUrl, map,JSON.toJSONString(billRootVO));

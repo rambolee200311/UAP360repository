@@ -70,21 +70,23 @@ import u8c.server.SecureRandomStringGenerator;
 				List<ApplyPayBody> bodys=JSON.parseArray(strBody,ApplyPayBody.class);
 				List<PostResult> listPostResult=new ArrayList();//返回结果
 				ApplyPayData dataResult=new ApplyPayData();	
-				
+				//20240804 uniquekey加行号
+				int iRow=1;
 				for(ApplyPayBody body:bodys){
 					BusiXml busiXml=u8c.server.XmlConfig.getBusiXml(body.getTransferBusinType());
 					if (busiXml!=null) {
 						//付款
-						PostResult postResult=setPostResultFK(body,busiXml.getBusiTypeCode());
+						PostResult postResult=setPostResultFK(body,busiXml.getBusiTypeCode(),iRow);
 						listPostResult.add(postResult);
 						if (postResult.getStatus().equals("success")){
 							if (busiXml.getAppBusiTypeCode()!=null && busiXml.getAppBusiTypeCode().trim().length()!=0) {
 								//收款
-								PostResult postResult1=setPostResultSK(body,busiXml.getAppBusiTypeCode());
+								PostResult postResult1=setPostResultSK(body,busiXml.getAppBusiTypeCode(),iRow);
 								listPostResult.add(postResult1);
 							}
 						}
 					}
+					iRow++;
 				}
 				// 第三步：返回结果
 				obj=JSON.toJSONString(listPostResult);
@@ -134,7 +136,7 @@ import u8c.server.SecureRandomStringGenerator;
 			return retStr;
 		}
 		//sokuan 
-		private PostResult setPostResultSK(ApplyPayBody body,String strDjlxbm) {
+		private PostResult setPostResultSK(ApplyPayBody body,String strDjlxbm,int iRow) {
 			PostResult postResult=new PostResult();
 			postResult.setBillID(body.getTransferApplyNo());
 			
@@ -218,6 +220,8 @@ import u8c.server.SecureRandomStringGenerator;
 				}else {
 					uniquekey="";
 				}
+				//20240804 uniquekey加行号
+				uniquekey+="_"+Integer.toString(iRow);
 				uniquekey=body.getTransferApplyNo()+uniquekey;			
 				map.put("uniquekey", uniquekey);
 				//map.put("uniquekey", body.getTransferApplyNo());				
@@ -244,7 +248,7 @@ import u8c.server.SecureRandomStringGenerator;
 			return postResult;
 		}
 		//fukuan
-		private PostResult setPostResultFK(ApplyPayBody body,String strDjlxbm){
+		private PostResult setPostResultFK(ApplyPayBody body,String strDjlxbm,int iRow){
 			PostResult postResult=new PostResult();
 			postResult.setBillID(body.getTransferApplyNo());
 			
@@ -330,8 +334,13 @@ import u8c.server.SecureRandomStringGenerator;
 				map.put("trantype", "code"); // 档案翻译方式，枚举值为：编码请录入 code， 名称请录入 name， 主键请录入 pk
 				map.put("system", "busiitf"); // 系统编码
 				map.put("usercode", "busiuser"); // 用户
-				map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入				
-				map.put("uniquekey", body.getTransferApplyNo());
+				map.put("password", "bbbed85aa52a7dc74fc4b4bca8423394"); // 密码1qazWSX，需要 MD5 加密后录入	
+				
+				String uniquekey=body.getTransferApplyNo();
+				//20240804 uniquekey加行号
+				uniquekey+="_"+Integer.toString(iRow);				
+				map.put("uniquekey", uniquekey);
+				
 				strBody=HttpURLConnectionDemo.operator(serviceUrl, map,JSON.toJSONString(billRootVO));
 				
 				// 第三步：处理结果

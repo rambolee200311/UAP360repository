@@ -75,10 +75,12 @@ public class invoice  implements IAPICustmerDevelop{
 			
 			List<PostResult> listPostResult=new ArrayList();//返回结果
 			ApplyInvoiceData dataResult=new ApplyInvoiceData();
-			
+			//20240804 uniquekey加行号
+			int iRow=1;
 			for(ApplyInvoiceBody body:bodys){
-				PostResult postResult=setPostResult(body,body.getBusiType());
+				PostResult postResult=setPostResult(body,body.getBusiType(),iRow);
 				listPostResult.add(postResult);
+				iRow++;
 			}
 			// 第三步：返回结果
 			obj=JSON.toJSONString(listPostResult);
@@ -103,7 +105,7 @@ public class invoice  implements IAPICustmerDevelop{
 	//处理data
 
 
-	private PostResult setPostResult(ApplyInvoiceBody body,String strDjlxbm){
+	private PostResult setPostResult(ApplyInvoiceBody body,String strDjlxbm,int iRow){
 		Logger.init("hanglianAPI");
 		PostResult postResult=new PostResult();
 		postResult.setBillID(body.getAdviceNote());		
@@ -195,7 +197,7 @@ public class invoice  implements IAPICustmerDevelop{
 			}
 			
 			billVO.setParentvo(parentvo);
-			int iRow=0;
+			
 			//单据体
 			List<ChildrenVO> children=new ArrayList();
 			for(ApplyInvoiceDetail detail:body.getDetail()){
@@ -239,7 +241,10 @@ public class invoice  implements IAPICustmerDevelop{
 			}else {
 				uniquekey="";
 			}
-			uniquekey=body.getAdviceNote()+uniquekey;			
+			//20240804 uniquekey加行号
+			uniquekey+="_"+Integer.toString(iRow);
+			uniquekey=body.getAdviceNote()+uniquekey;
+			
 			map.put("uniquekey", uniquekey);
 			
 			strBody=HttpURLConnectionDemo.operator(serviceUrl, map,JSON.toJSONString(billRootVO));
