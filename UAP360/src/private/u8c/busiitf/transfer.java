@@ -81,6 +81,7 @@ import u8c.server.SecureRandomStringGenerator;
 						if (postResult.getStatus().equals("success")){
 							if (busiXml.getAppBusiTypeCode()!=null && busiXml.getAppBusiTypeCode().trim().length()!=0) {
 								//ÊÕ¿î
+								iRow++;
 								PostResult postResult1=setPostResultSK(body,busiXml.getAppBusiTypeCode(),iRow);
 								listPostResult.add(postResult1);
 							}

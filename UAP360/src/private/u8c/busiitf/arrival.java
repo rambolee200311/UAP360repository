@@ -85,6 +85,7 @@ public class arrival implements IAPICustmerDevelop{
 					listPostResult.add(postResult);
 					if (postResult.getStatus().equals("success")){			
 						//skred ºì×ÖÊÕ¿îµ¥
+						iRow++;
 						PostResult postResult1=setPostResultSKHZ(confirmArrivalBody,busiXml.getAppBusiTypeCode(),iRow);
 						listPostResult.add(postResult1);
 					}
