@@ -1,5 +1,5 @@
 package u8c.vo.reverseInvoice;
-
+import java.util.List;
 public class ReverseInvoiceBody {
 	private String adviceNote;
     private String adviceDate;
@@ -9,6 +9,8 @@ public class ReverseInvoiceBody {
     private String currency;
     private double reverseInclusiveMoney;
     private double reverseInclusiveRMB;
+    private String payerCode;//收票单位编码
+	private String payerName;//收票单位名称
     private String operatorCode;
     private String comCode;
     private String comName;
@@ -18,7 +20,8 @@ public class ReverseInvoiceBody {
     private String zyx3;
     private String zyx4;
     private String zyx5;
-    
+    private String dpName;//部门名称
+    private List<ReverseInvoiceDetail> detail;
 	public String getAdviceNote() {
 		return adviceNote;
 	}
@@ -120,6 +123,30 @@ public class ReverseInvoiceBody {
 	}
 	public void setZyx5(String zyx5) {
 		this.zyx5 = zyx5;
+	}
+	public List<ReverseInvoiceDetail> getDetail() {
+		return detail;
+	}
+	public void setDetail(List<ReverseInvoiceDetail> detail) {
+		this.detail = detail;
+	}
+	public String getDpName() {
+		return dpName;
+	}
+	public void setDpName(String dpName) {
+		this.dpName = dpName;
+	}
+	public String getPayerCode() {
+		return payerCode;
+	}
+	public void setPayerCode(String payerCode) {
+		this.payerCode = payerCode;
+	}
+	public String getPayerName() {
+		return payerName;
+	}
+	public void setPayerName(String payerName) {
+		this.payerName = payerName;
 	}
     
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +53,9 @@ import u8c.vo.reverseInvoice.PostResult;
 import u8c.vo.reverseInvoice.ReverseInvoiceMessage;
 import u8c.vo.reverseInvoice.ReverseInvoiceData;
 import u8c.vo.reverseInvoice.ReverseInvoiceBody;
+import u8c.vo.reverseInvoice.ReverseInvoiceDetail;
+import u8c.bs.convert.JSONConvertor;
+import u8c.server.XmlConfig;
 
 public class reverseinvoice implements IAPICustmerDevelop {
 	private BaseDAO dao;
@@ -212,15 +216,27 @@ public class reverseinvoice implements IAPICustmerDevelop {
 			
 			// 单据体
 			List<ChildrenVO> children = new ArrayList();
+			for (ReverseInvoiceDetail detail:body.getDetail()) {
+				Double dAmount=u8c.server.XmlConfig.getInvoiceAmount(body.getComCode().toString());
+				Double inclusiveAmount=detail.getInclusiveRMB();
+				BigDecimal inclusiveAmountD1=new BigDecimal(inclusiveAmount);
+				inclusiveAmount=inclusiveAmountD1.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+				
+				
+				ChildrenVO childrenvo=getChildrenVO(inclusiveAmount*-1,body,detail,iRow);
+				children.add(childrenvo);
+			}
+			
 			//for (DJZBItemVO vob : vobs) {
-				ChildrenVO childrenvo = new ChildrenVO();
-				/*
+				/*ChildrenVO childrenvo = new ChildrenVO();
+				
 				 * 客户档案
-				 */
+				 
 				sql1 = "select pk_corp,pk_cubasdoc,custcode,custname" + " from bd_cubasdoc" + " where pk_cubasdoc='"
 						+ vobs.get(0).getHbbm() + "';";
 				CustBasVO custBasVO = (CustBasVO) getDao().executeQuery(sql1, new BeanProcessor(CustBasVO.class));
 				childrenvo.setHbbm(custBasVO.getCustcode());
+				*/
 				/*
 				 * if(!body.getCurrency().equals("CNY")){
 				 * childrenvo.setBbhl(vobs.get(0).getBbhl().doubleValue());
@@ -231,6 +247,8 @@ public class reverseinvoice implements IAPICustmerDevelop {
 				 * childrenvo.setJfbbje(Double.toString(body.getReverseInclusiveRMB()));
 				 * childrenvo.setJfybje(Double.toString(body.getReverseInclusiveRMB()));
 				 */
+			
+				 /*	
 				 childrenvo.setBbhl(vobs.get(0).getBbhl().doubleValue());
 				 //childrenvo.setBzbm(vob.getBzbm());				 
 				 childrenvo.setSl(vobs.get(0).getSl().toDouble());
@@ -239,6 +257,8 @@ public class reverseinvoice implements IAPICustmerDevelop {
 				 childrenvo.setZyx1(vobs.get(0).getZyx1());// 自定义1 险种编码
 				 childrenvo.setZyx2(vobs.get(0).getZyx2());// 自定义2 险种名称
 				 childrenvo.setZyx3(vobs.get(0).getZyx3());// 自定义2 险种名称
+				 
+				 */
 				 //String zyx3=""+vob.getZyx3();
 				 //if( (vob.getZyx3()!=null)||(!vob.getZyx3().isEmpty())||(!vob.getZyx3().equals(""))||(vob.getZyx3().trim().length()!=0)) {
 				//	 zyx3=vob.getZyx3();
@@ -253,6 +273,7 @@ public class reverseinvoice implements IAPICustmerDevelop {
 				 * 收支项目
 				 */
 				//金税系统流水号
+				/*
 				if(fplist!=null) {
 					if (fplist.getRows()!=null) {
 						parentvo.setZyx16 (fplist.getRows().get(0).getXtlsh());
@@ -263,9 +284,11 @@ public class reverseinvoice implements IAPICustmerDevelop {
 				 
 				  DeptdocVO deptdocVO=(DeptdocVO) dmo.queryByPrimaryKey(DeptdocVO.class, vobs.get(0).getDeptid()); 
 				  childrenvo.setDeptid(deptdocVO.getDeptcode());
+				  
+				  */
 				 //childrenvo.setSzxmid(vob.getSzxmid());//收支项目
 				 
-				children.add(childrenvo);
+				//children.add(childrenvo);
 			//}
 			billVO.setChildren(children);
 
@@ -362,4 +385,52 @@ public class reverseinvoice implements IAPICustmerDevelop {
 			util.writeBytesToFile(info.getBytes("UTF-8"), fileName);
 		}
 	}
+	
+	private ChildrenVO getChildrenVO(Double amount,ReverseInvoiceBody body,ReverseInvoiceDetail detail,int iRow) throws DAOException {
+		ChildrenVO childrenvo=new ChildrenVO();
+		childrenvo.setHbbm(body.getPayerCode());
+		if(!detail.getCurrency().equals("CNY")){
+			//childrenvo.setBbhl(detail.getCurRate());
+			//childrenvo.setBzbm(detail.getCurrency());
+			childrenvo.setZyx1(detail.getCurrency().toString()
+					+"金额:"
+					+detail.getInclusiveMoney().toString()
+					+"汇率:"
+					+detail.getCurRate().toString());
+		}
+		
+		//收支项目按监管险种名称匹配
+		String sql3="select pk_costsubj,costcode,costname from bd_costsubj where pk_corp=(select pk_corp from bd_corp where unitcode='"+body.getComCode().toString()+"') and costname='"
+		//+detail.getInsurTypeName().toString()+"'";
+		+detail.getSupInsurTypeName().toString()+"'";		
+		CostsubjVO costsubjVO=(CostsubjVO)getDao().executeQuery(sql3, new BeanProcessor(CostsubjVO.class));
+		if (costsubjVO!=null){
+			//childrenvo.setSzxmid(costsubjVO.getPk_costsubj());
+			childrenvo.setSzxmid(costsubjVO.getCostcode());
+			childrenvo.setSzxmid_code(costsubjVO.getCostcode());
+			childrenvo.setSzxmid_name(costsubjVO.getCostname());
+		}else {
+			childrenvo.setSzxmid("A01001001");
+		}
+		//部门编码按对照xml
+		childrenvo.setDeptid(XmlConfig.getDeptXml(body.getComCode(),  body.getDpName()));
+		//默认税率6
+		Double dSL=6.00;
+		if (detail.getTaxRate()!=null) {
+			if (detail.getTaxRate()!=0.00) {
+				dSL=detail.getTaxRate();
+			}
+		}
+		childrenvo.setSl(dSL);
+		childrenvo.setJfbbje(Double.toString(amount));
+		childrenvo.setJfybje(Double.toString(amount));
+		//childrenvo.setZyx1(detail.getInsurTypeCode());//自定义1 险种编码
+		childrenvo.setZyx2(detail.getInsurTypeName());//自定义2 业务险种名称
+		if (iRow!=0) {
+			childrenvo.setZyx3(Integer.toString(iRow));//自定义3发票合并号
+		}
+		return childrenvo;
+	}
+
 }
+
