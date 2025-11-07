@@ -182,7 +182,9 @@ public class reverseinvoice implements IAPICustmerDevelop {
 			parentvo.setZyx13(vos.getZyx13());//自定义2 项目			
 			//发票种类 zyx15
 			parentvo.setZyx15(vos.getZyx15());
-			
+			//发票业务号
+			String ywh= vobs.get(0).getVouchid()+"_"+ vobs.get(0).getZyx3();
+			parentvo.setZyx16(ywh);
 			//20240606 add serviceName,serviceMemo
 			parentvo.setZyx18(vos.getZyx18());
 			parentvo.setZyx19(vos.getZyx19());
